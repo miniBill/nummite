@@ -1,0 +1,25 @@
+== Todo for 0.2 ==
+background
+help system
+better image handling
+more eye-candy
+objects auto-resize
+better print support
+aboutbox
+
+== Todo for 0.2-0.3 ==
+in-place text edit
+
+== Todo for 0.x ==
+svg support
+export to oo.o draw 
+
+== morgoth comments ==
+1) ogni tanto crasha quando si setta il testo
+--> non riproducibile, of course
+2) non bloccare colori e linea
+4)sarebbe utile selezionare più oggetti per spostarli ad esempio
+--> implementare selezione, o no?
+5) quando si esporta come immagine gli oggetti testo sono disegnati male 
+5.1) dopo qualche prova sembra che si veda male nell esportazione come immagine il testo che non ha come sfondo niente, per esempio le lettere che sforano fuori da dai bordi si vedono male mentre quelle che rimangono dentro si vedono bene
+--> controllare
