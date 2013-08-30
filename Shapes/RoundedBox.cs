@@ -23,7 +23,7 @@ using DiagramDrawer.Properties;
 using DiagramDrawer.Export;
 
 namespace DiagramDrawer.Shapes {
-	public class RoundedBox : Box {
+	class RoundedBox : Box {
 		public override PointF GetIntersection(PointF other) {
 			PointF c = Center;
 			var ox = other.X - c.X;

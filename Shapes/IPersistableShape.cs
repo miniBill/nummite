@@ -16,11 +16,14 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Xml;
+
 namespace DiagramDrawer.Shapes
 {
-	interface IDimension
+	interface IPersistableShape : IShape
 	{
-		int Width{ get; }
-		int Height{ get; }
+		void Load(XmlReader reader);
+		void Save(XmlWriter writer);
+		void SvgSave(XmlWriter writer);
 	}
 }

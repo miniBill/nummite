@@ -16,58 +16,16 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using DiagramDrawer.Forms;
-
 namespace DiagramDrawer.Shapes {
-	interface IShape : IDisposable, IDimension {
-		bool Contains(PointF point);
-		bool Dragged {
+	interface IAutoSizeable : ISizeable {
+		bool AutoResizeWidth {
 			get;
 			set;
 		}
-		bool Depends {
-			get;
-		}
-		void OpenMenu(PointF point);
-		void DrawTo(Graphics graphics);
-		bool Linkable {
-			get;
-		}
-		ShapeContainer ShapeContainer {
-			set;
-		}
-		Point Location {
-			get;
-		}
-		Point Offset {
-			set;
-		}
-		string Text {
+		bool AutoResizeHeight {
 			get;
 			set;
 		}
-		string Name {
-			get;
-			set;
-		}
-		void Move(Point point);
-		event EventHandler Moving;
-		event EventHandler DragStart;
-		event EventHandler DragEnd;
-		event EventHandler Deleted;
-		Point Center {
-			get;
-		}
-		PointF GetIntersection(PointF other);
-
-		void BeginInitialize();
-		void EndInitialize(KeyedCollection<string, IShape> list);
-		bool NeedInitialize {
-			get;
-		}
-		void SetLocation(Point point);
 	}
+	
 }

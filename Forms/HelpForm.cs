@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Forms {
-	public partial class HelpForm : Form {
+	partial class HelpForm : Form {
 		public HelpForm() {
 			InitializeComponent();
 			LoadPageIndex();

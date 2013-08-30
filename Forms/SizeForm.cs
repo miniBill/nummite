@@ -21,88 +21,82 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using DiagramDrawer.Shapes;
+
 namespace DiagramDrawer.Forms {
-	public interface ISizeable {
-		int Height {
-			get;
-			set;
-		}
-		int Width {
-			get;
-			set;
-		}
-		void Refresh();
-	}
-	public interface IAutoSizeable : ISizeable {
-		bool AutoResizeWidth {
-			get;
-			set;
-		}
-		bool AutoResizeHeight {
-			get;
-			set;
-		}
-	}
-	public partial class SizeForm : Form {
+	partial class SizeForm : Form
+	{
 		readonly ISizeable s;
 		readonly IAutoSizeable asi;
-		public SizeForm(ISizeable shape) {
-			InitializeComponent();
+
+		public SizeForm (ISizeable shape)
+		{
+			InitializeComponent ();
 			s = shape;
 			asi = shape as IAutoSizeable;
-			if(asi != null) {
+			if (asi != null) {
 				checkBox1.Checked = asi.AutoResizeHeight;
 				checkBox2.Checked = asi.AutoResizeWidth;
-			}
-			else {
+			} else {
 				checkBox1.Visible = false;
 				checkBox2.Visible = false;
 			}
-			textBox1.Text = shape.Height.ToString(CultureInfo.CurrentCulture);
-			textBox2.Text = shape.Width.ToString(CultureInfo.CurrentCulture);
+			textBox1.Text = shape.Height.ToString (CultureInfo.CurrentCulture);
+			textBox2.Text = shape.Width.ToString (CultureInfo.CurrentCulture);
 		}
-		void Button1Click(object sender, EventArgs e) {
-			Ok();
+
+		void Button1Click (object sender, EventArgs e)
+		{
+			Ok ();
 		}
-		void Ok() {
-			if(asi != null) {
+
+		void Ok ()
+		{
+			if (asi != null) {
 				asi.AutoResizeHeight = checkBox1.Checked;
 				asi.AutoResizeWidth = checkBox2.Checked;
 			}
-			if(asi == null || (!asi.AutoResizeWidth && !asi.AutoResizeHeight)) {
-				s.Height = int.Parse(textBox1.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
-				s.Width = int.Parse(textBox2.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
-				if(s.Height < Options.MinimumHeight)
+			if (asi == null || (!asi.AutoResizeWidth && !asi.AutoResizeHeight)) {
+				s.Height = int.Parse (textBox1.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
+				s.Width = int.Parse (textBox2.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
+				if (s.Height < Options.MinimumHeight)
 					s.Height = Options.MinimumHeight;
-				if(s.Width < Options.MinimumWidth)
+				if (s.Width < Options.MinimumWidth)
 					s.Width = Options.MinimumWidth;
 			}
-			s.Refresh();
-			Close();
+			s.Refresh ();
+			Close ();
 		}
-		void TextBoxKeyUp(object sender, KeyEventArgs e) {
-			if(e.KeyCode == Keys.Enter)
-				Ok();
-			if(e.KeyCode == Keys.Escape)
-				Close();
+
+		void TextBoxKeyUp (object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+				Ok ();
+			if (e.KeyCode == Keys.Escape)
+				Close ();
 		}
-		void TextBoxValidating(object sender, CancelEventArgs e) {
+
+		void TextBoxValidating (object sender, CancelEventArgs e)
+		{
 			var senderBox = sender as TextBox;
 			int o;
-			if(senderBox == null)
+			if (senderBox == null)
 				return;
-			if(!int.TryParse(senderBox.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture, out o)) {
+			if (!int.TryParse (senderBox.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture, out o)) {
 				e.Cancel = true;
 				senderBox.BackColor = Color.Red;
-			}
-			else
+			} else
 				senderBox.BackColor = SystemColors.Window;
 		}
-		void Button2Click(object sender, EventArgs e) {
-			Close();
+
+		void Button2Click (object sender, EventArgs e)
+		{
+			Close ();
 		}
-		void CheckBox1CheckedChanged(object sender, EventArgs e) {
-			checkBox1.Focus();
+
+		void CheckBox1CheckedChanged (object sender, EventArgs e)
+		{
+			checkBox1.Focus ();
 			textBox1.Enabled = !checkBox1.Checked;
 			textBox2.Enabled = !checkBox2.Checked;
 		}

@@ -18,13 +18,11 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
-using System.Xml;
 using DiagramDrawer.Forms;
 
 namespace DiagramDrawer.Shapes {
-	public class InvisiblePoint : IShape {
+	class InvisiblePoint : IShape {
 		public InvisiblePoint() {
 			Text = String.Empty;
 		}
@@ -131,48 +129,6 @@ namespace DiagramDrawer.Shapes {
 				return true;
 			}
 		}
-		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
-		public Image Image {
-			get {
-				throw new NotImplementedException();
-			}
-		}
-		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
-		public Font Font {
-			get {
-				throw new NotImplementedException();
-			}
-			set {
-				throw new NotImplementedException();
-			}
-		}
-		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
-		public Color BackgroundColor {
-			get {
-				throw new NotImplementedException();
-			}
-			set {
-				throw new NotImplementedException();
-			}
-		}
-		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
-		public Color ForegroundColor {
-			get {
-				throw new NotImplementedException();
-			}
-			set {
-				throw new NotImplementedException();
-			}
-		}
-		public void Load(XmlReader reader) {
-			throw new NotImplementedException();
-		}
-		public void Save(XmlWriter writer) {
-			throw new NotImplementedException();
-		}
-		public void Refresh() {
-			throw new NotImplementedException();
-		}
 		public void SetLocation(Point point) {
 			Location = point;
 		}
@@ -182,38 +138,6 @@ namespace DiagramDrawer.Shapes {
 		}
 		protected virtual void Dispose(bool disposing) {
 
-		}
-		public Color BorderColor {
-			get {
-				throw new NotImplementedException();
-			}
-			set {
-				throw new NotImplementedException();
-			}
-		}
-		public void SvgSave(XmlWriter writer) {
-			throw new NotImplementedException();
-		}
-		public bool AutoResizeable {
-			get {
-				throw new NotImplementedException();
-			}
-		}
-		public bool AutoResizeWidth {
-			get {
-				throw new NotImplementedException();
-			}
-			set {
-				throw new NotImplementedException();
-			}
-		}
-		public bool AutoResizeHeight {
-			get {
-				throw new NotImplementedException();
-			}
-			set {
-				throw new NotImplementedException();
-			}
 		}
 	}
 }

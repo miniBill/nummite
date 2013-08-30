@@ -21,7 +21,7 @@ using System.Drawing;
 using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes {
-	public class Parallelogram : Box {
+	class Parallelogram : Box {
 		protected override void DrawBackground(Graphics graphics) {
 			var i = Width / 10F;
 			var a = Width / 2F;

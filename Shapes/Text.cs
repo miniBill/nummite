@@ -22,7 +22,7 @@ using DiagramDrawer.Properties;
 using System.Text;
 
 namespace DiagramDrawer.Shapes {
-	public class LabelShape : Box {
+	class LabelShape : Box {
 		public LabelShape() {
 			Height = 40;
 		}

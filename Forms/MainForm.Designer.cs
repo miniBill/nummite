@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace DiagramDrawer.Forms {
 	partial class MainForm {
 		/// <summary>
@@ -25,84 +27,84 @@ namespace DiagramDrawer.Forms {
 		void InitializeComponent() {
 			components = new System.ComponentModel.Container();
 			var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-			panel1 = new System.Windows.Forms.Panel();
+			toolStripContainer1 = new ToolStripContainer();
+			panel1 = new Panel();
 			shapeContainer1 = new ShapeContainer();
-			menuStrip1 = new System.Windows.Forms.MenuStrip();
-			fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-			saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			exportImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			comeImmagineVettorialeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			printPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			objectsTSMI = new System.Windows.Forms.ToolStripMenuItem();
-			lineKindTSMI = new System.Windows.Forms.ToolStripMenuItem();
-			toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			showTSMI = new System.Windows.Forms.ToolStripMenuItem();
-			hideTSMI = new System.Windows.Forms.ToolStripMenuItem();
-			helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-			aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			toolStrip1 = new System.Windows.Forms.ToolStrip();
-			newToolStripButton = new System.Windows.Forms.ToolStripButton();
-			saveToolStripButton = new System.Windows.Forms.ToolStripButton();
-			openToolStripButton = new System.Windows.Forms.ToolStripButton();
-			printToolStripButton = new System.Windows.Forms.ToolStripButton();
-			toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-			cutToolStripButton = new System.Windows.Forms.ToolStripButton();
-			copyToolStripButton = new System.Windows.Forms.ToolStripButton();
-			pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
-			toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-			libraryTS = new System.Windows.Forms.ToolStripSplitButton();
+			menuStrip1 = new MenuStrip();
+			fileToolStripMenuItem = new ToolStripMenuItem();
+			newToolStripMenuItem = new ToolStripMenuItem();
+			openToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator = new ToolStripSeparator();
+			saveToolStripMenuItem = new ToolStripMenuItem();
+			saveAsToolStripMenuItem = new ToolStripMenuItem();
+			exportToolStripMenuItem = new ToolStripMenuItem();
+			exportImageToolStripMenuItem = new ToolStripMenuItem();
+			comeImmagineVettorialeToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator1 = new ToolStripSeparator();
+			printToolStripMenuItem = new ToolStripMenuItem();
+			printPreviewToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator2 = new ToolStripSeparator();
+			exitToolStripMenuItem = new ToolStripMenuItem();
+			editToolStripMenuItem = new ToolStripMenuItem();
+			undoToolStripMenuItem = new ToolStripMenuItem();
+			redoToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator3 = new ToolStripSeparator();
+			cutToolStripMenuItem = new ToolStripMenuItem();
+			copyToolStripMenuItem = new ToolStripMenuItem();
+			pasteToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator4 = new ToolStripSeparator();
+			selectAllToolStripMenuItem = new ToolStripMenuItem();
+			objectsTSMI = new ToolStripMenuItem();
+			lineKindTSMI = new ToolStripMenuItem();
+			toolsToolStripMenuItem = new ToolStripMenuItem();
+			customizeToolStripMenuItem = new ToolStripMenuItem();
+			optionsToolStripMenuItem = new ToolStripMenuItem();
+			showTSMI = new ToolStripMenuItem();
+			hideTSMI = new ToolStripMenuItem();
+			helpToolStripMenuItem = new ToolStripMenuItem();
+			contentsToolStripMenuItem = new ToolStripMenuItem();
+			indexToolStripMenuItem = new ToolStripMenuItem();
+			searchToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator5 = new ToolStripSeparator();
+			aboutToolStripMenuItem = new ToolStripMenuItem();
+			toolStrip1 = new ToolStrip();
+			newToolStripButton = new ToolStripButton();
+			saveToolStripButton = new ToolStripButton();
+			openToolStripButton = new ToolStripButton();
+			printToolStripButton = new ToolStripButton();
+			toolStripSeparator6 = new ToolStripSeparator();
+			cutToolStripButton = new ToolStripButton();
+			copyToolStripButton = new ToolStripButton();
+			pasteToolStripButton = new ToolStripButton();
+			toolStripSeparator7 = new ToolStripSeparator();
+			libraryTS = new ToolStripSplitButton();
 			linkModeTS = new CheckableToolStripSplitButton();
-			toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+			toolStripSeparator8 = new ToolStripSeparator();
 			fontTS = new CheckableToolStripSplitButton();
-			altriToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			altriToolStripMenuItem = new ToolStripMenuItem();
 			fColorTS = new CheckableToolStripSplitButton();
-			altriToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			altriToolStripMenuItem1 = new ToolStripMenuItem();
 			bColorTS = new CheckableToolStripSplitButton();
-			altriToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			altriToolStripMenuItem2 = new ToolStripMenuItem();
 			borderColorTS = new CheckableToolStripSplitButton();
-			altriToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-			toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-			resizeTS = new System.Windows.Forms.ToolStripButton();
-			gridTS = new System.Windows.Forms.ToolStripButton();
-			toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-			helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-			imageList1 = new System.Windows.Forms.ImageList(components);
-			fColorDialog = new System.Windows.Forms.ColorDialog();
-			fontDialog1 = new System.Windows.Forms.FontDialog();
-			bColorDialog = new System.Windows.Forms.ColorDialog();
+			altriToolStripMenuItem3 = new ToolStripMenuItem();
+			toolStripSeparator9 = new ToolStripSeparator();
+			resizeTS = new ToolStripButton();
+			gridTS = new ToolStripButton();
+			toolStripSeparator10 = new ToolStripSeparator();
+			helpToolStripButton = new ToolStripButton();
+			imageList1 = new ImageList(components);
+			fColorDialog = new ColorDialog();
+			fontDialog1 = new FontDialog();
+			bColorDialog = new ColorDialog();
 			printDocument1 = new System.Drawing.Printing.PrintDocument();
-			printDialog1 = new System.Windows.Forms.PrintDialog();
-			printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-			openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-			saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-			borderColorDialog = new System.Windows.Forms.ColorDialog();
-			saveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
+			printDialog1 = new PrintDialog();
+			printPreviewDialog1 = new PrintPreviewDialog();
+			openFileDialog1 = new OpenFileDialog();
+			saveFileDialog1 = new SaveFileDialog();
+			saveFileDialog2 = new SaveFileDialog();
+			borderColorDialog = new ColorDialog();
+			saveFileDialog3 = new SaveFileDialog();
 			toolStripContainer1.ContentPanel.SuspendLayout();
 			toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			toolStripContainer1.SuspendLayout();
@@ -118,7 +120,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			toolStripContainer1.ContentPanel.Controls.Add(panel1);
 			toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(804, 529);
-			toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			toolStripContainer1.Dock = DockStyle.Fill;
 			toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			toolStripContainer1.Name = "toolStripContainer1";
 			toolStripContainer1.Size = new System.Drawing.Size(804, 578);
@@ -134,9 +136,9 @@ namespace DiagramDrawer.Forms {
 			// 
 			panel1.AutoScroll = true;
 			panel1.AutoSize = true;
-			panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 			panel1.Controls.Add(shapeContainer1);
-			panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			panel1.Dock = DockStyle.Fill;
 			panel1.Location = new System.Drawing.Point(0, 0);
 			panel1.Name = "panel1";
 			panel1.Size = new System.Drawing.Size(804, 529);
@@ -151,13 +153,13 @@ namespace DiagramDrawer.Forms {
 			shapeContainer1.TabIndex = 1;
 			shapeContainer1.Link += new System.EventHandler(ShapeContainer1Link);
 			shapeContainer1.Click += new System.EventHandler<ShapeEventArgs>(ShapeContainer1Click);
-			shapeContainer1.MouseClick += new System.Windows.Forms.MouseEventHandler(ShapeContainer1MouseClick);
-			shapeContainer1.MouseDown += new System.Windows.Forms.MouseEventHandler(ShapeContainer1MouseDown);
+			shapeContainer1.MouseClick += new MouseEventHandler(ShapeContainer1MouseClick);
+			shapeContainer1.MouseDown += new MouseEventHandler(ShapeContainer1MouseDown);
 			// 
 			// menuStrip1
 			// 
-			menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			menuStrip1.Dock = DockStyle.None;
+			menuStrip1.Items.AddRange(new ToolStripItem[] {
             fileToolStripMenuItem,
             editToolStripMenuItem,
             objectsTSMI,
@@ -172,7 +174,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// fileToolStripMenuItem
 			// 
-			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
             newToolStripMenuItem,
             openToolStripMenuItem,
             toolStripSeparator,
@@ -193,7 +195,7 @@ namespace DiagramDrawer.Forms {
 			newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
 			newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			newToolStripMenuItem.Name = "newToolStripMenuItem";
-			newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+			newToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
 			newToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			newToolStripMenuItem.Text = "Nuovo...";
 			newToolStripMenuItem.Click += new System.EventHandler(NewToolStripMenuItemClick);
@@ -203,7 +205,7 @@ namespace DiagramDrawer.Forms {
 			openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
 			openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			openToolStripMenuItem.Name = "openToolStripMenuItem";
-			openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+			openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
 			openToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			openToolStripMenuItem.Text = "Apri...";
 			openToolStripMenuItem.Click += new System.EventHandler(OpenToolStripMenuItemClick);
@@ -218,7 +220,7 @@ namespace DiagramDrawer.Forms {
 			saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
 			saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			saveToolStripMenuItem.ShortcutKeys = ((Keys.Control | Keys.S));
 			saveToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			saveToolStripMenuItem.Text = "Salva";
 			saveToolStripMenuItem.Click += new System.EventHandler(SaveToolStripMenuItemClick);
@@ -232,7 +234,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// exportToolStripMenuItem
 			// 
-			exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			exportToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
             exportImageToolStripMenuItem,
             comeImmagineVettorialeToolStripMenuItem});
 			exportToolStripMenuItem.Name = "exportToolStripMenuItem";
@@ -263,7 +265,7 @@ namespace DiagramDrawer.Forms {
 			printToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripMenuItem.Image")));
 			printToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			printToolStripMenuItem.Name = "printToolStripMenuItem";
-			printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			printToolStripMenuItem.ShortcutKeys = ((Keys.Control | Keys.P));
 			printToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			printToolStripMenuItem.Text = "&Stampa...";
 			printToolStripMenuItem.Click += new System.EventHandler(PrintToolStripMenuItemClick);
@@ -291,7 +293,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// editToolStripMenuItem
 			// 
-			editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
             undoToolStripMenuItem,
             redoToolStripMenuItem,
             toolStripSeparator3,
@@ -310,7 +312,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			undoToolStripMenuItem.Enabled = false;
 			undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-			undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+			undoToolStripMenuItem.ShortcutKeys = ((Keys.Control | Keys.Z));
 			undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			undoToolStripMenuItem.Text = "&Undo";
 			// 
@@ -318,7 +320,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			redoToolStripMenuItem.Enabled = false;
 			redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-			redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+			redoToolStripMenuItem.ShortcutKeys = ((Keys.Control | Keys.Y));
 			redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			redoToolStripMenuItem.Text = "&Redo";
 			// 
@@ -333,7 +335,7 @@ namespace DiagramDrawer.Forms {
 			cutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripMenuItem.Image")));
 			cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-			cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+			cutToolStripMenuItem.ShortcutKeys = ((Keys.Control | Keys.X));
 			cutToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			cutToolStripMenuItem.Text = "Cu&t";
 			// 
@@ -343,7 +345,7 @@ namespace DiagramDrawer.Forms {
 			copyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripMenuItem.Image")));
 			copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-			copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			copyToolStripMenuItem.ShortcutKeys = ((Keys.Control | Keys.C));
 			copyToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			copyToolStripMenuItem.Text = "&Copy";
 			// 
@@ -353,7 +355,7 @@ namespace DiagramDrawer.Forms {
 			pasteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripMenuItem.Image")));
 			pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-			pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+			pasteToolStripMenuItem.ShortcutKeys = ((Keys.Control | Keys.V));
 			pasteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			pasteToolStripMenuItem.Text = "&Paste";
 			// 
@@ -383,7 +385,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// toolsToolStripMenuItem
 			// 
-			toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
             customizeToolStripMenuItem,
             optionsToolStripMenuItem,
             showTSMI,
@@ -423,7 +425,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// helpToolStripMenuItem
 			// 
-			helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
             contentsToolStripMenuItem,
             indexToolStripMenuItem,
             searchToolStripMenuItem,
@@ -468,8 +470,8 @@ namespace DiagramDrawer.Forms {
 			// 
 			// toolStrip1
 			// 
-			toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-			toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			toolStrip1.Dock = DockStyle.None;
+			toolStrip1.Items.AddRange(new ToolStripItem[] {
             newToolStripButton,
             saveToolStripButton,
             openToolStripButton,
@@ -498,7 +500,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// newToolStripButton
 			// 
-			newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			newToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
 			newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			newToolStripButton.Name = "newToolStripButton";
@@ -508,7 +510,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// saveToolStripButton
 			// 
-			saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			saveToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
 			saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			saveToolStripButton.Name = "saveToolStripButton";
@@ -518,7 +520,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// openToolStripButton
 			// 
-			openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			openToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
 			openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			openToolStripButton.Name = "openToolStripButton";
@@ -528,7 +530,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// printToolStripButton
 			// 
-			printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			printToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
 			printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			printToolStripButton.Name = "printToolStripButton";
@@ -543,7 +545,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// cutToolStripButton
 			// 
-			cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			cutToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			cutToolStripButton.Enabled = false;
 			cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
 			cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -554,7 +556,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// copyToolStripButton
 			// 
-			copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			copyToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			copyToolStripButton.Enabled = false;
 			copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
 			copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -565,7 +567,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// pasteToolStripButton
 			// 
-			pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			pasteToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			pasteToolStripButton.Enabled = false;
 			pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
 			pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -582,7 +584,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// libraryTS
 			// 
-			libraryTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			libraryTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			libraryTS.Image = global::DiagramDrawer.Properties.Resources.Book;
 			libraryTS.ImageTransparentColor = System.Drawing.Color.Magenta;
 			libraryTS.Name = "libraryTS";
@@ -592,7 +594,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// linkModeTS
 			// 
-			linkModeTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			linkModeTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			linkModeTS.DoubleClickEnabled = true;
 			linkModeTS.Image = global::DiagramDrawer.Properties.Resources.NoArrow;
 			linkModeTS.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -609,9 +611,9 @@ namespace DiagramDrawer.Forms {
 			// 
 			// fontTS
 			// 
-			fontTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			fontTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			fontTS.DoubleClickEnabled = true;
-			fontTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			fontTS.DropDownItems.AddRange(new ToolStripItem[] {
             altriToolStripMenuItem});
 			fontTS.Image = ((System.Drawing.Image)(resources.GetObject("fontTS.Image")));
 			fontTS.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -630,9 +632,9 @@ namespace DiagramDrawer.Forms {
 			// 
 			// fColorTS
 			// 
-			fColorTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			fColorTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			fColorTS.DoubleClickEnabled = true;
-			fColorTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			fColorTS.DropDownItems.AddRange(new ToolStripItem[] {
             altriToolStripMenuItem1});
 			fColorTS.Image = global::DiagramDrawer.Properties.Resources.FontColor;
 			fColorTS.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -651,9 +653,9 @@ namespace DiagramDrawer.Forms {
 			// 
 			// bColorTS
 			// 
-			bColorTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			bColorTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			bColorTS.DoubleClickEnabled = true;
-			bColorTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			bColorTS.DropDownItems.AddRange(new ToolStripItem[] {
             altriToolStripMenuItem2});
 			bColorTS.Image = global::DiagramDrawer.Properties.Resources.Fill;
 			bColorTS.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -673,8 +675,8 @@ namespace DiagramDrawer.Forms {
 			// borderColorTS
 			// 
 			borderColorTS.AutoToolTip = false;
-			borderColorTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			borderColorTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			borderColorTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+			borderColorTS.DropDownItems.AddRange(new ToolStripItem[] {
             altriToolStripMenuItem3});
 			borderColorTS.Image = global::DiagramDrawer.Properties.Resources.Border;
 			borderColorTS.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -698,7 +700,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// resizeTS
 			// 
-			resizeTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			resizeTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			resizeTS.Image = ((System.Drawing.Image)(resources.GetObject("resizeTS.Image")));
 			resizeTS.ImageTransparentColor = System.Drawing.Color.Magenta;
 			resizeTS.Name = "resizeTS";
@@ -708,7 +710,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// gridTS
 			// 
-			gridTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			gridTS.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			gridTS.DoubleClickEnabled = true;
 			gridTS.Image = global::DiagramDrawer.Properties.Resources.Grid;
 			gridTS.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -726,7 +728,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// helpToolStripButton
 			// 
-			helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			helpToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			helpToolStripButton.Enabled = false;
 			helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
 			helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -737,7 +739,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			// imageList1
 			// 
-			imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+			imageList1.ImageStream = ((ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
 			imageList1.TransparentColor = System.Drawing.Color.Magenta;
 			imageList1.Images.SetKeyName(0, "ellipse.bmp");
 			imageList1.Images.SetKeyName(1, "rectangle.bmp");
@@ -814,7 +816,7 @@ namespace DiagramDrawer.Forms {
 			MainMenuStrip = menuStrip1;
 			Name = "MainForm";
 			Text = "Diagram Drawer";
-			FormClosing += new System.Windows.Forms.FormClosingEventHandler(MainForm_FormClosing);
+			FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
 			toolStripContainer1.ContentPanel.ResumeLayout(false);
 			toolStripContainer1.ContentPanel.PerformLayout();
 			toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
@@ -832,84 +834,84 @@ namespace DiagramDrawer.Forms {
 
 		#endregion
 
-		System.Windows.Forms.ToolStripContainer toolStripContainer1;
-		System.Windows.Forms.MenuStrip menuStrip1;
-		System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-		System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem printPreviewToolStripMenuItem;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-		System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem customizeToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem contentsToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem indexToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-		System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-		System.Windows.Forms.ToolStrip toolStrip1;
-		System.Windows.Forms.ToolStripButton newToolStripButton;
-		System.Windows.Forms.ToolStripButton openToolStripButton;
-		System.Windows.Forms.ToolStripButton saveToolStripButton;
-		System.Windows.Forms.ToolStripButton printToolStripButton;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-		System.Windows.Forms.ToolStripButton cutToolStripButton;
-		System.Windows.Forms.ToolStripButton copyToolStripButton;
-		System.Windows.Forms.ToolStripButton pasteToolStripButton;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-		System.Windows.Forms.ToolStripButton helpToolStripButton;
-		System.Windows.Forms.ImageList imageList1;
-		System.Windows.Forms.ToolStripSplitButton libraryTS;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-		System.Windows.Forms.FontDialog fontDialog1;
-		System.Windows.Forms.ColorDialog bColorDialog;
-		System.Windows.Forms.PrintDialog printDialog1;
-		System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
-		System.Windows.Forms.ColorDialog fColorDialog;
+		ToolStripContainer toolStripContainer1;
+		MenuStrip menuStrip1;
+		ToolStripMenuItem fileToolStripMenuItem;
+		ToolStripMenuItem newToolStripMenuItem;
+		ToolStripMenuItem openToolStripMenuItem;
+		ToolStripSeparator toolStripSeparator;
+		ToolStripMenuItem saveToolStripMenuItem;
+		ToolStripMenuItem saveAsToolStripMenuItem;
+		ToolStripSeparator toolStripSeparator1;
+		ToolStripMenuItem printToolStripMenuItem;
+		ToolStripMenuItem printPreviewToolStripMenuItem;
+		ToolStripSeparator toolStripSeparator2;
+		ToolStripMenuItem exitToolStripMenuItem;
+		ToolStripMenuItem editToolStripMenuItem;
+		ToolStripMenuItem undoToolStripMenuItem;
+		ToolStripMenuItem redoToolStripMenuItem;
+		ToolStripSeparator toolStripSeparator3;
+		ToolStripMenuItem cutToolStripMenuItem;
+		ToolStripMenuItem copyToolStripMenuItem;
+		ToolStripMenuItem pasteToolStripMenuItem;
+		ToolStripSeparator toolStripSeparator4;
+		ToolStripMenuItem selectAllToolStripMenuItem;
+		ToolStripMenuItem toolsToolStripMenuItem;
+		ToolStripMenuItem customizeToolStripMenuItem;
+		ToolStripMenuItem optionsToolStripMenuItem;
+		ToolStripMenuItem helpToolStripMenuItem;
+		ToolStripMenuItem contentsToolStripMenuItem;
+		ToolStripMenuItem indexToolStripMenuItem;
+		ToolStripMenuItem searchToolStripMenuItem;
+		ToolStripSeparator toolStripSeparator5;
+		ToolStripMenuItem aboutToolStripMenuItem;
+		ToolStrip toolStrip1;
+		ToolStripButton newToolStripButton;
+		ToolStripButton openToolStripButton;
+		ToolStripButton saveToolStripButton;
+		ToolStripButton printToolStripButton;
+		ToolStripSeparator toolStripSeparator6;
+		ToolStripButton cutToolStripButton;
+		ToolStripButton copyToolStripButton;
+		ToolStripButton pasteToolStripButton;
+		ToolStripSeparator toolStripSeparator7;
+		ToolStripButton helpToolStripButton;
+		ImageList imageList1;
+		ToolStripSplitButton libraryTS;
+		ToolStripSeparator toolStripSeparator9;
+		FontDialog fontDialog1;
+		ColorDialog bColorDialog;
+		PrintDialog printDialog1;
+		PrintPreviewDialog printPreviewDialog1;
+		ColorDialog fColorDialog;
 		System.Drawing.Printing.PrintDocument printDocument1;
-		System.Windows.Forms.OpenFileDialog openFileDialog1;
-		System.Windows.Forms.SaveFileDialog saveFileDialog1;
+		OpenFileDialog openFileDialog1;
+		SaveFileDialog saveFileDialog1;
 		CheckableToolStripSplitButton linkModeTS;
-		System.Windows.Forms.Panel panel1;
+		Panel panel1;
 		ShapeContainer shapeContainer1;
-		System.Windows.Forms.ToolStripMenuItem objectsTSMI;
-		System.Windows.Forms.ToolStripMenuItem lineKindTSMI;
+		ToolStripMenuItem objectsTSMI;
+		ToolStripMenuItem lineKindTSMI;
 		CheckableToolStripSplitButton fontTS;
-		System.Windows.Forms.ToolStripMenuItem altriToolStripMenuItem;
+		ToolStripMenuItem altriToolStripMenuItem;
 		CheckableToolStripSplitButton fColorTS;
-		System.Windows.Forms.ToolStripMenuItem altriToolStripMenuItem1;
+		ToolStripMenuItem altriToolStripMenuItem1;
 		CheckableToolStripSplitButton bColorTS;
-		System.Windows.Forms.ToolStripMenuItem altriToolStripMenuItem2;
-		System.Windows.Forms.ToolStripMenuItem showTSMI;
-		System.Windows.Forms.ToolStripMenuItem hideTSMI;
-		System.Windows.Forms.ToolStripButton resizeTS;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-		System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-		System.Windows.Forms.ToolStripMenuItem exportImageToolStripMenuItem;
-		System.Windows.Forms.SaveFileDialog saveFileDialog2;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-		System.Windows.Forms.ToolStripButton gridTS;
+		ToolStripMenuItem altriToolStripMenuItem2;
+		ToolStripMenuItem showTSMI;
+		ToolStripMenuItem hideTSMI;
+		ToolStripButton resizeTS;
+		ToolStripSeparator toolStripSeparator10;
+		ToolStripMenuItem exportToolStripMenuItem;
+		ToolStripMenuItem exportImageToolStripMenuItem;
+		SaveFileDialog saveFileDialog2;
+		ToolStripSeparator toolStripSeparator8;
+		ToolStripButton gridTS;
 		CheckableToolStripSplitButton borderColorTS;
-		System.Windows.Forms.ColorDialog borderColorDialog;
-		System.Windows.Forms.ToolStripMenuItem altriToolStripMenuItem3;
-		System.Windows.Forms.ToolStripMenuItem comeImmagineVettorialeToolStripMenuItem;
-		System.Windows.Forms.SaveFileDialog saveFileDialog3;
+		ColorDialog borderColorDialog;
+		ToolStripMenuItem altriToolStripMenuItem3;
+		ToolStripMenuItem comeImmagineVettorialeToolStripMenuItem;
+		SaveFileDialog saveFileDialog3;
 	}
 }
 

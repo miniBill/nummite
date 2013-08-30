@@ -25,7 +25,7 @@ using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes
 {
-	public class Link : Ellipse
+	class Link : Ellipse
 	{
 		public Link()
 		{
@@ -40,7 +40,7 @@ namespace DiagramDrawer.Shapes
 		}
 		public override void DrawTo(Graphics graphics)
 		{
-			base.DrawBackground(graphics);
+			DrawBackground (graphics);
 		}
 		public override string ToString()
 		{

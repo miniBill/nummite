@@ -16,11 +16,16 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace DiagramDrawer.Shapes
+using System.Collections.ObjectModel;
+using DiagramDrawer.Shapes;
+
+namespace DiagramDrawer.Forms
 {
-	interface IDimension
+	class ShapeCollection : KeyedCollection<string, IShape>
 	{
-		int Width{ get; }
-		int Height{ get; }
+		protected override string GetKeyForItem(IShape item)
+		{
+			return item.Name;
+		}
 	}
 }

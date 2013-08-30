@@ -16,11 +16,14 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Drawing;
+
 namespace DiagramDrawer.Shapes
 {
-	interface IDimension
+	interface IMenu
 	{
-		int Width{ get; }
-		int Height{ get; }
+		Image Image {
+			get;
+		}
 	}
 }

@@ -16,11 +16,33 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace DiagramDrawer.Shapes
-{
-	interface IDimension
+using DiagramDrawer.Properties;
+using System.Drawing;
+
+namespace DiagramDrawer.Shapes {
+	class TwoArrowsAngle : OneArrowAngle
 	{
-		int Width{ get; }
-		int Height{ get; }
+		public override void DrawTo (Graphics graphics)
+		{
+			if (!(SubLines [0] is OneArrow)) {
+				var l = SubLines [0];
+				SubLines [0] = new OneArrow {
+					Origin = l.Pointed,
+					Pointed = l.Origin
+				};
+			}
+			base.DrawTo (graphics);
+		}
+
+		public override Image Image {
+			get {
+				return Resources.TwoArrowsAngle;
+			}
+		}
+
+		public override string ToString ()
+		{
+			return "Ad angolo con doppia freccia";
+		}
 	}
 }

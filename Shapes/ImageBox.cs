@@ -24,7 +24,7 @@ using DiagramDrawer.Properties;
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Shapes {
-	public class ImageBox : Box {
+	class ImageBox : Box {
 		string filename = String.Empty;
 		public string FileName {
 			set {

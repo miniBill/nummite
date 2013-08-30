@@ -190,7 +190,6 @@
     </Compile>
     <Compile Include="Shapes\InvisiblePoint.cs" />
     <Compile Include="Shapes\IShape.cs" />
-    <Compile Include="Shapes\Line.cs" />
     <Compile Include="Shapes\Link.cs" />
     <Compile Include="Shapes\Parallelogram.cs" />
     <Compile Include="Shapes\Box.cs" />
@@ -199,6 +198,22 @@
     <Compile Include="Shapes\Text.cs" />
     <Compile Include="Shapes\VisiblePoint.cs" />
     <Compile Include="Shapes\IDimension.cs" />
+    <Compile Include="Shapes\IStyleable.cs" />
+    <Compile Include="Shapes\IMenu.cs" />
+    <Compile Include="Shapes\IPersistableShape.cs" />
+    <Compile Include="Forms\ShapeEventArgs.cs" />
+    <Compile Include="Forms\ShapeCollection.cs" />
+    <Compile Include="Shapes\TextLabel.cs" />
+    <Compile Include="Shapes\IAutoSizeable.cs" />
+    <Compile Include="Shapes\ISizeable.cs" />
+    <Compile Include="Shapes\Lines\Line.cs" />
+    <Compile Include="Shapes\Lines\NoArrowFragmented.cs" />
+    <Compile Include="Shapes\Lines\OneArrow.cs" />
+    <Compile Include="Shapes\Lines\OneArrowAngle.cs" />
+    <Compile Include="Shapes\Lines\OneArrowFragmented.cs" />
+    <Compile Include="Shapes\Lines\TwoArrows.cs" />
+    <Compile Include="Shapes\Lines\TwoArrowsAngle.cs" />
+    <Compile Include="Shapes\Lines\TwoArrowsFragmented.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Book.png" />
@@ -269,4 +284,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Shapes\Lines\" />
+  </ItemGroup>
 </Project>

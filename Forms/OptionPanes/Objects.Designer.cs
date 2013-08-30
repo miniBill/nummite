@@ -1,4 +1,6 @@
-﻿namespace DiagramDrawer.Forms.OptionPanes {
+﻿using System.Windows.Forms;
+
+namespace DiagramDrawer.Forms.OptionPanes {
 	partial class Objects {
 		/// <summary> 
 		/// Required designer variable.
@@ -23,38 +25,38 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		void InitializeComponent() {
-			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			label1 = new System.Windows.Forms.Label();
-			numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-			label2 = new System.Windows.Forms.Label();
-			numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+			tableLayoutPanel1 = new TableLayoutPanel();
+			label1 = new Label();
+			numericUpDown1 = new NumericUpDown();
+			label2 = new Label();
+			numericUpDown2 = new NumericUpDown();
 			tableLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(numericUpDown1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(numericUpDown2)).BeginInit();
+			(numericUpDown1).BeginInit();
+			(numericUpDown2).BeginInit();
 			SuspendLayout();
 			// 
 			// tableLayoutPanel1
 			// 
 			tableLayoutPanel1.ColumnCount = 2;
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
 			tableLayoutPanel1.Controls.Add(label1, 0, 0);
 			tableLayoutPanel1.Controls.Add(label2, 0, 1);
 			tableLayoutPanel1.Controls.Add(numericUpDown1, 1, 0);
 			tableLayoutPanel1.Controls.Add(numericUpDown2, 1, 1);
-			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel1.Dock = DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
 			tableLayoutPanel1.RowCount = 3;
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 			tableLayoutPanel1.Size = new System.Drawing.Size(277, 62);
 			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label1
 			// 
-			label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label1.Anchor = AnchorStyles.Left;
 			label1.AutoSize = true;
 			label1.Location = new System.Drawing.Point(3, 6);
 			label1.Name = "label1";
@@ -64,7 +66,7 @@
 			// 
 			// numericUpDown1
 			// 
-			numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			numericUpDown1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			numericUpDown1.Increment = new decimal(new int[] {
             10,
             0,
@@ -92,7 +94,7 @@
 			// 
 			// label2
 			// 
-			label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label2.Anchor = AnchorStyles.Left;
 			label2.AutoSize = true;
 			label2.Location = new System.Drawing.Point(3, 32);
 			label2.Name = "label2";
@@ -102,7 +104,7 @@
 			// 
 			// numericUpDown2
 			// 
-			numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			numericUpDown2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			numericUpDown2.Increment = new decimal(new int[] {
             10,
             0,
@@ -131,24 +133,24 @@
 			// Objects
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Font;
 			Controls.Add(tableLayoutPanel1);
 			Name = "Objects";
 			Size = new System.Drawing.Size(277, 62);
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(numericUpDown1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(numericUpDown2)).EndInit();
+			numericUpDown1.EndInit();
+			numericUpDown2.EndInit();
 			ResumeLayout (false);
 
 		}
 
 		#endregion
 
-		System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		System.Windows.Forms.Label label1;
-		System.Windows.Forms.Label label2;
-		System.Windows.Forms.NumericUpDown numericUpDown1;
-		System.Windows.Forms.NumericUpDown numericUpDown2;
+		TableLayoutPanel tableLayoutPanel1;
+		Label label1;
+		Label label2;
+		NumericUpDown numericUpDown1;
+		NumericUpDown numericUpDown2;
 	}
 }

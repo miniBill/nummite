@@ -16,11 +16,38 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace DiagramDrawer.Shapes
-{
-	interface IDimension
+using DiagramDrawer.Properties;
+using System;
+using System.Drawing;
+
+namespace DiagramDrawer.Shapes {
+	class OneArrowFragmented : NoArrowFragmented
 	{
-		int Width{ get; }
-		int Height{ get; }
+		public override void DrawTo (Graphics graphics)
+		{
+			SetShapeContainer ();
+			if (!ShouldDraw ())
+				return;
+			var c = SubLines.Count - 1;
+			if (!(SubLines [c] is OneArrow)) {
+				SubLines [c] = new OneArrow {
+					Origin = SubPoints [1]
+				};
+				if (Pointed != null)
+					SubLines [c].Pointed = Pointed;
+			}
+			base.DrawTo (graphics);
+		}
+
+		public override string ToString ()
+		{
+			return "Spezzata con freccia";
+		}
+
+		public override Image Image {
+			get {
+				return Resources.OneArrowFragmented;
+			}
+		}
 	}
 }

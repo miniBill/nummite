@@ -23,7 +23,7 @@ using System.Xml;
 using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes {
-	public class VisiblePoint : Box {
+	class VisiblePoint : Box {
 		public VisiblePoint() {
 			Width = Height = 20;
 			Text = String.Empty;

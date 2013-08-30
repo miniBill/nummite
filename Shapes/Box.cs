@@ -28,7 +28,7 @@ using DiagramDrawer.Export;
 
 namespace DiagramDrawer.Shapes
 {
-	public class Box : IShape, IAutoSizeable
+	class Box : IShape, IAutoSizeable, IMenu
 	{
 		public Font Font
 		{

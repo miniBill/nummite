@@ -19,7 +19,7 @@
 using System.Collections.Generic;
 
 namespace DiagramDrawer.Forms.OptionPanes {
-	public interface IOptionPane {
+	interface IOptionPane {
 		string Name {
 			get;
 			set;

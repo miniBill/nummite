@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Forms.OptionPanes {
-	public partial class Objects : UserControl, IOptionPane {
+	partial class Objects : UserControl, IOptionPane {
 		public Objects() {
 			Children = new List<IOptionPane>();
 			InitializeComponent();

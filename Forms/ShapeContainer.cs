@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -28,7 +27,7 @@ using System.ComponentModel;
 
 namespace DiagramDrawer.Forms
 {
-	public partial class ShapeContainer : UserControl, ISizeable
+	partial class ShapeContainer : UserControl, ISizeable
 	{
 		public ShapeCollection ShapeList
 		{
@@ -456,26 +455,6 @@ namespace DiagramDrawer.Forms
 			ShapeList.Remove(shape);
 			ShapeList.Add(shape);
 			ForceRefresh();
-		}
-	}
-	public class ShapeCollection : KeyedCollection<string, IShape>
-	{
-		protected override string GetKeyForItem(IShape item)
-		{
-			return item.Name;
-		}
-	}
-	public class ShapeEventArgs : EventArgs
-	{
-		public IShape Shape
-		{
-			get;
-			private set;
-		}
-
-		public ShapeEventArgs(IShape shape)
-		{
-			Shape = shape;
 		}
 	}
 }

@@ -21,7 +21,7 @@ using System;
 using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes {
-	public class Rhombus : Box {
+	class Rhombus : Box {
 		public override bool Contains(PointF point) {
 			var c = Center;
 			var ox = point.X - c.X;

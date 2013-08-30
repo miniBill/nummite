@@ -16,11 +16,15 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace DiagramDrawer.Shapes
-{
-	interface IDimension
+using System.Drawing;
+
+namespace DiagramDrawer.Shapes {
+	class TextLabel : Box
 	{
-		int Width{ get; }
-		int Height{ get; }
+		protected override void DrawBackground (Graphics graphics)
+		{
+			var bounds = new Rectangle (Location.X, Location.Y, Width, Height);
+			graphics.FillRectangle (BackBrush, bounds);
+		}
 	}
 }

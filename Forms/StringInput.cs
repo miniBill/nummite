@@ -20,13 +20,15 @@ using System;
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Forms {
-	public partial class StringInput : Form {
+	public partial class StringInput : Form
+	{
 		public static string LastResult {
 			get;
 			private set;
 		}
 
-		public static DialogResult Show(string text, string caption, string defaultText) {
+		public static DialogResult Show (string text, string caption, string defaultText)
+		{
 			var si = new StringInput {
 				textBox1 = {
 					Text = LastResult = defaultText
@@ -36,33 +38,43 @@ namespace DiagramDrawer.Forms {
 					Text = text
 				}
 			};
-			si.ShowDialog();
+			si.ShowDialog ();
 			return si.DialogResult;
 		}
-		StringInput() {
-			InitializeComponent();
+
+		StringInput ()
+		{
+			InitializeComponent ();
 		}
+
 		bool isok;
-		void Button2Click(object sender, EventArgs e) {
-			Close();
+
+		void Button2Click (object sender, EventArgs e)
+		{
+			Close ();
 		}
-		void Button1Click(object sender, EventArgs e) {
+
+		void Button1Click (object sender, EventArgs e)
+		{
 			isok = true;
-			Close();
+			Close ();
 		}
-		void StringInput_FormClosed(object sender, FormClosedEventArgs e) {
+
+		void StringInput_FormClosed (object sender, FormClosedEventArgs e)
+		{
 			LastResult = textBox1.Text;
 			DialogResult = isok ? DialogResult.OK : DialogResult.Cancel;
 		}
 
-		void TextBox1KeyDown(object sender, KeyEventArgs e) {
-			if(e.KeyCode != Keys.Enter && e.KeyCode != Keys.Escape)
+		void TextBox1KeyDown (object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode != Keys.Enter && e.KeyCode != Keys.Escape)
 				return;
 			e.Handled = true;
-			if(e.KeyCode == Keys.Enter)
-				Button1Click(sender, e);
+			if (e.KeyCode == Keys.Enter)
+				Button1Click (sender, e);
 			else
-				Button2Click(sender, e);
+				Button2Click (sender, e);
 		}
 	}
 }

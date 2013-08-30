@@ -20,7 +20,7 @@ using System;
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Forms{
-	public partial class ErrorForm : Form {
+	partial class ErrorForm : Form {
 		public ErrorForm(string error) {
 			InitializeComponent();
 			textBox1.Text = error;

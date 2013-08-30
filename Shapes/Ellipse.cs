@@ -23,7 +23,7 @@ using DiagramDrawer.Properties;
 using DiagramDrawer.Export;
 
 namespace DiagramDrawer.Shapes {
-	public class Ellipse : Box {
+	class Ellipse : Box {
 		public override bool Contains(PointF point) {
 			var c = Center;
 			var ox = point.X - c.X;

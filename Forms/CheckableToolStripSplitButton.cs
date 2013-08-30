@@ -23,7 +23,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Forms {
-	public class CheckableToolStripSplitButton : ToolStripSplitButton {
+	class CheckableToolStripSplitButton : ToolStripSplitButton {
 		static readonly Brush backBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, 22), Color.FromArgb(255, 220, 150), Color.FromArgb(255, 170, 80));
 		static readonly Brush reversedBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, 22), Color.FromArgb(255, 170, 80), Color.FromArgb(255, 220, 150));
 

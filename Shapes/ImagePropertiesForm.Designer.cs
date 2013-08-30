@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace DiagramDrawer.Shapes {
 	partial class ImagePropertiesForm {
 		/// <summary>
@@ -23,33 +25,33 @@ namespace DiagramDrawer.Shapes {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		void InitializeComponent() {
-			pictureBox1 = new System.Windows.Forms.PictureBox();
-			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			label1 = new System.Windows.Forms.Label();
-			label2 = new System.Windows.Forms.Label();
-			trackBar1 = new System.Windows.Forms.TrackBar();
-			trackBar2 = new System.Windows.Forms.TrackBar();
-			label3 = new System.Windows.Forms.Label();
-			label4 = new System.Windows.Forms.Label();
-			label5 = new System.Windows.Forms.Label();
-			label6 = new System.Windows.Forms.Label();
-			label7 = new System.Windows.Forms.Label();
-			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			button2 = new System.Windows.Forms.Button();
-			button1 = new System.Windows.Forms.Button();
-			button3 = new System.Windows.Forms.Button();
-			openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			pictureBox1 = new PictureBox();
+			tableLayoutPanel1 = new TableLayoutPanel();
+			label1 = new Label();
+			label2 = new Label();
+			trackBar1 = new TrackBar();
+			trackBar2 = new TrackBar();
+			label3 = new Label();
+			label4 = new Label();
+			label5 = new Label();
+			label6 = new Label();
+			label7 = new Label();
+			flowLayoutPanel1 = new FlowLayoutPanel();
+			button2 = new Button();
+			button1 = new Button();
+			button3 = new Button();
+			openFileDialog1 = new OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(pictureBox1)).BeginInit();
 			tableLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(trackBar1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(trackBar2)).BeginInit();
+			(trackBar1).BeginInit();
+			(trackBar2).BeginInit();
 			flowLayoutPanel1.SuspendLayout();
 			SuspendLayout();
 			// 
 			// pictureBox1
 			// 
-			pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-			pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			pictureBox1.Anchor = AnchorStyles.None;
+			pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
 			tableLayoutPanel1.SetColumnSpan(pictureBox1, 3);
 			pictureBox1.Location = new System.Drawing.Point(252, 256);
 			pictureBox1.Name = "pictureBox1";
@@ -60,12 +62,12 @@ namespace DiagramDrawer.Shapes {
 			// tableLayoutPanel1
 			// 
 			tableLayoutPanel1.ColumnCount = 6;
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 22F));
 			tableLayoutPanel1.Controls.Add(pictureBox1, 2, 6);
 			tableLayoutPanel1.Controls.Add(label1, 1, 2);
 			tableLayoutPanel1.Controls.Add(label2, 1, 3);
@@ -78,25 +80,25 @@ namespace DiagramDrawer.Shapes {
 			tableLayoutPanel1.Controls.Add(label7, 1, 1);
 			tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 2, 7);
 			tableLayoutPanel1.Controls.Add(button3, 4, 1);
-			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel1.Dock = DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
 			tableLayoutPanel1.RowCount = 9;
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
 			tableLayoutPanel1.Size = new System.Drawing.Size(527, 432);
 			tableLayoutPanel1.TabIndex = 1;
 			// 
 			// label1
 			// 
-			label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label1.Anchor = AnchorStyles.Left;
 			label1.AutoSize = true;
 			label1.Location = new System.Drawing.Point(23, 63);
 			label1.Name = "label1";
@@ -106,7 +108,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// label2
 			// 
-			label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label2.Anchor = AnchorStyles.Left;
 			label2.AutoSize = true;
 			label2.Location = new System.Drawing.Point(23, 103);
 			label2.Name = "label2";
@@ -116,7 +118,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// trackBar1
 			// 
-			trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			trackBar1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			tableLayoutPanel1.SetColumnSpan(trackBar1, 3);
 			trackBar1.LargeChange = 1;
 			trackBar1.Location = new System.Drawing.Point(103, 53);
@@ -130,7 +132,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// trackBar2
 			// 
-			trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			trackBar2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			tableLayoutPanel1.SetColumnSpan(trackBar2, 3);
 			trackBar2.LargeChange = 1;
 			trackBar2.Location = new System.Drawing.Point(103, 93);
@@ -144,7 +146,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// label3
 			// 
-			label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label3.Anchor = AnchorStyles.Left;
 			label3.AutoSize = true;
 			label3.Location = new System.Drawing.Point(23, 274);
 			label3.Name = "label3";
@@ -154,7 +156,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// label4
 			// 
-			label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label4.Anchor = AnchorStyles.Left;
 			label4.AutoSize = true;
 			label4.Location = new System.Drawing.Point(103, 138);
 			label4.Name = "label4";
@@ -164,7 +166,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// label5
 			// 
-			label5.Anchor = System.Windows.Forms.AnchorStyles.None;
+			label5.Anchor = AnchorStyles.None;
 			label5.AutoSize = true;
 			label5.Location = new System.Drawing.Point(286, 138);
 			label5.Name = "label5";
@@ -174,7 +176,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// label6
 			// 
-			label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label6.Anchor = AnchorStyles.Right;
 			label6.AutoSize = true;
 			label6.Location = new System.Drawing.Point(469, 138);
 			label6.Name = "label6";
@@ -184,7 +186,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// label7
 			// 
-			label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label7.Anchor = AnchorStyles.Left;
 			label7.AutoSize = true;
 			label7.Location = new System.Drawing.Point(23, 28);
 			label7.Name = "label7";
@@ -197,10 +199,10 @@ namespace DiagramDrawer.Shapes {
 			tableLayoutPanel1.SetColumnSpan(flowLayoutPanel1, 3);
 			flowLayoutPanel1.Controls.Add(button2);
 			flowLayoutPanel1.Controls.Add(button1);
-			flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+			flowLayoutPanel1.Dock = DockStyle.Fill;
+			flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
 			flowLayoutPanel1.Location = new System.Drawing.Point(100, 382);
-			flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+			flowLayoutPanel1.Margin = new Padding(0);
 			flowLayoutPanel1.Name = "flowLayoutPanel1";
 			flowLayoutPanel1.Size = new System.Drawing.Size(405, 30);
 			flowLayoutPanel1.TabIndex = 10;
@@ -227,7 +229,7 @@ namespace DiagramDrawer.Shapes {
 			// 
 			// button3
 			// 
-			button3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			button3.Anchor = AnchorStyles.Right;
 			button3.Location = new System.Drawing.Point(427, 23);
 			button3.Name = "button3";
 			button3.Size = new System.Drawing.Size(75, 23);
@@ -243,7 +245,7 @@ namespace DiagramDrawer.Shapes {
 			// ImagePropertiesForm
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new System.Drawing.Size(527, 432);
 			Controls.Add(tableLayoutPanel1);
 			Name = "ImagePropertiesForm";
@@ -251,8 +253,8 @@ namespace DiagramDrawer.Shapes {
 			((System.ComponentModel.ISupportInitialize)(pictureBox1)).EndInit();
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(trackBar1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(trackBar2)).EndInit();
+			(trackBar1).EndInit();
+			(trackBar2).EndInit();
 			flowLayoutPanel1.ResumeLayout(false);
 			ResumeLayout (false);
 
@@ -260,21 +262,21 @@ namespace DiagramDrawer.Shapes {
 
 		#endregion
 
-		System.Windows.Forms.PictureBox pictureBox1;
-		System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		System.Windows.Forms.Label label1;
-		System.Windows.Forms.Label label2;
-		System.Windows.Forms.TrackBar trackBar1;
-		System.Windows.Forms.TrackBar trackBar2;
-		System.Windows.Forms.Label label3;
-		System.Windows.Forms.Label label4;
-		System.Windows.Forms.Label label5;
-		System.Windows.Forms.Label label6;
-		System.Windows.Forms.Label label7;
-		System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-		System.Windows.Forms.Button button1;
-		System.Windows.Forms.Button button2;
-		System.Windows.Forms.Button button3;
-		System.Windows.Forms.OpenFileDialog openFileDialog1;
+		PictureBox pictureBox1;
+		TableLayoutPanel tableLayoutPanel1;
+		Label label1;
+		Label label2;
+		TrackBar trackBar1;
+		TrackBar trackBar2;
+		Label label3;
+		Label label4;
+		Label label5;
+		Label label6;
+		Label label7;
+		FlowLayoutPanel flowLayoutPanel1;
+		Button button1;
+		Button button2;
+		Button button3;
+		OpenFileDialog openFileDialog1;
 	}
 }

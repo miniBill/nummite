@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using DiagramDrawer.Forms.OptionPanes;
 
 namespace DiagramDrawer.Forms {
-	public partial class OptionsForm : Form {
+	partial class OptionsForm : Form {
 		readonly List<IOptionPane> panes = new List<IOptionPane>();
 		public OptionsForm() {
 			InitializeComponent();

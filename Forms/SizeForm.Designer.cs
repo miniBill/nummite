@@ -39,7 +39,7 @@
 			// textBox1
 			// 
 			textBox1.AcceptsReturn = true;
-			textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			textBox1.Anchor = ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
 			textBox1.Location = new System.Drawing.Point(75, 13);
 			textBox1.Name = "textBox1";
 			textBox1.Size = new System.Drawing.Size(225, 20);
@@ -51,7 +51,7 @@
 			// textBox2
 			// 
 			textBox2.AcceptsReturn = true;
-			textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			textBox2.Anchor = ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
 			textBox2.Location = new System.Drawing.Point(75, 39);
 			textBox2.Name = "textBox2";
 			textBox2.Size = new System.Drawing.Size(225, 20);

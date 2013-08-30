@@ -21,7 +21,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Shapes {
-	public partial class ImagePropertiesForm : Form {
+	partial class ImagePropertiesForm : Form {
 		readonly ImageBox val;
 		int w, h;
 		public ImagePropertiesForm(ImageBox shape) {

@@ -16,11 +16,22 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace DiagramDrawer.Shapes
+using System;
+using DiagramDrawer.Shapes;
+
+namespace DiagramDrawer.Forms
 {
-	interface IDimension
+	class ShapeEventArgs : EventArgs
 	{
-		int Width{ get; }
-		int Height{ get; }
+		public IShape Shape
+		{
+			get;
+			private set;
+		}
+
+		public ShapeEventArgs(IShape shape)
+		{
+			Shape = shape;
+		}
 	}
 }
