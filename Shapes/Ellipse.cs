@@ -18,37 +18,38 @@
 
 using System;
 using System.Drawing;
+using System.Xml;
 using DiagramDrawer.Properties;
 using DiagramDrawer.Export;
 
 namespace DiagramDrawer.Shapes {
 	public class Ellipse : Box {
 		public override bool Contains(PointF point) {
-			Point c = Center;
-			float ox = point.X - c.X;
-			float oy = point.Y - c.Y;
-			float a = Width / 2F;
-			float b = Height / 2F;
+			var c = Center;
+			var ox = point.X - c.X;
+			var oy = point.Y - c.Y;
+			var a = Width / 2F;
+			var b = Height / 2F;
 			return ox * ox / (a * a) + oy * oy / (b * b) <= 1;
 		}
 		public override PointF GetIntersection(PointF other) {
 			PointF c = Center;
-			float ox = other.X - c.X;
-			float oy = other.Y - c.Y;
+			var ox = other.X - c.X;
+			var oy = other.Y - c.Y;
 			if(ox == 0)
 				return new PointF(c.X, c.Y + Height / 2F * Math.Sign(oy));
-			float a = Width / 2F;
-			float b = Height / 2F;
-			float m = oy / ox;
-			float x = 1F / (1F / (a * a) + m * m / (b * b));
+			var a = Width / 2F;
+			var b = Height / 2F;
+			var m = oy / ox;
+			var x = 1F / (1F / (a * a) + m * m / (b * b));
 			x = (float)Math.Sqrt(x);
 			if(ox < 0)
 				x = -x;
-			float y = m * x;
+			var y = m * x;
 			return new PointF(x + c.X, y + c.Y);
 		}
 		protected override void DrawBackground(Graphics graphics) {
-			Rectangle bounds = new Rectangle(Location.X, Location.Y, Width, Height);
+			var bounds = new Rectangle(Location.X, Location.Y, Width, Height);
 			graphics.FillEllipse(BackBrush, bounds);
 			graphics.DrawEllipse(BorderPen, bounds);
 		}
@@ -60,7 +61,7 @@ namespace DiagramDrawer.Shapes {
 				return Resources.Ellipse;
 			}
 		}
-		public override void SvgSave(System.Xml.XmlWriter writer) {
+		public override void SvgSave(XmlWriter writer) {
 			Svg.WriteEllipse(writer, Center, new Size(Width, Height), BackgroundColor, BorderPen);
 			Svg.WriteText(writer, Center, ForegroundColor, Font, Text);
 		}

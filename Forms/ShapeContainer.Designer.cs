@@ -12,8 +12,8 @@ namespace DiagramDrawer.Forms {
 		protected override void Dispose(bool disposing) {
 			if(disposing && (components != null)) {
 				components.Dispose();
-				_current.Dispose();
-				_back.Dispose();
+				current.Dispose();
+				back.Dispose();
 			}
 			base.Dispose(disposing);
 		}

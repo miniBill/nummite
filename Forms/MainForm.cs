@@ -49,13 +49,13 @@ namespace DiagramDrawer.Forms {
 			};
 
 			EventHandler libraryHandler = LibraryItemClick;
-			foreach(Type t in Controller.ShapeTypes) {
+			foreach(var t in Controller.ShapeTypes) {
 				AddShapeType(t, libraryTS, libraryHandler);
 				AddShapeType(t, objectsTSMI, libraryHandler);
 			}
 
 			EventHandler lTypeHandler = LineItemClick;
-			foreach(Type t in Controller.ArrowTypes) {
+			foreach(var t in Controller.ArrowTypes) {
 				AddShapeType(t, linkModeTS, lTypeHandler);
 				AddShapeType(t, lineKindTSMI, lTypeHandler);
 			}
@@ -69,10 +69,10 @@ namespace DiagramDrawer.Forms {
 		private void CheckForUpdates() {
 			try {
 				var client = new WebClient();
-				byte[] buff = client.DownloadData(Options.UpdateUrl);
-				string gnu = Encoding.UTF8.GetString(buff);
+				var buff = client.DownloadData(Options.UpdateUrl);
+				var gnu = Encoding.UTF8.GetString(buff);
 				gnu = gnu.Substring(0, gnu.Length - 1);
-				string old = Encoding.UTF8.GetString(Resources.version);
+				var old = Encoding.UTF8.GetString(Resources.version);
 				old = old.Substring(0, old.Length - 1);
 				if(gnu != old)
 					MessageBox.Show("E' disponibile una nuova versione! [" + gnu + "]" +
@@ -81,12 +81,12 @@ namespace DiagramDrawer.Forms {
 			}
 			catch(Exception e) {
 				MessageBox.Show("Errore nel tentativo di controllare nuove versioni:" +
-					Environment.NewLine + e.Message + "[" + e.GetType().ToString() + "].",
+					Environment.NewLine + e.Message + "[" + e.GetType() + "].",
 					"Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
 		}
 		void ShapeControllerMiddleDoubleClick(object sender, EventArgs e) {
-			int i = 0;
+			var i = 0;
 			foreach(ToolStripItem item in linkModeTS.DropDownItems)
 				if(((ToolStripMenuItem)item).Checked)
 					i = linkModeTS.DropDownItems.IndexOf(item);
@@ -102,7 +102,7 @@ namespace DiagramDrawer.Forms {
 		}
 		private static void AddShapeType(Type t, ToolStripDropDownItem dropDownItem,
 			EventHandler handler) {
-			IShape istance = GetIstance<IShape>(t);
+			var istance = GetIstance<IShape>(t);
 			if(istance == null)
 				return;
 			var i = new ToolStripMenuItem(istance.ToString(),
@@ -117,20 +117,20 @@ namespace DiagramDrawer.Forms {
 			var senderTsi = sender as ToolStripMenuItem;
 			if(senderTsi == null)
 				return;
-			Type t = senderTsi.Tag as Type;
+			var t = senderTsi.Tag as Type;
 			Controller.LineType = t;
 			foreach(ToolStripMenuItem tsi in linkModeTS.DropDownItems)
 				tsi.Checked = tsi.Tag == senderTsi.Tag;
 			foreach(ToolStripMenuItem tsmi in lineKindTSMI.DropDownItems)
 				tsmi.Checked = tsmi.Tag == senderTsi.Tag;
-			Line istance = GetIstance<Line>(t);
+			var istance = GetIstance<Line>(t);
 			linkModeTS.Image = istance.Image;
 			SetLock(linkModeTS, LockChange.Set);
 		}
 		void LibraryItemClick(object sender, EventArgs e) {
 			var s = sender as ToolStripMenuItem;
-			Type t = s.Tag as Type;
-			IShape istance = GetIstance<IShape>(t);
+			var t = s.Tag as Type;
+			var istance = GetIstance<IShape>(t);
 			libraryTS.Image = istance.Image ?? Resources.Book;
 			libraryTS.Tag = s.Tag;
 			libraryTS.Text = istance.ToString();
@@ -226,7 +226,7 @@ namespace DiagramDrawer.Forms {
 		}
 		private void Save(string filename) {
 			Controller.Save(filename);
-			_modified = false;
+			modified = false;
 		}
 		private void NewToolStripMenuItemClick(object sender, EventArgs e) {
 			New();
@@ -362,9 +362,9 @@ namespace DiagramDrawer.Forms {
 		private void FColorSelected() {
 			var current = fColorTS.Image as Bitmap;
 			if(current != null)
-				using(Graphics g = Graphics.FromImage(current))
+				using(var g = Graphics.FromImage(current))
 				using(var tempPen = new Pen(fColorDialog.Color))
-					for(int y = 12; y < 16; y++)
+					for(var y = 12; y < 16; y++)
 						g.DrawLine(tempPen, 0, y, 15, y);
 			fColorTS.Image = current;
 			SetLock(fColorTS, LockChange.Set);
@@ -388,7 +388,7 @@ namespace DiagramDrawer.Forms {
 			ToolStripItem tsi = new ToolStripMenuItem(fColorDialog.Color.Name) {
 				Image = new Bitmap(20, 20)
 			};
-			using(Graphics g = Graphics.FromImage(tsi.Image))
+			using(var g = Graphics.FromImage(tsi.Image))
 			using(Brush b = new SolidBrush(fColorDialog.Color)) {
 				g.FillRectangle(b, 0, 5, 20, 10);
 				g.DrawRectangle(Pens.Black, 0, 5, 19, 10);
@@ -414,9 +414,9 @@ namespace DiagramDrawer.Forms {
 		private void BColorSelected() {
 			var current = bColorTS.Image as Bitmap;
 			if(current != null)
-				using(Graphics g = Graphics.FromImage(current))
-				using(Pen tempPen = new Pen(bColorDialog.Color))
-					for(int y = 12; y < 16; y++)
+				using(var g = Graphics.FromImage(current))
+				using(var tempPen = new Pen(bColorDialog.Color))
+					for(var y = 12; y < 16; y++)
 						g.DrawLine(tempPen, 0, y, 15, y);
 			bColorTS.Image = current;
 			SetLock(bColorTS, LockChange.Set);
@@ -426,9 +426,9 @@ namespace DiagramDrawer.Forms {
 		private void BorderColorSelected() {
 			var current = borderColorTS.Image as Bitmap;
 			if(current != null)
-				using(Graphics g = Graphics.FromImage(current))
-				using(Pen tempPen = new Pen(borderColorDialog.Color))
-					for(int y = 12; y < 16; y++)
+				using(var g = Graphics.FromImage(current))
+				using(var tempPen = new Pen(borderColorDialog.Color))
+					for(var y = 12; y < 16; y++)
 						g.DrawLine(tempPen, 0, y, 15, y);
 			borderColorTS.Image = current;
 			SetLock(borderColorTS, LockChange.Set);
@@ -452,7 +452,7 @@ namespace DiagramDrawer.Forms {
 			ToolStripItem tsi = new ToolStripMenuItem(borderColorDialog.Color.Name) {
 				Image = new Bitmap(20, 20)
 			};
-			using(Graphics g = Graphics.FromImage(tsi.Image))
+			using(var g = Graphics.FromImage(tsi.Image))
 			using(Brush b = new SolidBrush(borderColorDialog.Color)) {
 				g.FillRectangle(b, 0, 5, 20, 10);
 				g.DrawRectangle(Pens.Black, 0, 5, 19, 10);
@@ -479,7 +479,7 @@ namespace DiagramDrawer.Forms {
 			ToolStripItem tsi = new ToolStripMenuItem(bColorDialog.Color.Name) {
 				Image = new Bitmap(20, 20)
 			};
-			using(Graphics g = Graphics.FromImage(tsi.Image))
+			using(var g = Graphics.FromImage(tsi.Image))
 			using(Brush b = new SolidBrush(bColorDialog.Color)) {
 				g.FillRectangle(b, 0, 5, 20, 10);
 				g.DrawRectangle(Pens.Black, 0, 5, 19, 10);
@@ -503,7 +503,7 @@ namespace DiagramDrawer.Forms {
 		private void ExportImageToolStripMenuItemClick(object sender, EventArgs e) {
 			if(saveFileDialog2.ShowDialog() != DialogResult.OK)
 				return;
-			ImageFormat format = ImageFormat.Png;
+			var format = ImageFormat.Png;
 			switch(saveFileDialog2.FilterIndex) {
 				case 1:
 					format = ImageFormat.Png;
@@ -531,7 +531,8 @@ namespace DiagramDrawer.Forms {
 			Off,
 			Locked
 		}
-		Dictionary<CheckableToolStripSplitButton, LockState> locks = new Dictionary<CheckableToolStripSplitButton, LockState>();
+
+		readonly Dictionary<CheckableToolStripSplitButton, LockState> locks = new Dictionary<CheckableToolStripSplitButton, LockState>();
 
 		private void TsDoubleClick(object sender, EventArgs e) {
 			SetLock(sender as CheckableToolStripSplitButton, LockChange.DoubleClick);
@@ -557,9 +558,9 @@ namespace DiagramDrawer.Forms {
 					);
 			BorderColorSelected();
 		}
-		bool _modified;
+		bool modified;
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-			if(!_modified || !Options.AskForSave)
+			if(!modified || !Options.AskForSave)
 				return;
 			switch(
 				MessageBox.Show("Salvare le modifiche?", "Diagram Drawer", MessageBoxButtons.YesNoCancel,
@@ -573,7 +574,7 @@ namespace DiagramDrawer.Forms {
 			}
 		}
 		private void ShapeContainer1MouseDown(object sender, MouseEventArgs e) {
-			_modified = true;
+			modified = true;
 		}
 		private void ComeImmagineVettorialeToolStripMenuItemClick(object sender, EventArgs e) {
 			if(saveFileDialog3.ShowDialog() != DialogResult.OK)

@@ -16,9 +16,10 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Windows.Forms;
 using System;
+using System.Xml;
 using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes {
@@ -37,7 +38,7 @@ namespace DiagramDrawer.Shapes {
 		public override void BeginInitialize() {
 			
 		}
-		public override void EndInitialize(System.Collections.ObjectModel.KeyedCollection<string, IShape> list) {
+		public override void EndInitialize(KeyedCollection<string, IShape> list) {
 			Open = false;
 		}
 		private void ShowClick(object sender, EventArgs e) {
@@ -49,13 +50,13 @@ namespace DiagramDrawer.Shapes {
 		public override string ToString() {
 			return "Punto";
 		}
-		bool _open = true;
+		bool open = true;
 		public bool Open {
 			private get {
-				return _open;
+				return open;
 			}
 			set {
-				_open = value;
+				open = value;
 				ShapeContainer.ForceRefresh();
 			}
 		}
@@ -75,8 +76,7 @@ namespace DiagramDrawer.Shapes {
 		public override PointF GetIntersection(PointF other) {
 			return Center;
 		}
-		public override void SvgSave(System.Xml.XmlWriter writer) {
-			return;
+		public override void SvgSave(XmlWriter writer) {
 		}
 	}
 }

@@ -5,7 +5,7 @@ using DiagramDrawer.Forms.OptionPanes;
 
 namespace DiagramDrawer.Forms {
 	public partial class OptionsForm : Form {
-		readonly List<IOptionPane> _panes = new List<IOptionPane>();
+		readonly List<IOptionPane> panes = new List<IOptionPane>();
 		public OptionsForm() {
 			InitializeComponent();
 			LoadPanes();
@@ -14,12 +14,12 @@ namespace DiagramDrawer.Forms {
 		}
 		private void LoadPanes() {
 			IOptionPane general = new General();
-			_panes.Add(general);
+			panes.Add(general);
 			IOptionPane objects = new Objects();
-			_panes.Add(objects);
+			panes.Add(objects);
 		}
 		private void LoadTree() {
-			foreach(var pane in _panes) {
+			foreach(var pane in panes) {
 				var t = treeView1.Nodes.Add(pane.Name);
 				t.Tag = pane;
 				pane.Load();
@@ -38,7 +38,7 @@ namespace DiagramDrawer.Forms {
 			Close();
 		}
 		private void Button2Click(object sender, EventArgs e) {
-			foreach(var child in _panes)
+			foreach(var child in panes)
 				Save(child);
 			Close();
 		}
@@ -47,14 +47,17 @@ namespace DiagramDrawer.Forms {
 			foreach(var cchild in child.Children)
 				Save(cchild);
 		}
-		private void TreeView1AfterSelect(object sender, TreeViewEventArgs e) {
+
+		private void TreeView1AfterSelect (object sender, TreeViewEventArgs e)
+		{
 			var c = e.Node.Tag as Control;
-			panel.SuspendLayout();
-			panel.Controls.Clear();
-			panel.Controls.Add(c);
-			if(c != null)
-				c.Dock = DockStyle.Fill;
-			panel.ResumeLayout(true);
+			if (c == null)
+				return;
+			panel.SuspendLayout ();
+			panel.Controls.Clear ();
+			panel.Controls.Add (c);
+			c.Dock = DockStyle.Fill;
+			panel.ResumeLayout (true);
 		}
 	}
 }

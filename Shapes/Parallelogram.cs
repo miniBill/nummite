@@ -23,11 +23,11 @@ using DiagramDrawer.Properties;
 namespace DiagramDrawer.Shapes {
 	public class Parallelogram : Box {
 		protected override void DrawBackground(Graphics graphics) {
-			float i = Width / 10F;
-			float a = Width / 2F;
-			float b = Height / 2F;
+			var i = Width / 10F;
+			var a = Width / 2F;
+			var b = Height / 2F;
 			PointF c = Center;
-			PointF[] points = new[] { 
+			var points = new[] { 
 				new PointF(c.X - a + i, c.Y - b),
 				new PointF(c.X - a, c.Y + b),
 				new PointF(c.X + a - i, c.Y + b),
@@ -43,14 +43,14 @@ namespace DiagramDrawer.Shapes {
 			if(point.X < Center.X) {
 				float m = -Height * 10;
 				m /= Width;
-				float q = Center.Y - m * (Location.X + Width / 20F);
+				var q = Center.Y - m * (Location.X + Width / 20F);
 				if(point.Y > (m * point.X + q))
 					return true;
 			}
 			else {
 				float m = -Height * 10;
 				m /= Width;
-				float q = Center.Y - m * (Location.X + Width - Width / 20F);
+				var q = Center.Y - m * (Location.X + Width - Width / 20F);
 				if(point.Y < (m * point.X + q))
 					return true;
 			}
@@ -59,15 +59,15 @@ namespace DiagramDrawer.Shapes {
 		public override PointF GetIntersection(PointF other) {
 			float r = -Height;
 			r /= Width;
-			float l = 5F * Height;
+			var l = 5F * Height;
 			l /= 4F * Width;
 			PointF c = Center;
-			float ox = other.X - c.X;
-			float oy = other.Y - c.Y;
+			var ox = other.X - c.X;
+			var oy = other.Y - c.Y;
 			if(ox == 0)
 				return new PointF(c.X, c.Y + Height / 2F * Math.Sign(oy));
-			float om = oy / ox;
-			float oq = oy - om * ox;
+			var om = oy / ox;
+			var oq = oy - om * ox;
 			float x, y;
 			if(r < om && om < l) {
 				float m = -Height * 10;
@@ -77,7 +77,7 @@ namespace DiagramDrawer.Shapes {
 				//q=-5H*(-10/10+1/10)
 				//q=-H*(-9/2)
 				//q=9H/2
-				float q = 4.5F * Height;
+				var q = 4.5F * Height;
 				if(other.X < Center.X)
 					q = -q;
 				//y=mx+q

@@ -16,6 +16,7 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Drawing;
 using DiagramDrawer.Properties;
 using System.Text;
@@ -39,17 +40,16 @@ namespace DiagramDrawer.Shapes {
 #if DEBUG
 			if(Text.StartsWith("'shapes'")) {
 				var sb = new StringBuilder();
-				sb.Append("'shapes'" + System.Environment.NewLine);
-				foreach(IShape s in ShapeContainer.ShapeList)
+				sb.Append("'shapes'" + Environment.NewLine);
+				foreach(var s in ShapeContainer.ShapeList)
 					if(!(s is LabelShape))
-						sb.Append(s.Text + ":" + s.Location + System.Environment.NewLine);
+						sb.Append(s.Text + ":" + s.Location + Environment.NewLine);
 				Text = sb.ToString();
 			}
 #endif
 			base.DrawTo(graphics);
 		}
 		protected override void DrawBackground(Graphics graphics) {
-			return;
 		}
 		public override string ToString() {
 			return "Testo";

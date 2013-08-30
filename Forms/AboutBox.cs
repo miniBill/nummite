@@ -17,7 +17,9 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -37,13 +39,13 @@ namespace DiagramDrawer.Forms {
 
 		public static string AssemblyTitle {
 			get {
-				object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+				var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
 				if(attributes.Length > 0) {
-					AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
+					var titleAttribute = (AssemblyTitleAttribute)attributes[0];
 					if(titleAttribute.Title.Length > 0)
 						return titleAttribute.Title;
 				}
-				return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+				return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
 			}
 		}
 
@@ -55,7 +57,7 @@ namespace DiagramDrawer.Forms {
 
 		public static string AssemblyDescription {
 			get {
-				object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+				var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
 				if(attributes.Length == 0)
 					return String.Empty;
 				return ((AssemblyDescriptionAttribute)attributes[0]).Description;
@@ -64,7 +66,7 @@ namespace DiagramDrawer.Forms {
 
 		public static string AssemblyProduct {
 			get {
-				object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+				var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
 				if(attributes.Length == 0)
 					return String.Empty;
 				return ((AssemblyProductAttribute)attributes[0]).Product;
@@ -73,7 +75,7 @@ namespace DiagramDrawer.Forms {
 
 		public static string AssemblyCopyright {
 			get {
-				object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+				var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
 				if(attributes.Length == 0)
 					return String.Empty;
 				return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
@@ -82,7 +84,7 @@ namespace DiagramDrawer.Forms {
 
 		public static string AssemblyCompany {
 			get {
-				object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+				var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
 				if(attributes.Length == 0)
 					return String.Empty;
 				return ((AssemblyCompanyAttribute)attributes[0]).Company;
@@ -97,7 +99,7 @@ namespace DiagramDrawer.Forms {
 		///<summary>
 		///Required designer variable.
 		///</summary>
-		private System.ComponentModel.IContainer components = null;
+		private readonly IContainer components = null;
 
 		///<summary>
 		///Clean up any resources being used.
@@ -115,7 +117,7 @@ namespace DiagramDrawer.Forms {
 		///the contents of this method with the code editor.
 		///</summary>
 		private void InitializeComponent() {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
+			var resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.logoPictureBox = new System.Windows.Forms.PictureBox();
 			this.labelProductName = new System.Windows.Forms.Label();
@@ -263,13 +265,13 @@ namespace DiagramDrawer.Forms {
 
 		#endregion
 
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-		private System.Windows.Forms.PictureBox logoPictureBox;
-		private System.Windows.Forms.Label labelProductName;
-		private System.Windows.Forms.Label labelVersion;
-		private System.Windows.Forms.Label labelCopyright;
-		private System.Windows.Forms.Label labelCompanyName;
-		private System.Windows.Forms.TextBox textBoxDescription;
-		private System.Windows.Forms.Button okButton;
+		private TableLayoutPanel tableLayoutPanel;
+		private PictureBox logoPictureBox;
+		private Label labelProductName;
+		private Label labelVersion;
+		private Label labelCopyright;
+		private Label labelCompanyName;
+		private TextBox textBoxDescription;
+		private Button okButton;
 	}
 }

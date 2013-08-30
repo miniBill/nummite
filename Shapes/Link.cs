@@ -18,45 +18,56 @@
 
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 using DiagramDrawer.Forms;
 using DiagramDrawer.Export;
+using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes {
-	public class Link : Ellipse {
-		public Link() {
+namespace DiagramDrawer.Shapes
+{
+	public class Link : Ellipse
+	{
+		public Link()
+		{
 			BackgroundColor = Color.LightBlue;
 			Width = Height = 10;
-			MenuItem mi = new MenuItem("Vai", delegate {
-													if(ShapeContainer.ParentForm != null)
-														((MainForm)ShapeContainer.ParentForm).Controller.Open(Text);
-												});
+			var mi = new MenuItem("Vai", delegate
+			{
+				if (ShapeContainer.ParentForm != null)
+					((MainForm)ShapeContainer.ParentForm).Controller.Open(Text);
+			});
 			ContextMenu.MenuItems.Add(0, mi);
 		}
-		public override void DrawTo(Graphics graphics) {
+		public override void DrawTo(Graphics graphics)
+		{
 			base.DrawBackground(graphics);
 		}
-		public override string ToString() {
+		public override string ToString()
+		{
 			return "Collegamento";
 		}
-		protected override void OnTextChange() {
-			if(Text == "...")
+		protected override void OnTextChange()
+		{
+			if (Text == "...")
 				Text = string.Empty;
 			base.OnTextChange();
 		}
-		const int Radius = 10;
-		protected override void OnSizeChange() {
-			if(Width != Radius)
-				Width = Radius;
-			if(Height != Radius)
-				Height = Radius;
+		const int RADIUS = 10;
+		protected override void OnSizeChange()
+		{
+			Width = RADIUS;
+			Height = RADIUS;
 			base.OnSizeChange();
 		}
-		public override Image Image {
-			get {
-				return Properties.Resources.WLink;
+		public override Image Image
+		{
+			get
+			{
+				return Resources.WLink;
 			}
 		}
-		public override void SvgSave(System.Xml.XmlWriter writer) {
+		public override void SvgSave(XmlWriter writer)
+		{
 			Svg.WriteStartLink(writer, Text.Replace(".xml", ".svg"));
 			Svg.WriteEllipse(writer, Center, new Size(Width, Height), BackgroundColor, BorderPen);
 			Svg.WriteEndLink(writer);

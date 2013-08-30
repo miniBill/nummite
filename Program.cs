@@ -17,47 +17,58 @@
  */
 
 using System;
+using System.Text;
 using System.Windows.Forms;
+using DiagramDrawer.Forms;
+using DiagramDrawer.Properties;
 
-namespace DiagramDrawer {
-	static class Program {
+namespace DiagramDrawer
+{
+	static class Program
+	{
 		[STAThread]
-		static void Main() {
-#if !DEBUG
-			try {
-#endif
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Forms.MainForm());
-#if !DEBUG
+		static void Main()
+		{
+			try
+			{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new MainForm());
 			}
-			catch(Exception e) {
+			catch (Exception e)
+			{
 				string error = string.Empty;
-				try {
-					string version = System.Text.Encoding.UTF8.GetString(
-						DiagramDrawer.Properties.Resources.version);
+				try
+				{
+					string version = Encoding.UTF8.GetString(Resources.version);
 					version = "Version: " + version.Substring(0, version.Length - 1);
 					error = Inspect(version, e);
 				}
-				catch {
+				catch
+				{
 					MessageBox.Show("Error in Inspect! Complete disaster");
 				}
-				try {
+				try
+				{
 					new ErrorForm(error).ShowDialog();
 				}
-				catch {
+				catch
+				{
 					MessageBox.Show("GREAT ERROR: " + Environment.NewLine + error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
-#endif
+
 		}
-// ReSharper disable UnusedMember.Local
-		private static string Inspect(string p, Exception e) {
-// ReSharper restore UnusedMember.Local
-			if(e == null)
-				return p;
-			p += Environment.NewLine + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace;
-			return Inspect(p, e.InnerException);
+
+		private static string Inspect(string p, Exception e)
+		{
+			while (true)
+			{
+				if (e == null)
+					return p;
+				p += Environment.NewLine + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace;
+				e = e.InnerException;
+			}
 		}
 	}
 }

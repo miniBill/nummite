@@ -25,17 +25,17 @@ using System.Windows.Forms;
 
 namespace DiagramDrawer.Shapes {
 	public class ImageBox : Box {
-		string _filename = String.Empty;
+		string filename = String.Empty;
 		public string FileName {
 			set {
-				_filename = value;
+				filename = value;
 				if(value.Length == 0) {
-					if(_image != null)
-						_image.Dispose();
-					_image = new Bitmap(100, 50);
+					if(image != null)
+						image.Dispose();
+					image = new Bitmap(100, 50);
 					Width = 100;
 					Height = 50;
-					using(Graphics g = Graphics.FromImage(_image)) {
+					using(var g = Graphics.FromImage(image)) {
 						g.DrawLine(Pens.Red, 0, 0, Width, Height);
 						g.DrawLine(Pens.Red, 0, Height, Width, 0);
 						g.DrawLines(Pens.Black, new[] {
@@ -49,7 +49,7 @@ namespace DiagramDrawer.Shapes {
 				}
 				else
 					try {
-						Image temp = Image.FromFile(_filename);
+						var temp = Image.FromFile(filename);
 						ShownImage = temp;
 					}
 					catch(FileNotFoundException) {
@@ -57,13 +57,13 @@ namespace DiagramDrawer.Shapes {
 					}
 			}
 		}
-		Image _image = new Bitmap(100, 50);
+		Image image = new Bitmap(100, 50);
 		public Image ShownImage {
 			get {
-				return _image;
+				return image;
 			}
 			set {
-				_image = value;
+				image = value;
 				//iw/ih=w/h
 				//h=ih*w/iw
 				Width = 100;
@@ -73,7 +73,7 @@ namespace DiagramDrawer.Shapes {
 			}
 		}
 		public ImageBox() {
-			using(Graphics g = Graphics.FromImage(_image)) {
+			using(var g = Graphics.FromImage(image)) {
 				g.DrawLine(Pens.Red, 0, 0, Width, Height);
 				g.DrawLine(Pens.Red, 0, Height, Width, 0);
 				g.DrawLines(Pens.Black, new[] {
@@ -91,9 +91,9 @@ namespace DiagramDrawer.Shapes {
 			ShapeContainer.ForceRefresh();
 		}
 		public override void DrawTo(Graphics graphics) {
-			Rectangle bounds = new Rectangle(Location.X, Location.Y, Width, Height);
-			Rectangle src = new Rectangle(0, 0, _image.Width, _image.Height);
-			graphics.DrawImage(_image, bounds, src, GraphicsUnit.Pixel);
+			var bounds = new Rectangle(Location.X, Location.Y, Width, Height);
+			var src = new Rectangle(0, 0, image.Width, image.Height);
+			graphics.DrawImage(image, bounds, src, GraphicsUnit.Pixel);
 		}
 		public override string ToString() {
 			return "Immagine";
@@ -136,7 +136,7 @@ namespace DiagramDrawer.Shapes {
 		}
 		private void SaveImage(XmlWriter writer) {
 			writer.WriteStartElement("image");
-			writer.WriteAttributeString("path", _filename);
+			writer.WriteAttributeString("path", filename);
 			writer.WriteEndElement();
 		}
 	}

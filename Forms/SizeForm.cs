@@ -44,15 +44,15 @@ namespace DiagramDrawer.Forms {
 		}
 	}
 	public partial class SizeForm : Form {
-		readonly ISizeable _s;
-		readonly IAutoSizeable _asi;
+		readonly ISizeable s;
+		readonly IAutoSizeable asi;
 		public SizeForm(ISizeable shape) {
 			InitializeComponent();
-			_s = shape;
-			_asi = shape as IAutoSizeable;
-			if(_asi != null) {
-				checkBox1.Checked = _asi.AutoResizeHeight;
-				checkBox2.Checked = _asi.AutoResizeWidth;
+			s = shape;
+			asi = shape as IAutoSizeable;
+			if(asi != null) {
+				checkBox1.Checked = asi.AutoResizeHeight;
+				checkBox2.Checked = asi.AutoResizeWidth;
 			}
 			else {
 				checkBox1.Visible = false;
@@ -65,19 +65,19 @@ namespace DiagramDrawer.Forms {
 			Ok();
 		}
 		private void Ok() {
-			if(_asi != null) {
-				_asi.AutoResizeHeight = checkBox1.Checked;
-				_asi.AutoResizeWidth = checkBox2.Checked;
+			if(asi != null) {
+				asi.AutoResizeHeight = checkBox1.Checked;
+				asi.AutoResizeWidth = checkBox2.Checked;
 			}
-			if(_asi == null || (!_asi.AutoResizeWidth && !_asi.AutoResizeHeight)) {
-				_s.Height = int.Parse(textBox1.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
-				_s.Width = int.Parse(textBox2.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
-				if(_s.Height < Options.MinimumHeight)
-					_s.Height = Options.MinimumHeight;
-				if(_s.Width < Options.MinimumWidth)
-					_s.Width = Options.MinimumWidth;
+			if(asi == null || (!asi.AutoResizeWidth && !asi.AutoResizeHeight)) {
+				s.Height = int.Parse(textBox1.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
+				s.Width = int.Parse(textBox2.Text, NumberStyles.AllowThousands | NumberStyles.Integer, CultureInfo.CurrentCulture);
+				if(s.Height < Options.MinimumHeight)
+					s.Height = Options.MinimumHeight;
+				if(s.Width < Options.MinimumWidth)
+					s.Width = Options.MinimumWidth;
 			}
-			_s.Refresh();
+			s.Refresh();
 			Close();
 		}
 		private void TextBoxKeyUp(object sender, KeyEventArgs e) {

@@ -23,23 +23,23 @@ using DiagramDrawer.Properties;
 namespace DiagramDrawer.Shapes {
 	public class Rhombus : Box {
 		public override bool Contains(PointF point) {
-			Point c = Center;
-			float ox = point.X - c.X;
-			float oy = point.Y - c.Y;
+			var c = Center;
+			var ox = point.X - c.X;
+			var oy = point.Y - c.Y;
 			if(ox == 0)
 				return Math.Abs(oy) <= (Height / 2F);
 			if(oy == 0)
 				return Math.Abs(ox) <= (Width / 2F);
-			float m = oy / ox;
+			var m = oy / ox;
 			if(m > 0) {
-				float qa = Height / 2F * Math.Sign(ox);
+				var qa = Height / 2F * Math.Sign(ox);
 				float ma = -Height;
 				ma /= Width;
 				if(oy >= 0)
 					return oy < (ox * ma + qa);
 				return oy > (ox * ma + qa);
 			}
-			float qb = -Height / 2F * Math.Sign(ox);
+			var qb = -Height / 2F * Math.Sign(ox);
 			float mb = Height;
 			mb /= Width;
 			if(oy >= 0)
@@ -48,23 +48,23 @@ namespace DiagramDrawer.Shapes {
 		}
 		public override PointF GetIntersection(PointF other) {
 			PointF c = Center;
-			float ox = other.X - c.X;
-			float oy = other.Y - c.Y;
+			var ox = other.X - c.X;
+			var oy = other.Y - c.Y;
 			if(ox == 0)
 				return new PointF(c.X, c.Y + Height / 2 * Math.Sign(oy));
 			if(oy == 0)
 				return new PointF(c.X + Width / 2 * Math.Sign(ox), c.Y);
-			float m = oy / ox;
-			float qa = Height / 2F * Math.Sign(oy);
+			var m = oy / ox;
+			var qa = Height / 2F * Math.Sign(oy);
 			float ma = -Height * Math.Sign(m);
 			ma /= Width;
-			float x = qa / (m - ma);
-			float y = m * x;
+			var x = qa / (m - ma);
+			var y = m * x;
 			return new PointF(x + c.X, y + c.Y);
 		}
 		protected override void DrawBackground(Graphics graphics) {
-			float a = Width / 2F;
-			float b = Height / 2F;
+			var a = Width / 2F;
+			var b = Height / 2F;
 			PointF c = Center;
 			var points = new[]{
 				new PointF(c.X - a, c.Y),

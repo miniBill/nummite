@@ -42,17 +42,17 @@ namespace DiagramDrawer.Forms {
 		private StringInput() {
 			InitializeComponent();
 		}
-		bool _isok;
+		bool isok;
 		private void Button2Click(object sender, EventArgs e) {
 			Close();
 		}
 		private void Button1Click(object sender, EventArgs e) {
-			_isok = true;
+			isok = true;
 			Close();
 		}
 		private void StringInput_FormClosed(object sender, FormClosedEventArgs e) {
 			LastResult = textBox1.Text;
-			DialogResult = _isok ? DialogResult.OK : DialogResult.Cancel;
+			DialogResult = isok ? DialogResult.OK : DialogResult.Cancel;
 		}
 
 		private void TextBox1KeyDown(object sender, KeyEventArgs e) {

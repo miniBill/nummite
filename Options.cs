@@ -5,7 +5,7 @@
 			AskForSave = true;
 			MinimumHeight = MinimumWidth = 30;
 			CheckForUpdates = true;
-			UpdateUrl = "http://download.gna.org/diagram-drawer/version";
+			UpdateUrl = "https://raw.github.com/miniBill/DiagramDrawer/master/version";
 		}
 		public static int MinimumWidth {
 			get;

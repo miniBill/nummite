@@ -38,7 +38,7 @@ namespace DiagramDrawer.Export {
 			writer.WriteAttributeString("version", "1.1");
 			writer.WriteAttributeString("preserveAspectratio", "xMidYMid");
 			if(shapes != null)
-				foreach(IShape s in shapes)
+				foreach(var s in shapes)
 					s.SvgSave(writer);
 			writer.WriteEndElement();
 		}
@@ -61,8 +61,8 @@ namespace DiagramDrawer.Export {
 			writer.WriteEndElement();
 		}
 		public static void WriteText(XmlWriter writer, Point location, Color fill, Font font, string text) {
-			string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-			for(int c = 0; c < lines.Length; c++) {
+			var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			for(var c = 0; c < lines.Length; c++) {
 				writer.WriteStartElement("text");
 				writer.WriteAttributeString("x", SafeString(location.X));
 				writer.WriteAttributeString("y",
@@ -123,7 +123,7 @@ namespace DiagramDrawer.Export {
 		internal static void WritePolygon(XmlWriter writer, PointF[] points, Color fill) {
 			writer.WriteStartElement("polygon");
 			var sb = new StringBuilder();
-			for(int i = 0; i < points.Length; i++) {
+			for(var i = 0; i < points.Length; i++) {
 				sb.Append(
 					SafeString(points[i].X) + "," + SafeString(points[i].Y));
 				if(i != (points.Length - 1))

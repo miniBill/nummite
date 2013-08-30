@@ -22,14 +22,14 @@ using System.Windows.Forms;
 
 namespace DiagramDrawer.Shapes {
 	public partial class ImagePropertiesForm : Form {
-		readonly ImageBox _val;
-		int _w, _h;
+		readonly ImageBox val;
+		int w, h;
 		public ImagePropertiesForm(ImageBox shape) {
 			InitializeComponent();
-			_val = shape;
-			pictureBox1.BackgroundImage = _val.ShownImage;
-			_w = _val.Width;
-			_h = _val.Height;
+			val = shape;
+			pictureBox1.BackgroundImage = val.ShownImage;
+			w = val.Width;
+			h = val.Height;
 			UpdateSize();
 		}
 		private void TrackBar1Scroll(object sender, EventArgs e) {
@@ -37,31 +37,31 @@ namespace DiagramDrawer.Shapes {
 		}
 
 		private void UpdateSize() {
-			pictureBox1.Width = _w * trackBar1.Value / 10;
-			pictureBox1.Height = _h * trackBar2.Value / 10;
+			pictureBox1.Width = w * trackBar1.Value / 10;
+			pictureBox1.Height = h * trackBar2.Value / 10;
 		}
 		private void Button2Click(object sender, EventArgs e) {
 			Close();
 		}
 		private void Button1Click(object sender, EventArgs e) {
-			if(!_loaded)
-				_val.ShownImage = pictureBox1.BackgroundImage;
+			if(!loaded)
+				val.ShownImage = pictureBox1.BackgroundImage;
 			else
-				_val.FileName = openFileDialog1.FileName;
-			_val.Width = pictureBox1.Width;
-			_val.Height = pictureBox1.Height;
+				val.FileName = openFileDialog1.FileName;
+			val.Width = pictureBox1.Width;
+			val.Height = pictureBox1.Height;
 			Close();
 		}
-		bool _loaded;
+		bool loaded;
 		private void Button3Click(object sender, EventArgs e) {
 			if(openFileDialog1.ShowDialog() != DialogResult.OK)
 				return;
-			Image temp = Image.FromFile(openFileDialog1.FileName);
+			var temp = Image.FromFile(openFileDialog1.FileName);
 			pictureBox1.BackgroundImage = temp;
-			_w = 100;
-			_h = temp.Height * _w / temp.Width;
+			w = 100;
+			h = temp.Height * w / temp.Width;
 			UpdateSize();
-			_loaded = true;
+			loaded = true;
 		}
 	}
 }

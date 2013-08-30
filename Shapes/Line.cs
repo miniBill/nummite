@@ -16,82 +16,82 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Linq;
+using DiagramDrawer.Export;
+using DiagramDrawer.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Linq;
 using System.Xml;
-using DiagramDrawer.Properties;
-using DiagramDrawer.Export;
 
 namespace DiagramDrawer.Shapes {
 	public class TextLabel : Box {
 		protected override void DrawBackground(Graphics graphics) {
-			Rectangle bounds = new Rectangle(Location.X, Location.Y, Width, Height);
+			var bounds = new Rectangle(Location.X, Location.Y, Width, Height);
 			graphics.FillRectangle(BackBrush, bounds);
 		}
 	}
 	public class Line : Box {
-		readonly TextLabel _label = new TextLabel();
+		readonly TextLabel label = new TextLabel();
 		public Line() {
 			Location = Point.Empty;
 			Start = Point.Empty;
 			End = Point.Empty;
 			ForegroundColor = Color.Black;
-			_label.Height = 25;
-			_label.Width = 75;
+			label.Height = 25;
+			label.Width = 75;
 			Text = String.Empty;
 			BackgroundColorChange += Line_BackgroundColorChange;
 			ForegroundColorChange += Line_ForegroundColorChange;
 		}
 		void Line_ForegroundColorChange(object sender, EventArgs e) {
-			_label.ForegroundColor = ForegroundColor;
+			label.ForegroundColor = ForegroundColor;
 		}
 		void Line_BackgroundColorChange(object sender, EventArgs e) {
-			_label.BackgroundColor = BackgroundColor;
+			label.BackgroundColor = BackgroundColor;
 		}
-		bool _textchanged;
+		bool textchanged;
 		protected override void OnTextChange() {
-			_label.Text = Text;
-			_textchanged = true;
+			label.Text = Text;
+			textchanged = true;
 			base.OnTextChange();
 		}
-		private IShape _origin;
+		private IShape origin;
 		public IShape Origin {
 			get {
-				return _origin;
+				return origin;
 			}
 			set {
 				OnOriginChange(value);
 			}
 		}
 		protected virtual void OnOriginChange(IShape value) {
-			_origin = value;
-			_origin.Moving += OnMoving;
-			_origin.DragStart += OnDragStart;
-			_origin.DragEnd += OnDragEnd;
-			_origin.Deleted += OnDeleted;
+			origin = value;
+			origin.Moving += OnMoving;
+			origin.DragStart += OnDragStart;
+			origin.DragEnd += OnDragEnd;
+			origin.Deleted += OnDeleted;
 			OnMoving(this, EventArgs.Empty);
 		}
 		void OnDeleted(object sender, EventArgs e) {
 			ShapeContainer.RemoveShape(this);
 		}
-		private IShape _pointed;
+		private IShape pointed;
 		public IShape Pointed {
 			get {
-				return _pointed;
+				return pointed;
 			}
 			set {
 				OnPointedChange(value);
 			}
 		}
 		protected virtual void OnPointedChange(IShape value) {
-			_pointed = value;
-			_pointed.Moving += OnMoving;
-			_pointed.DragStart += OnDragStart;
-			_pointed.DragEnd += OnDragEnd;
-			_pointed.Deleted += OnDeleted;
+			pointed = value;
+			pointed.Moving += OnMoving;
+			pointed.DragStart += OnDragStart;
+			pointed.DragEnd += OnDragEnd;
+			pointed.Deleted += OnDeleted;
 			OnMoving(this, EventArgs.Empty);
 		}
 		void OnDragEnd(object sender, EventArgs e) {
@@ -104,14 +104,14 @@ namespace DiagramDrawer.Shapes {
 			Moved();
 		}
 		private void Moved() {
-			if(_origin == null || _pointed == null ||
-						 _origin.Contains(_pointed.Center) || _pointed.Contains(_origin.Center)) {
+			if(origin == null || pointed == null ||
+						 origin.Contains(pointed.Center) || pointed.Contains(origin.Center)) {
 				Start = End = new PointF(0, 0);
 			}
 			else {
-				Start = _origin.GetIntersection(_pointed.Center);
-				End = _pointed.GetIntersection(_origin.Center);
-				_label.SetLocation(new Point((int)(Start.X + End.X - _label.Width) / 2, (int)(Start.Y + End.Y - _label.Height) / 2));
+				Start = origin.GetIntersection(pointed.Center);
+				End = pointed.GetIntersection(origin.Center);
+				label.SetLocation(new Point((int)(Start.X + End.X - label.Width) / 2, (int)(Start.Y + End.Y - label.Height) / 2));
 			}
 		}
 
@@ -129,26 +129,26 @@ namespace DiagramDrawer.Shapes {
 			if(!ShouldDraw())
 				return;
 			graphics.DrawLine(BorderPen, Start, End);
-			if(_textchanged) {
-				_textchanged = false;
-				if(_label.ShapeContainer == null)
-					_label.ShapeContainer = ShapeContainer;
-				_label.AutoResizeHeight = _label.AutoResizeWidth = true;
-				_label.SetLocation(
+			if(textchanged) {
+				textchanged = false;
+				if(label.ShapeContainer == null)
+					label.ShapeContainer = ShapeContainer;
+				label.AutoResizeHeight = label.AutoResizeWidth = true;
+				label.SetLocation(
 					new Point(
-						(int)(Start.X + End.X - _label.Width) / 2,
-						(int)(Start.Y + End.Y - _label.Height) / 2
+						(int)(Start.X + End.X - label.Width) / 2,
+						(int)(Start.Y + End.Y - label.Height) / 2
 					));
 			}
-			if(_label.Text.Length > 0)
-				_label.DrawTo(graphics);
+			if(label.Text.Length > 0)
+				label.DrawTo(graphics);
 		}
 		protected virtual bool ShouldDraw() {
 			return (Start.X != 0 || Start.Y == 0) && (End.X != 0 || End.Y != 0) && !Pointed.Contains(Start) && !Origin.Contains(End);
 		}
 		protected override void OnSizeChange() {
-			_label.Width = Width;
-			_label.Height = Height;
+			label.Width = Width;
+			label.Height = Height;
 			base.OnSizeChange();
 		}
 		protected override Point VCenter {
@@ -231,11 +231,11 @@ namespace DiagramDrawer.Shapes {
 		private void ReadEndpoints(XmlReader reader) {
 			if(reader.Name == "origin") {
 				ReadEndpointCheck(reader);
-				_originName = reader.Value;
+				originName = reader.Value;
 			}
 			else {
 				ReadEndpointCheck(reader);
-				_pointedName = reader.Value;
+				pointedName = reader.Value;
 			}
 		}
 		private static void ReadEndpointCheck(XmlReader reader) {
@@ -253,19 +253,19 @@ namespace DiagramDrawer.Shapes {
 		}
 		private void SavePointed(XmlWriter writer) {
 			writer.WriteStartElement("pointed");
-			writer.WriteAttributeString("name", _pointed.Name);
+			writer.WriteAttributeString("name", pointed.Name);
 			writer.WriteEndElement();
 		}
 		private void SaveOrigin(XmlWriter writer) {
 			writer.WriteStartElement("origin");
-			writer.WriteAttributeString("name", _origin.Name);
+			writer.WriteAttributeString("name", origin.Name);
 			writer.WriteEndElement();
 		}
-		string _originName;
-		string _pointedName;
+		string originName;
+		string pointedName;
 		public override void EndInitialize(KeyedCollection<string, IShape> list) {
-			Origin = list[_originName];
-			Pointed = list[_pointedName];
+			Origin = list[originName];
+			Pointed = list[pointedName];
 		}
 		public override bool NeedInitialize {
 			get {
@@ -287,39 +287,39 @@ namespace DiagramDrawer.Shapes {
 		}
 		public override void SvgSave(XmlWriter writer) {
 			Svg.WriteLine(writer, Start, End, BorderPen);
-			Svg.WriteRectangle(writer, _label.Location, new Size(_label.Width, _label.Height), BackgroundColor, BackPen);
-			Svg.WriteText(writer, _label.Center, ForegroundColor, Font, _label.Text);
+			Svg.WriteRectangle(writer, label.Location, new Size(label.Width, label.Height), BackgroundColor, BackPen);
+			Svg.WriteText(writer, label.Center, ForegroundColor, Font, label.Text);
 		}
 	}
 	public class OneArrow : Line {
-		const float Distanza = 10F;
-		const float Apertura = 5F;
-		PointF _l, _r;
+		const float DISTANZA = 10F;
+		const float APERTURA = 5F;
+		PointF l, r;
 		public override void DrawTo(Graphics graphics) {
 			if(!ShouldDraw())
 				return;
 			base.DrawTo(graphics);
-			graphics.FillPolygon(BorderBrush, new[] { _l, End, _r, _l });
+			graphics.FillPolygon(BorderBrush, new[] { l, End, r, l });
 		}
 		private void Recalculate() {
-			float otherPointX = Start.X - End.X;
-			float otherPointY = Start.Y - End.Y;
-			float m = otherPointY / otherPointX;
+			var otherPointX = Start.X - End.X;
+			var otherPointY = Start.Y - End.Y;
+			var m = otherPointY / otherPointX;
 			if(otherPointX == 0) {
-				float y = (End.Y > Start.Y) ? (End.Y - Distanza) : (End.Y + Distanza);
-				_l.Y = _r.Y = y;
-				_l.X = End.X - Apertura;
-				_r.X = End.X + Apertura;
+				var y = (End.Y > Start.Y) ? (End.Y - DISTANZA) : (End.Y + DISTANZA);
+				l.Y = r.Y = y;
+				l.X = End.X - APERTURA;
+				r.X = End.X + APERTURA;
 			}
 			else
 				if(otherPointY == 0) {
-					float x = (End.X > Start.X) ? (End.X - Distanza) : (End.X + Distanza);
-					_l.X = _r.X = x;
-					_l.Y = End.Y - Apertura;
-					_r.Y = End.Y + Apertura;
+					var x = (End.X > Start.X) ? (End.X - DISTANZA) : (End.X + DISTANZA);
+					l.X = r.X = x;
+					l.Y = End.Y - APERTURA;
+					r.Y = End.Y + APERTURA;
 				}
 				else {
-					RecalculateMath(otherPointX, m, out _l, out _r);
+					RecalculateMath(otherPointX, m, out l, out r);
 				}
 		}
 		private void RecalculateMath(float otherPointX, float m, out PointF l, out PointF r) {
@@ -345,24 +345,24 @@ namespace DiagramDrawer.Shapes {
 			//mx=o/sqrt(1+m^2)
 			l = r = new PointF();
 			var cross = new PointF {
-				X = Distanza / (float)Math.Sqrt(1F + m * m)
+				X = DISTANZA / (float)Math.Sqrt(1F + m * m)
 			};
 			if(otherPointX < 0)
 				cross.X = -cross.X;
 			cross.Y = cross.X * m;
-			float inverseM = -1F / m;
+			var inverseM = -1F / m;
 			//y=mx+q
 			//q=y-mx
-			float inverseQ = cross.Y - inverseM * cross.X;
+			var inverseQ = cross.Y - inverseM * cross.X;
 			//apertura=h
 			//h^2=(mx-lx)^2+(my-ly)^2
 			//h^2=mx^2-2mxlx+lx^2+2my^2-2my(imlx+iq)+(imlx+iq)^2
 			//lx^2-2mxlx-2myimlx+(imlx+iq)^2-h^2+mx^2+2my^2-2myiq=0
 			//lx^2+(-2mx-2myim)lx+im^2lx^2+2imlxiq+iq^2-h^2+mx^2+2my^2-2myiq=0
 			//(im^2+1)lx^2+2(imiq-mx-myim)lx+iq^2-h^2+mx^2+2my^2-2myiq=0
-			float a = inverseM * inverseM + 1;
-			float b = 2 * (inverseM * inverseQ - cross.X - cross.Y * inverseM);
-			float discriminant = inverseQ * inverseQ - Apertura * Apertura + cross.X * cross.X +
+			var a = inverseM * inverseM + 1;
+			var b = 2 * (inverseM * inverseQ - cross.X - cross.Y * inverseM);
+			var discriminant = inverseQ * inverseQ - APERTURA * APERTURA + cross.X * cross.X +
 				2 * cross.Y * cross.Y - 2 * cross.Y * inverseQ;
 			var discriminantRoot = (float)Math.Sqrt(discriminant);
 			l.X = (-b + discriminantRoot) / (2F * a);
@@ -388,7 +388,7 @@ namespace DiagramDrawer.Shapes {
 		}
 		public override void SvgSave(XmlWriter writer) {
 			base.SvgSave(writer);
-			Svg.WritePolygon(writer, new[] { _l, End, _r, _l }, BorderColor);
+			Svg.WritePolygon(writer, new[] { l, End, r, l }, BorderColor);
 		}
 	}
 	public class TwoArrows : OneArrow {
@@ -406,7 +406,7 @@ namespace DiagramDrawer.Shapes {
 			Swap();
 		}
 		private void Swap() {
-			IShape c = Pointed;
+			var c = Pointed;
 			Pointed = Origin;
 			Origin = c;
 		}
@@ -448,9 +448,9 @@ namespace DiagramDrawer.Shapes {
 		public NoArrowFragmented() {
 			SubLines = new List<Line>();
 			SubPoints = new List<InvisiblePoint>();
-			for(int c = 0; c < 3; c++)
+			for(var c = 0; c < 3; c++)
 				SubLines.Add(new Line());
-			for(int i = 0; i < 2; i++)
+			for(var i = 0; i < 2; i++)
 				SubPoints.Add(new InvisiblePoint());
 			//origin--l1--m[0]
 			//            |
@@ -470,7 +470,7 @@ namespace DiagramDrawer.Shapes {
 			BorderColorChange += Fragmented_BorderColorChange;
 		}
 		void Fragmented_BorderColorChange(object sender, EventArgs e) {
-			foreach(Line l in SubLines)
+			foreach(var l in SubLines)
 				l.BorderColor = BorderColor;
 		}
 		void Fragmented_BackgroundColorChange(object sender, EventArgs e) {
@@ -495,7 +495,7 @@ namespace DiagramDrawer.Shapes {
 			if(dx == 0 || dy == 0)
 				base.DrawTo(graphics);
 			else
-				foreach(Line l in SubLines)
+				foreach(var l in SubLines)
 					l.DrawTo(graphics);
 		}
 		private void Moved() {
@@ -513,17 +513,17 @@ namespace DiagramDrawer.Shapes {
 				SubPoints[1].Move(new Point(Origin.Center.X - (int)dx / 2, Pointed.Center.Y));
 			}
 			if(Origin.Contains(SubPoints[0].Location) || Pointed.Contains(SubPoints[1].Location)) {
-				PointF m1Int = Origin.GetIntersection(Pointed.Center);
+				var m1Int = Origin.GetIntersection(Pointed.Center);
 				SubPoints[0].Move(new Point(Origin.Center.X - (int)(dx / 2), (int)m1Int.Y));
-				PointF m2Int = Pointed.GetIntersection(Origin.Center);
+				var m2Int = Pointed.GetIntersection(Origin.Center);
 				SubPoints[1].Move(new Point(Origin.Center.X - (int)(dx / 2), (int)m2Int.Y));
 			}
 		}
 		protected void SetShapeContainer() {
 			if(SubPoints[0].ShapeContainer == null) {
-				foreach(Line l in SubLines)
+				foreach(var l in SubLines)
 					l.ShapeContainer = ShapeContainer;
-				foreach(InvisiblePoint m in SubPoints)
+				foreach(var m in SubPoints)
 					m.ShapeContainer = ShapeContainer;
 			}
 		}
@@ -545,7 +545,7 @@ namespace DiagramDrawer.Shapes {
 			if(dx == 0 || dy == 0)
 				base.SvgSave(writer);
 			else
-				foreach(Line l in SubLines)
+				foreach(var l in SubLines)
 					l.SvgSave(writer);
 		}
 	}
@@ -554,7 +554,7 @@ namespace DiagramDrawer.Shapes {
 			SetShapeContainer();
 			if(!ShouldDraw())
 				return;
-			int c = SubLines.Count - 1;
+			var c = SubLines.Count - 1;
 			if(!(SubLines[c] is OneArrow)) {
 				SubLines[c] = new OneArrow {
 					Origin = SubPoints[1]
@@ -621,7 +621,7 @@ namespace DiagramDrawer.Shapes {
 			private set;
 		}
 
-		bool _reverse;
+		bool reverse;
 		public OneArrowAngle() {
 			SubLines = new List<Line>();
 			SubPoints = new List<InvisiblePoint>();
@@ -651,20 +651,20 @@ namespace DiagramDrawer.Shapes {
 			BackgroundColorChange += Fragmented_BackgroundColorChange;
 			BorderColorChange += Fragmented_BorderColorChange;
 			ContextMenu.MenuItems.Add("Inverti", delegate {
-				_reverse ^= true;
+				reverse ^= true;
 				ShapeContainer.ForceRefresh();
 			});
 		}
 		void Fragmented_BorderColorChange(object sender, EventArgs e) {
-			foreach(Line l in SubLines)
+			foreach(var l in SubLines)
 				l.BorderColor = BorderColor;
 		}
 		void Fragmented_BackgroundColorChange(object sender, EventArgs e) {
-			foreach(Line l in SubLines)
+			foreach(var l in SubLines)
 				l.BackgroundColor = BackgroundColor;
 		}
 		void Fragmented_ForegroundColorChange(object sender, EventArgs e) {
-			foreach(Line l in SubLines)
+			foreach(var l in SubLines)
 				l.ForegroundColor = ForegroundColor;
 		}
 		protected override void OnMoving(object sender, EventArgs e) {
@@ -680,7 +680,7 @@ namespace DiagramDrawer.Shapes {
 			if(dx == 0 || dy == 0)
 				base.DrawTo(graphics);
 			else
-				foreach(Line l in SubLines)
+				foreach(var l in SubLines)
 					l.DrawTo(graphics);
 		}
 		private void Moved() {
@@ -689,30 +689,30 @@ namespace DiagramDrawer.Shapes {
 			CheckShapeContainer();
 			/*float dx = Origin.Center.X - Pointed.Center.X;
 			float dy = Origin.Center.Y - Pointed.Center.Y;*/
-			SubPoints[0].Move(_reverse
+			SubPoints[0].Move(reverse
 								? new Point(Pointed.Center.X, Origin.Center.Y)
 								: new Point(Origin.Center.X, Pointed.Center.Y));
 			if(Origin.Contains(SubPoints[0].Location)) {
-				PointF m1Int = Origin.GetIntersection(Pointed.Center);
+				var m1Int = Origin.GetIntersection(Pointed.Center);
 				SubPoints[0].Move(new Point((int)m1Int.X, Pointed.Center.Y));
 			}
 			else
 				if(Pointed.Contains(SubPoints[0].Location)) {
-					PointF m1Int = Origin.GetIntersection(Pointed.Center);
+					var m1Int = Origin.GetIntersection(Pointed.Center);
 					SubPoints[0].Move(new Point(Pointed.Center.X, (int)m1Int.Y));
 				}
 		}
 		private void CheckShapeContainer() {
 			if(SubPoints[0].ShapeContainer == null) {
-				foreach(Line l in SubLines)
+				foreach(var l in SubLines)
 					l.ShapeContainer = ShapeContainer;
-				foreach(InvisiblePoint m in SubPoints)
+				foreach(var m in SubPoints)
 					m.ShapeContainer = ShapeContainer;
 			}
 		}
 		protected override void OnTextChange() {
 			if(SubLines.Count > 1)
-				SubLines[_reverse ? 0 : 1].Text = Text;
+				SubLines[reverse ? 0 : 1].Text = Text;
 		}
 		public override bool Contains(PointF point) {
 			return SubLines.Any(l => l.Contains(point));
@@ -727,14 +727,14 @@ namespace DiagramDrawer.Shapes {
 			if(dx == 0 || dy == 0)
 				base.SvgSave(writer);
 			else
-				foreach(Line l in SubLines)
+				foreach(var l in SubLines)
 					l.SvgSave(writer);
 		}
 	}
 	public class TwoArrowsAngle : OneArrowAngle {
 		public override void DrawTo(Graphics graphics) {
 			if(!(SubLines[0] is OneArrow)) {
-				Line l = SubLines[0];
+				var l = SubLines[0];
 				SubLines[0] = new OneArrow {
 					Origin = l.Pointed,
 					Pointed = l.Origin

@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Xml;
 using DiagramDrawer.Forms;
@@ -30,10 +31,10 @@ namespace DiagramDrawer.Shapes {
 		public virtual bool Contains(PointF point) {
 			return false;
 		}
-		bool _dragged;
+		bool dragged;
 		public bool Dragged {
 			get {
-				return _dragged;
+				return dragged;
 			}
 			set {
 				if(value) {
@@ -41,17 +42,15 @@ namespace DiagramDrawer.Shapes {
 						DragStart(this, EventArgs.Empty);
 				}
 				else
-					if(_dragged)
+					if(dragged)
 						if(DragEnd != null)
 							DragEnd(this, EventArgs.Empty);
-				_dragged = value;
+				dragged = value;
 			}
 		}
 		public bool Depends {
 			get {
 				return false;
-			}
-			set {
 			}
 		}
 		public void OpenMenu(PointF point) {
@@ -90,12 +89,12 @@ namespace DiagramDrawer.Shapes {
 		public string Text { get; set; }
 
 		public void Move(Point point) {
-			int x = point.X - Offset.X;
+			var x = point.X - Offset.X;
 			if(x < 0)
 				x = 0;
 			if(x > ShapeContainer.Width)
 				x = ShapeContainer.Width;
-			int y = point.Y - Offset.Y;
+			var y = point.Y - Offset.Y;
 			if(y < 0)
 				y = 0;
 			if(y > ShapeContainer.Height)
@@ -138,13 +137,13 @@ namespace DiagramDrawer.Shapes {
 				return true;
 			}
 		}
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
 		public Image Image {
 			get {
 				throw new NotImplementedException();
 			}
 		}
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
 		public Font Font {
 			get {
 				throw new NotImplementedException();
@@ -153,7 +152,7 @@ namespace DiagramDrawer.Shapes {
 				throw new NotImplementedException();
 			}
 		}
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
 		public Color BackgroundColor {
 			get {
 				throw new NotImplementedException();
@@ -162,7 +161,7 @@ namespace DiagramDrawer.Shapes {
 				throw new NotImplementedException();
 			}
 		}
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
 		public Color ForegroundColor {
 			get {
 				throw new NotImplementedException();

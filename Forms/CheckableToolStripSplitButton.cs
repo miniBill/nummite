@@ -24,51 +24,39 @@ using System.Windows.Forms;
 
 namespace DiagramDrawer.Forms {
 	public class CheckableToolStripSplitButton : ToolStripSplitButton {
-		static readonly Brush Bb = new LinearGradientBrush(new Point(0, 0), new Point(0, 22), Color.FromArgb(255, 220, 150), Color.FromArgb(255, 170, 80));
-		static readonly Brush Rb = new LinearGradientBrush(new Point(0, 0), new Point(0, 22), Color.FromArgb(255, 170, 80), Color.FromArgb(255, 220, 150));
-		Rectangle ButtonBound {
-			get {
-				return new Rectangle(ButtonBounds.X, ButtonBounds.Y, ButtonBounds.Width, ButtonBounds.Height - 1);
-			}
-		}
-		Rectangle DropBound {
-			get {
-				return new Rectangle(DropDownButtonBounds.X - 1, DropDownButtonBounds.Y, DropDownButtonBounds.Width, DropDownButtonBounds.Height - 1);
-			}
-		}
-		bool _over;
+		static readonly Brush backBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, 22), Color.FromArgb(255, 220, 150), Color.FromArgb(255, 170, 80));
+		static readonly Brush reversedBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, 22), Color.FromArgb(255, 170, 80), Color.FromArgb(255, 220, 150));
+
+		bool over;
 		protected override void OnMouseEnter(EventArgs e) {
-			_over = true;
+			over = true;
 			base.OnMouseEnter(e);
 		}
 		protected override void OnMouseLeave(EventArgs e) {
-			_over = false;
+			over = false;
 			base.OnMouseLeave(e);
 		}
 		protected override void OnPaint(PaintEventArgs e) {
-			Rectangle clip = e.ClipRectangle;
-			clip = new Rectangle(0, 0, Width, Height - 1);//HACK: needs os specific code
-			Rectangle btb = ButtonBound;
-			btb = new Rectangle(0, 0, 20, Height - 1);//HACK: needs os specific code
-			Rectangle ddb = DropBound;
-			ddb = new Rectangle(20, 0, Width - 20 - 1, Height - 1);//HACK: needs os specific code
+			var clip = new Rectangle(0, 0, Width, Height - 1);
+			var btb = new Rectangle(0, 0, 20, Height - 1);
+			var ddb = new Rectangle(20, 0, Width - 20 - 1, Height - 1);
 			if(Checked) {
-				e.Graphics.FillRectangle(_over ? Rb : Bb, clip);
+				e.Graphics.FillRectangle(over ? reversedBrush : backBrush, clip);
 				e.Graphics.DrawRectangles(Pens.Black, new[] { btb, ddb });
 			}
 			base.OnPaint(e);
 		}
-		bool _ck;
+		bool ck;
 
 		[Category("Appearance")]
 		[Description("Controls wheter the CheckableButton will appear checked")]
 		[DefaultValue(false)]
 		public bool Checked {
 			get {
-				return _ck;
+				return ck;
 			}
 			set {
-				_ck = value;
+				ck = value;
 				if(Parent != null)
 					Parent.Refresh();
 			}

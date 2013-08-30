@@ -18,6 +18,7 @@
 
 using System.Drawing;
 using System;
+using System.Xml;
 using DiagramDrawer.Properties;
 using DiagramDrawer.Export;
 
@@ -25,13 +26,13 @@ namespace DiagramDrawer.Shapes {
 	public class RoundedBox : Box {
 		public override PointF GetIntersection(PointF other) {
 			PointF c = Center;
-			float ox = other.X - c.X;
-			float oy = other.Y - c.Y;
+			var ox = other.X - c.X;
+			var oy = other.Y - c.Y;
 			if(ox == 0)
 				return new PointF(c.X, c.Y + Height / 2F * Math.Sign(oy));
-			float m = oy / ox;
-			float m1 = -Height / (Width - 2F * Roundness);
-			float m2 = -Height / (float)Width + (2F * Roundness) / Width;
+			var m = oy / ox;
+			var m1 = -Height / (Width - 2F * ROUNDNESS);
+			var m2 = -Height / (float)Width + (2F * ROUNDNESS) / Width;
 			PointF t;
 			if(m < m1)
 				t = VerticalIntersection(m, oy);
@@ -52,8 +53,8 @@ namespace DiagramDrawer.Shapes {
 			//a=w/2 b=h/2
 			//x=a*Sgn(ox)
 			//y=mx
-			float x = Width * Math.Sign(ox) / 2F;
-			float y = m * x;
+			var x = Width * Math.Sign(ox) / 2F;
+			var y = m * x;
 			return new PointF(x, y);
 		}
 		private PointF RoundIntersection(float ox, float oy) {
@@ -64,22 +65,22 @@ namespace DiagramDrawer.Shapes {
 			//a=1+m*m
 			//b=2*m*q
 			//c=q*q-r*r
-			float wh = Width / 2F;
-			float hh = Height / 2F;
-			const float r = Roundness;
-			float x0 = (wh - Roundness) * Math.Sign(ox);
-			float y0 = (hh - Roundness) * Math.Sign(oy);
-			float nx = ox - x0;
-			float ny = oy - y0;
-			float m = oy / ox;
-			float q = ny - m * nx;
-			float a = m * m + 1;
-			float b = 2 * m * q;
-			float c = q * q - r * r;
-			float d = b * b - 4 * a * c;
-			float ds = (float)Math.Sqrt(d);
-			float x = (-b + ds * Math.Sign(ox)) / (2F * a);
-			float y = m * x + q;
+			var wh = Width / 2F;
+			var hh = Height / 2F;
+			const float r = ROUNDNESS;
+			var x0 = (wh - ROUNDNESS) * Math.Sign(ox);
+			var y0 = (hh - ROUNDNESS) * Math.Sign(oy);
+			var nx = ox - x0;
+			var ny = oy - y0;
+			var m = oy / ox;
+			var q = ny - m * nx;
+			var a = m * m + 1;
+			var b = 2 * m * q;
+			var c = q * q - r * r;
+			var d = b * b - 4 * a * c;
+			var ds = (float)Math.Sqrt(d);
+			var x = (-b + ds * Math.Sign(ox)) / (2F * a);
+			var y = m * x + q;
 			return new PointF(x + x0, y + y0);
 		}
 		private PointF VerticalIntersection(float m, float oy) {
@@ -87,42 +88,42 @@ namespace DiagramDrawer.Shapes {
 			//y=mx
 			//y=b*Sng(oy)
 			//x=y/m
-			float y = Height * Math.Sign(oy) / 2F;
-			float x = y / m;
+			var y = Height * Math.Sign(oy) / 2F;
+			var x = y / m;
 			return new PointF(x, y);
 		}
-		const int Roundness = 10;
-		PointF _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, _e, _f, _g, _h;
+		const int ROUNDNESS = 10;
+		PointF p1, p2, p3, p4, p5, p6, p7, p8, e, f, g, h;
 		protected override void OnSizeChange() {
 			base.OnSizeChange();
 			SetPoints(Center);
 		}
 		protected override Point VCenter {
 			get {
-				Point c = base.VCenter;
+				var c = base.VCenter;
 				SetPoints(c);
 				return c;
 			}
 		}
 		protected override void DrawBackground(Graphics graphics) {
-			graphics.FillPolygon(BackBrush, new[] { _p1, _p2, _p5, _p6 });
-			graphics.FillPolygon(BackBrush, new[] { _p3, _p4, _p7, _p8 });
-			graphics.FillEllipse(BackBrush, _e.X, _e.Y, Roundness * 2, Roundness * 2);
-			graphics.FillEllipse(BackBrush, _f.X - Roundness * 2, _f.Y, Roundness * 2, Roundness * 2);
-			graphics.FillEllipse(BackBrush, _g.X - Roundness * 2, _g.Y - Roundness * 2, Roundness * 2, Roundness * 2);
-			graphics.FillEllipse(BackBrush, _h.X, _h.Y - Roundness * 2, Roundness * 2, Roundness * 2);
-			graphics.DrawLine(BorderPen, _p1, _p2);
-			graphics.DrawLine(BorderPen, _p3, _p4);
-			graphics.DrawLine(BorderPen, _p5, _p6);
-			graphics.DrawLine(BorderPen, _p7, _p8);
-			graphics.DrawArc(BorderPen, _e.X, _e.Y, Roundness * 2, Roundness * 2, 180, 90);
-			graphics.DrawArc(BorderPen, _f.X - Roundness * 2, _f.Y, Roundness * 2, Roundness * 2, 270, 90);
-			graphics.DrawArc(BorderPen, _g.X - Roundness * 2, _g.Y - Roundness * 2, Roundness * 2, Roundness * 2, 0, 90);
-			graphics.DrawArc(BorderPen, _h.X, _h.Y - Roundness * 2, Roundness * 2, Roundness * 2, 90, 90);
+			graphics.FillPolygon(BackBrush, new[] { p1, p2, p5, p6 });
+			graphics.FillPolygon(BackBrush, new[] { p3, p4, p7, p8 });
+			graphics.FillEllipse(BackBrush, e.X, e.Y, ROUNDNESS * 2, ROUNDNESS * 2);
+			graphics.FillEllipse(BackBrush, f.X - ROUNDNESS * 2, f.Y, ROUNDNESS * 2, ROUNDNESS * 2);
+			graphics.FillEllipse(BackBrush, g.X - ROUNDNESS * 2, g.Y - ROUNDNESS * 2, ROUNDNESS * 2, ROUNDNESS * 2);
+			graphics.FillEllipse(BackBrush, h.X, h.Y - ROUNDNESS * 2, ROUNDNESS * 2, ROUNDNESS * 2);
+			graphics.DrawLine(BorderPen, p1, p2);
+			graphics.DrawLine(BorderPen, p3, p4);
+			graphics.DrawLine(BorderPen, p5, p6);
+			graphics.DrawLine(BorderPen, p7, p8);
+			graphics.DrawArc(BorderPen, e.X, e.Y, ROUNDNESS * 2, ROUNDNESS * 2, 180, 90);
+			graphics.DrawArc(BorderPen, f.X - ROUNDNESS * 2, f.Y, ROUNDNESS * 2, ROUNDNESS * 2, 270, 90);
+			graphics.DrawArc(BorderPen, g.X - ROUNDNESS * 2, g.Y - ROUNDNESS * 2, ROUNDNESS * 2, ROUNDNESS * 2, 0, 90);
+			graphics.DrawArc(BorderPen, h.X, h.Y - ROUNDNESS * 2, ROUNDNESS * 2, ROUNDNESS * 2, 90, 90);
 		}
 		private void SetPoints(Point c) {
-			float a = Width / 2F;
-			float b = Height / 2F;
+			var a = Width / 2F;
+			var b = Height / 2F;
 			//e  1---2  f
 			// **     ** 
 			// *       * 
@@ -133,18 +134,18 @@ namespace DiagramDrawer.Shapes {
 			// *       * 
 			// **     ** 
 			//h  6---5  g
-			_p1 = new PointF(c.X - a + Roundness, c.Y - b);
-			_p2 = new PointF(c.X + a - Roundness, c.Y - b);
-			_p3 = new PointF(c.X + a, c.Y - b + Roundness);
-			_p4 = new PointF(c.X + a, c.Y + b - Roundness);
-			_p5 = new PointF(c.X + a - Roundness, c.Y + b);
-			_p6 = new PointF(c.X - a + Roundness, c.Y + b);
-			_p7 = new PointF(c.X - a, c.Y + b - Roundness);
-			_p8 = new PointF(c.X - a, c.Y - b + Roundness);
-			_e = new PointF(c.X - a, c.Y - b);
-			_f = new PointF(c.X + a, c.Y - b);
-			_g = new PointF(c.X + a, c.Y + b);
-			_h = new PointF(c.X - a, c.Y + b);
+			p1 = new PointF(c.X - a + ROUNDNESS, c.Y - b);
+			p2 = new PointF(c.X + a - ROUNDNESS, c.Y - b);
+			p3 = new PointF(c.X + a, c.Y - b + ROUNDNESS);
+			p4 = new PointF(c.X + a, c.Y + b - ROUNDNESS);
+			p5 = new PointF(c.X + a - ROUNDNESS, c.Y + b);
+			p6 = new PointF(c.X - a + ROUNDNESS, c.Y + b);
+			p7 = new PointF(c.X - a, c.Y + b - ROUNDNESS);
+			p8 = new PointF(c.X - a, c.Y - b + ROUNDNESS);
+			e = new PointF(c.X - a, c.Y - b);
+			f = new PointF(c.X + a, c.Y - b);
+			g = new PointF(c.X + a, c.Y + b);
+			h = new PointF(c.X - a, c.Y + b);
 		}
 		public override string ToString() {
 			return "Rettangolo arrotondato";
@@ -154,8 +155,8 @@ namespace DiagramDrawer.Shapes {
 				return Resources.RoundedBox;
 			}
 		}
-		public override void SvgSave(System.Xml.XmlWriter writer) {
-			Svg.WriteRoundedRectangle(writer, Location, new Size(Width, Height), BackgroundColor, BorderPen, Roundness);
+		public override void SvgSave(XmlWriter writer) {
+			Svg.WriteRoundedRectangle(writer, Location, new Size(Width, Height), BackgroundColor, BorderPen, ROUNDNESS);
 			Svg.WriteText(writer, Center, ForegroundColor, Font, Text);
 		}
 	}
