@@ -7,7 +7,7 @@ namespace DiagramDrawer.Forms {
 			InitializeComponent();
 			LoadPageIndex();
 		}
-		private void LoadPageIndex() {
+		void LoadPageIndex() {
 			throw new NotImplementedException();
 		}
 	}

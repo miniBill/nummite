@@ -39,23 +39,23 @@ namespace DiagramDrawer.Forms {
 			si.ShowDialog();
 			return si.DialogResult;
 		}
-		private StringInput() {
+		StringInput() {
 			InitializeComponent();
 		}
 		bool isok;
-		private void Button2Click(object sender, EventArgs e) {
+		void Button2Click(object sender, EventArgs e) {
 			Close();
 		}
-		private void Button1Click(object sender, EventArgs e) {
+		void Button1Click(object sender, EventArgs e) {
 			isok = true;
 			Close();
 		}
-		private void StringInput_FormClosed(object sender, FormClosedEventArgs e) {
+		void StringInput_FormClosed(object sender, FormClosedEventArgs e) {
 			LastResult = textBox1.Text;
 			DialogResult = isok ? DialogResult.OK : DialogResult.Cancel;
 		}
 
-		private void TextBox1KeyDown(object sender, KeyEventArgs e) {
+		void TextBox1KeyDown(object sender, KeyEventArgs e) {
 			if(e.KeyCode != Keys.Enter && e.KeyCode != Keys.Escape)
 				return;
 			e.Handled = true;

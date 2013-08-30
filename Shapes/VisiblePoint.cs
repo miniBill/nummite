@@ -41,10 +41,10 @@ namespace DiagramDrawer.Shapes {
 		public override void EndInitialize(KeyedCollection<string, IShape> list) {
 			Open = false;
 		}
-		private void ShowClick(object sender, EventArgs e) {
+		void ShowClick(object sender, EventArgs e) {
 			Open = true;
 		}
-		private void HideClick(object sender, EventArgs e) {
+		void HideClick(object sender, EventArgs e) {
 			Open = false;
 		}
 		public override string ToString() {

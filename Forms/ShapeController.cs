@@ -87,7 +87,7 @@ namespace DiagramDrawer.Forms
 					MiddleDoubleClick(sender, e);
 		}
 		public event EventHandler MiddleDoubleClick;
-		private static T GetIstance<T>(Type t) where T : class
+		static T GetIstance<T>(Type t) where T : class
 		{
 			if (t == null)
 				throw new ArgumentNullException("t", "type cannot be null");
@@ -234,7 +234,7 @@ namespace DiagramDrawer.Forms
 				Saved(this, EventArgs.Empty);
 		}
 		public event EventHandler Saved;
-		private void SaveSize(XmlWriter writer)
+		void SaveSize(XmlWriter writer)
 		{
 			writer.WriteStartElement("size");
 			writer.WriteAttributeString("width", container.Width.ToString(CultureInfo.InvariantCulture));
@@ -332,35 +332,6 @@ namespace DiagramDrawer.Forms
 			};
 			using (var writer = XmlWriter.Create(filename, sett))
 				Svg.Save(writer, container.ShapeList, container.Size);
-		}
-		public bool AutoResizeable
-		{
-			get
-			{
-				return false;
-			}
-		}
-		public bool AutoResizeWidth
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
-		public bool AutoResizeHeight
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
 		}
 	}
 }

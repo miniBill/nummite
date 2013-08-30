@@ -49,8 +49,7 @@ namespace DiagramDrawer.Forms
 			set
 			{
 				linkMode = value;
-				if (!LinkMode)
-					linking = false;
+				linking &= linkMode;
 			}
 		}
 		public ShapeContainer()
@@ -79,7 +78,7 @@ namespace DiagramDrawer.Forms
 		/// Draw moving shapes on front
 		/// Draw front
 		/// </summary>
-		private void RegenImage()
+		void RegenImage()
 		{
 			current.Dispose();
 			current = (Bitmap)back.Clone();
@@ -87,7 +86,7 @@ namespace DiagramDrawer.Forms
 			using (var g = CreateGraphics())
 				g.DrawImageUnscaled(current, Point.Empty);
 		}
-		private void DrawMovingShapes()
+		void DrawMovingShapes()
 		{
 			using (var f = Graphics.FromImage(current))
 				foreach (IShape s in ShapeList.Where(s => s.Dragged || s.Depends))
@@ -101,7 +100,7 @@ namespace DiagramDrawer.Forms
 			set;
 		}
 
-		private void ShapeContainer_MouseDown(object sender, MouseEventArgs e)
+		void ShapeContainer_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
 				if (!LinkMode)
@@ -119,7 +118,7 @@ namespace DiagramDrawer.Forms
 		/// </summary>
 		Line linkingPointer;
 
-		private void OnLeftLinkClick(Point p)
+		void OnLeftLinkClick(Point p)
 		{
 			var s = GetSelectedShape(p, true);
 			if (s == null)
@@ -129,7 +128,7 @@ namespace DiagramDrawer.Forms
 			AddLinkingShapes(p, s);
 			RegenImage();
 		}
-		private void ClearAndDrawShapesToBack()
+		void ClearAndDrawShapesToBack()
 		{
 			using (var b = Graphics.FromImage(back))
 			{
@@ -138,7 +137,7 @@ namespace DiagramDrawer.Forms
 					nD.DrawTo(b);
 			}
 		}
-		private void AddLinkingShapes(Point p, IShape s)
+		void AddLinkingShapes(Point p, IShape s)
 		{
 			//Point
 			var point = new InvisiblePoint();
@@ -156,7 +155,7 @@ namespace DiagramDrawer.Forms
 			AddShape(pointer);
 			point.Move(p);
 		}
-		private static T GetIstance<T>(Type lineType) where T : class
+		static T GetIstance<T>(Type lineType) where T : class
 		{
 			return lineType.GetConstructor(Type.EmptyTypes).Invoke(new object[] { }) as T;
 		}
@@ -169,16 +168,16 @@ namespace DiagramDrawer.Forms
 					selected.Add(s);
 				s.Dragged = false;
 			}
-			var i = selected.Select(sh => ShapeList.IndexOf(sh)).Concat(new[] { -1 }).Max();
+			var i = selected.Select (ShapeList.IndexOf).Concat(new[] { -1 }).Max();
 			return i < 0 ? null : ShapeList[i];
 		}
-		private void OnRightNonLinkClick(Point p)
+		void OnRightNonLinkClick(Point p)
 		{
 			var s = GetSelectedShape(p, false);
 			if (s != null)
 				s.OpenMenu(p);
 		}
-		private void OnLeftNonLinkClick(Point p)
+		void OnLeftNonLinkClick(Point p)
 		{
 			using (var b = Graphics.FromImage(back))
 			{
@@ -201,7 +200,7 @@ namespace DiagramDrawer.Forms
 			}
 			RegenImage();
 		}
-		private void ShapeContainer_MouseMove(object sender, MouseEventArgs e)
+		void ShapeContainer_MouseMove(object sender, MouseEventArgs e)
 		{
 			var drag = false;
 			var parent = Parent as ScrollableControl;
@@ -228,7 +227,7 @@ namespace DiagramDrawer.Forms
 				RegenImage();
 		}
 		public new event EventHandler<ShapeEventArgs> Click;
-		private void ShapeContainer_MouseUp(object sender, MouseEventArgs e)
+		void ShapeContainer_MouseUp(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right && !LinkMode)
 			{
@@ -252,7 +251,7 @@ namespace DiagramDrawer.Forms
 			if ((Click != null) && (selected != null))
 				Click.Invoke(this, new ShapeEventArgs(selected));
 		}
-		private void TryLink(Point location)
+		void TryLink(Point location)
 		{
 			linking = false;
 			linkingPoint.Dragged = false;
@@ -305,7 +304,7 @@ namespace DiagramDrawer.Forms
 			ForceRefresh();
 		}
 
-		private void AddShapeAtPoint(IShape shape, Point point)
+		void AddShapeAtPoint(IShape shape, Point point)
 		{
 			shape.Name = GetNextName(0);
 			if (shape.Text.Length == 0 && !(shape is Line))
@@ -314,7 +313,7 @@ namespace DiagramDrawer.Forms
 			DoAddShape(shape);
 		}
 		bool suspended;
-		private void DoAddShape(IShape shape)
+		void DoAddShape(IShape shape)
 		{
 			ShapeList.Add(shape);
 			shape.ShapeContainer = this;
@@ -325,7 +324,7 @@ namespace DiagramDrawer.Forms
 			RegenImage();
 		}
 
-		private void AddShape(IShape shape)
+		void AddShape(IShape shape)
 		{
 			var parent = Parent as ScrollableControl;
 			if (parent == null)
@@ -333,7 +332,7 @@ namespace DiagramDrawer.Forms
 			var p = new Point(-parent.AutoScrollPosition.X, -parent.AutoScrollPosition.Y);
 			AddShapeAtPoint(shape, p);
 		}
-		private string GetNextName(int p)
+		string GetNextName(int p)
 		{
 			while (true)
 			{
@@ -356,7 +355,7 @@ namespace DiagramDrawer.Forms
 				e.EndInitialize(ShapeList);
 			ForceRefresh();
 		}
-		private void ShapeContainer_MouseDoubleClick(object sender, MouseEventArgs e)
+		void ShapeContainer_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			var selectedShape = GetSelectedShape(e.Location, false);
 			if (selectedShape == null || selectedShape is ImageBox)
@@ -395,7 +394,7 @@ namespace DiagramDrawer.Forms
 			Refresh();
 		}
 
-		private void Suspend()
+		void Suspend()
 		{
 			suspended = true;
 		}
@@ -419,7 +418,7 @@ namespace DiagramDrawer.Forms
 		{
 			TogglePoints(true);
 		}
-		private void TogglePoints(bool show)
+		void TogglePoints(bool show)
 		{
 			foreach (var s in ShapeList)
 			{

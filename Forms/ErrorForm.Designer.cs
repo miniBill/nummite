@@ -3,7 +3,7 @@
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		readonly System.ComponentModel.IContainer components;
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -22,83 +22,83 @@
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void InitializeComponent() {
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.SuspendLayout();
+		void InitializeComponent() {
+			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			textBox1 = new System.Windows.Forms.TextBox();
+			button1 = new System.Windows.Forms.Button();
+			button2 = new System.Windows.Forms.Button();
+			tableLayoutPanel1.SuspendLayout();
+			SuspendLayout();
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.button1, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.button2, 1, 1);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
-			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(292, 266);
-			this.tableLayoutPanel1.TabIndex = 0;
+			tableLayoutPanel1.ColumnCount = 2;
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel1.Controls.Add(textBox1, 0, 0);
+			tableLayoutPanel1.Controls.Add(button1, 0, 1);
+			tableLayoutPanel1.Controls.Add(button2, 1, 1);
+			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
+			tableLayoutPanel1.RowCount = 2;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.Size = new System.Drawing.Size(292, 266);
+			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// textBox1
 			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.textBox1, 2);
-			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox1.Location = new System.Drawing.Point(13, 13);
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(266, 211);
-			this.textBox1.TabIndex = 0;
+			tableLayoutPanel1.SetColumnSpan(textBox1, 2);
+			textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			textBox1.Location = new System.Drawing.Point(13, 13);
+			textBox1.Multiline = true;
+			textBox1.Name = "textBox1";
+			textBox1.Size = new System.Drawing.Size(266, 211);
+			textBox1.TabIndex = 0;
 			// 
 			// button1
 			// 
-			this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button1.AutoSize = true;
-			this.button1.Location = new System.Drawing.Point(24, 230);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(107, 23);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "Copia negli appunti";
-			this.button1.Click += new System.EventHandler(this.Button1Click);
+			button1.Anchor = System.Windows.Forms.AnchorStyles.None;
+			button1.AutoSize = true;
+			button1.Location = new System.Drawing.Point(24, 230);
+			button1.Name = "button1";
+			button1.Size = new System.Drawing.Size(107, 23);
+			button1.TabIndex = 1;
+			button1.Text = "Copia negli appunti";
+			button1.Click += new System.EventHandler(Button1Click);
 			// 
 			// button2
 			// 
-			this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button2.AutoSize = true;
-			this.button2.Location = new System.Drawing.Point(176, 230);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "Chiudi";
-			this.button2.Click += new System.EventHandler(this.Button2Click);
+			button2.Anchor = System.Windows.Forms.AnchorStyles.None;
+			button2.AutoSize = true;
+			button2.Location = new System.Drawing.Point(176, 230);
+			button2.Name = "button2";
+			button2.Size = new System.Drawing.Size(75, 23);
+			button2.TabIndex = 2;
+			button2.Text = "Chiudi";
+			button2.Click += new System.EventHandler(Button2Click);
 			// 
 			// ErrorForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(292, 266);
-			this.Controls.Add(this.tableLayoutPanel1);
-			this.Name = "ErrorForm";
-			this.Text = "ErrorForm";
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.ResumeLayout(false);
+			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			ClientSize = new System.Drawing.Size(292, 266);
+			Controls.Add(tableLayoutPanel1);
+			Name = "ErrorForm";
+			Text = "ErrorForm";
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel1.PerformLayout();
+			ResumeLayout (false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
+		System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		System.Windows.Forms.TextBox textBox1;
+		System.Windows.Forms.Button button1;
+		System.Windows.Forms.Button button2;
 	}
 }

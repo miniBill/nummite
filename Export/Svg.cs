@@ -79,9 +79,9 @@ namespace DiagramDrawer.Export {
 		}
 
 		static string ColorString(Color c) {
-			if(c.IsNamedColor)
-				return c.Name.ToLowerInvariant();
-			return "#" + c.Name.ToLowerInvariant().Substring(2);
+			return c.IsNamedColor
+				? c.Name.ToLowerInvariant () 
+				: "#" + c.Name.ToLowerInvariant ().Substring (2);
 		}
 
 		public static void WriteLine(XmlWriter writer, PointF from, PointF to, Pen pen) {
@@ -134,7 +134,7 @@ namespace DiagramDrawer.Export {
 			writer.WriteEndElement();
 		}
 
-		private static string SafeString(float f) {
+		static string SafeString(float f) {
 			return f.ToString(CultureInfo.InvariantCulture).Replace(',', '.');
 		}
 

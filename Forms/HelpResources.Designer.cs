@@ -17,13 +17,13 @@ namespace DiagramDrawer.Forms {
     // Per aggiungere o rimuovere un membro, modificare il file con estensione ResX ed eseguire nuovamente ResGen
     // con l'opzione /str oppure ricompilare il progetto VS.
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
     internal class HelpResources {
         
-        private static global::System.Resources.ResourceManager resourceMan;
+        static global::System.Resources.ResourceManager resourceMan;
         
-        private static global::System.Globalization.CultureInfo resourceCulture;
+        static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal HelpResources() {
@@ -36,7 +36,7 @@ namespace DiagramDrawer.Forms {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DiagramDrawer.Forms.HelpResources", typeof(HelpResources).Assembly);
+                    var temp = new global::System.Resources.ResourceManager("DiagramDrawer.Forms.HelpResources", typeof(HelpResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

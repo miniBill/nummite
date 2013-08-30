@@ -29,30 +29,28 @@ namespace DiagramDrawer.Shapes {
 		public string FileName {
 			set {
 				filename = value;
-				if(value.Length == 0) {
-					if(image != null)
-						image.Dispose();
-					image = new Bitmap(100, 50);
+				if (value.Length == 0) {
+					if (image != null)
+						image.Dispose ();
+					image = new Bitmap (100, 50);
 					Width = 100;
 					Height = 50;
-					using(var g = Graphics.FromImage(image)) {
-						g.DrawLine(Pens.Red, 0, 0, Width, Height);
-						g.DrawLine(Pens.Red, 0, Height, Width, 0);
-						g.DrawLines(Pens.Black, new[] {
-						new Point(0, 0),
-						new Point(Width - 1, 0),
-						new Point(Width - 1, Height - 1),
-						new Point(0, Height - 1),
-						new Point(0, 0)
-					});
+					using (var g = Graphics.FromImage(image)) {
+						g.DrawLine (Pens.Red, 0, 0, Width, Height);
+						g.DrawLine (Pens.Red, 0, Height, Width, 0);
+						g.DrawLines (Pens.Black, new[] {
+							new Point (0, 0),
+							new Point (Width - 1, 0),
+							new Point (Width - 1, Height - 1),
+							new Point (0, Height - 1),
+							new Point (0, 0)
+						});
 					}
-				}
-				else
+				} else
 					try {
-						var temp = Image.FromFile(filename);
+						var temp = Image.FromFile (filename);
 						ShownImage = temp;
-					}
-					catch(FileNotFoundException) {
+					} catch (FileNotFoundException) {
 						FileName = String.Empty;
 					}
 			}
@@ -104,40 +102,40 @@ namespace DiagramDrawer.Shapes {
 			}
 		}
 		public override void Load(XmlReader reader) {
-			while(!reader.EOF) {
-				switch(reader.Name) {
+			while (!reader.EOF) {
+				switch (reader.Name) {
 					case "name":
-						ReadName(reader);
+						ReadName (reader);
 						break;
 					case "location":
-						ReadLocation(reader);
+						ReadLocation (reader);
 						break;
 					case "size":
-						ReadSize(reader);
+						ReadSize (reader);
 						break;
 					case "image":
-						ReadImage(reader);
+						ReadImage (reader);
 						break;
 				}
-				reader.ReadEndElement();
+				reader.ReadEndElement ();
 			}
 		}
-		private void ReadImage(XmlReader reader) {
-			if(reader.MoveToAttribute("path"))
-				FileName = reader.ReadString();
+		void ReadImage(XmlReader reader) {
+			if (reader.MoveToAttribute ("path"))
+				FileName = reader.ReadString ();
 			else
-				MessageBox.Show("Error loading imageBox: path couldn't be read");
+				MessageBox.Show ("Error loading imageBox: path couldn't be read");
 		}
 		public override void Save(XmlWriter writer) {
-			SaveName(writer);
-			SaveLocation(writer);
-			SaveSize(writer);
-			SaveImage(writer);
+			SaveName (writer);
+			SaveLocation (writer);
+			SaveSize (writer);
+			SaveImage (writer);
 		}
-		private void SaveImage(XmlWriter writer) {
-			writer.WriteStartElement("image");
-			writer.WriteAttributeString("path", filename);
-			writer.WriteEndElement();
+		void SaveImage(XmlWriter writer) {
+			writer.WriteStartElement ("image");
+			writer.WriteAttributeString ("path", filename);
+			writer.WriteEndElement ();
 		}
 	}
 }

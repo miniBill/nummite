@@ -3,7 +3,7 @@ namespace DiagramDrawer.Forms {
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		readonly System.ComponentModel.IContainer components;
 
 		/// <summary> 
 		/// Clean up any resources being used.
@@ -24,19 +24,19 @@ namespace DiagramDrawer.Forms {
 		/// Required method for Designer support - do not modify 
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void InitializeComponent() {
-			this.SuspendLayout();
+		void InitializeComponent() {
+			SuspendLayout();
 			// 
 			// ShapeContainer
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Name = "ShapeContainer";
-			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ShapeContainer_MouseMove);
-			this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ShapeContainer_MouseDoubleClick);
-			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShapeContainer_MouseDown);
-			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShapeContainer_MouseUp);
-			this.ResumeLayout(false);
+			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			Name = "ShapeContainer";
+			MouseMove += new System.Windows.Forms.MouseEventHandler(ShapeContainer_MouseMove);
+			MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(ShapeContainer_MouseDoubleClick);
+			MouseDown += new System.Windows.Forms.MouseEventHandler(ShapeContainer_MouseDown);
+			MouseUp += new System.Windows.Forms.MouseEventHandler(ShapeContainer_MouseUp);
+			ResumeLayout (false);
 
 		}
 

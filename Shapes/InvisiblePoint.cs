@@ -56,7 +56,7 @@ namespace DiagramDrawer.Shapes {
 		public void OpenMenu(PointF point) {
 
 		}
-		private void Delete() {
+		void Delete() {
 			ShapeContainer.RemoveShape(this);
 			if(Deleted != null)
 				Deleted(this, EventArgs.Empty);
@@ -73,16 +73,10 @@ namespace DiagramDrawer.Shapes {
 			get {
 				return 0;
 			}
-			set {
-				throw new NotImplementedException();
-			}
 		}
 		public int Height {
 			get {
 				return 0;
-			}
-			set {
-				throw new NotImplementedException();
 			}
 		}
 

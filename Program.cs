@@ -40,7 +40,7 @@ namespace DiagramDrawer
 				string error = string.Empty;
 				try
 				{
-					string version = Encoding.UTF8.GetString(Resources.version);
+					string version = Encoding.UTF8.GetString(Resources.Version);
 					version = "Version: " + version.Substring(0, version.Length - 1);
 					error = Inspect(version, e);
 				}
@@ -60,7 +60,7 @@ namespace DiagramDrawer
 
 		}
 
-		private static string Inspect(string p, Exception e)
+		static string Inspect(string p, Exception e)
 		{
 			while (true)
 			{

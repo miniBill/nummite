@@ -3,7 +3,7 @@
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		readonly System.ComponentModel.IContainer components;
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -22,96 +22,96 @@
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void InitializeComponent() {
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.treeView1 = new System.Windows.Forms.TreeView();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.panel = new System.Windows.Forms.Panel();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.SuspendLayout();
+		void InitializeComponent() {
+			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			treeView1 = new System.Windows.Forms.TreeView();
+			button1 = new System.Windows.Forms.Button();
+			button2 = new System.Windows.Forms.Button();
+			panel = new System.Windows.Forms.Panel();
+			tableLayoutPanel1.SuspendLayout();
+			SuspendLayout();
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.ColumnCount = 3;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Controls.Add(this.treeView1, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.button1, 2, 1);
-			this.tableLayoutPanel1.Controls.Add(this.button2, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.panel, 1, 0);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
-			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(428, 266);
-			this.tableLayoutPanel1.TabIndex = 0;
+			tableLayoutPanel1.ColumnCount = 3;
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel1.Controls.Add(treeView1, 0, 0);
+			tableLayoutPanel1.Controls.Add(button1, 2, 1);
+			tableLayoutPanel1.Controls.Add(button2, 1, 1);
+			tableLayoutPanel1.Controls.Add(panel, 1, 0);
+			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
+			tableLayoutPanel1.RowCount = 2;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel1.Size = new System.Drawing.Size(428, 266);
+			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// treeView1
 			// 
-			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeView1.Location = new System.Drawing.Point(13, 13);
-			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(84, 211);
-			this.treeView1.TabIndex = 0;
-			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1AfterSelect);
+			treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			treeView1.Location = new System.Drawing.Point(13, 13);
+			treeView1.Name = "treeView1";
+			treeView1.Size = new System.Drawing.Size(84, 211);
+			treeView1.TabIndex = 0;
+			treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(TreeView1AfterSelect);
 			// 
 			// button1
 			// 
-			this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button1.Location = new System.Drawing.Point(340, 230);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 2;
-			this.button1.Text = "Annulla";
-			this.button1.Click += new System.EventHandler(this.Button1Click);
+			button1.Anchor = System.Windows.Forms.AnchorStyles.None;
+			button1.Location = new System.Drawing.Point(340, 230);
+			button1.Name = "button1";
+			button1.Size = new System.Drawing.Size(75, 23);
+			button1.TabIndex = 2;
+			button1.Text = "Annulla";
+			button1.Click += new System.EventHandler(Button1Click);
 			// 
 			// button2
 			// 
-			this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.button2.Location = new System.Drawing.Point(259, 230);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 3;
-			this.button2.Text = "Ok";
-			this.button2.Click += new System.EventHandler(this.Button2Click);
+			button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			button2.Location = new System.Drawing.Point(259, 230);
+			button2.Name = "button2";
+			button2.Size = new System.Drawing.Size(75, 23);
+			button2.TabIndex = 3;
+			button2.Text = "Ok";
+			button2.Click += new System.EventHandler(Button2Click);
 			// 
 			// panel
 			// 
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(103, 13);
-			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(231, 211);
-			this.panel.TabIndex = 4;
+			panel.Dock = System.Windows.Forms.DockStyle.Fill;
+			panel.Location = new System.Drawing.Point(103, 13);
+			panel.Name = "panel";
+			panel.Size = new System.Drawing.Size(231, 211);
+			panel.TabIndex = 4;
 			// 
 			// OptionsForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(428, 266);
-			this.Controls.Add(this.tableLayoutPanel1);
-			this.Name = "OptionsForm";
-			this.Text = "OptionsForm";
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.ResumeLayout(false);
+			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			ClientSize = new System.Drawing.Size(428, 266);
+			Controls.Add(tableLayoutPanel1);
+			Name = "OptionsForm";
+			Text = "OptionsForm";
+			tableLayoutPanel1.ResumeLayout(false);
+			ResumeLayout (false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.TreeView treeView1;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Panel panel;
+		System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		System.Windows.Forms.TreeView treeView1;
+		System.Windows.Forms.Button button1;
+		System.Windows.Forms.Button button2;
+		System.Windows.Forms.Panel panel;
 	}
 }

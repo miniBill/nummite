@@ -198,6 +198,7 @@
     <Compile Include="Shapes\RoundedBox.cs" />
     <Compile Include="Shapes\Text.cs" />
     <Compile Include="Shapes\VisiblePoint.cs" />
+    <Compile Include="Shapes\IDimension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Book.png" />

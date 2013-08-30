@@ -35,16 +35,16 @@ namespace DiagramDrawer.Shapes {
 				var qa = Height / 2F * Math.Sign(ox);
 				float ma = -Height;
 				ma /= Width;
-				if(oy >= 0)
-					return oy < (ox * ma + qa);
-				return oy > (ox * ma + qa);
+				return oy >= 0
+					? oy < (ox * ma + qa)
+					: oy > (ox * ma + qa);
 			}
 			var qb = -Height / 2F * Math.Sign(ox);
 			float mb = Height;
 			mb /= Width;
-			if(oy >= 0)
-				return oy < (ox * mb + qb);
-			return oy > (ox * mb + qb);
+			return oy >= 0
+				? oy < (ox * mb + qb)
+				: oy > (ox * mb + qb);
 		}
 		public override PointF GetIntersection(PointF other) {
 			PointF c = Center;

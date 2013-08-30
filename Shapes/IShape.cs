@@ -23,7 +23,7 @@ using System.Xml;
 using DiagramDrawer.Forms;
 
 namespace DiagramDrawer.Shapes {
-	public interface IShape : IDisposable, IAutoSizeable {
+	public interface IShape : IDisposable, IDimension {
 		bool Contains(PointF point);
 		bool Dragged {
 			get;

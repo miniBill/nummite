@@ -66,13 +66,13 @@ namespace DiagramDrawer.Forms {
 			//the following code recreates the shapeContainer back image
 			Controller.Width = shapeContainer1.Width;
 		}
-		private void CheckForUpdates() {
+		void CheckForUpdates() {
 			try {
 				var client = new WebClient();
 				var buff = client.DownloadData(Options.UpdateUrl);
 				var gnu = Encoding.UTF8.GetString(buff);
 				gnu = gnu.Substring(0, gnu.Length - 1);
-				var old = Encoding.UTF8.GetString(Resources.version);
+				var old = Encoding.UTF8.GetString(Resources.Version);
 				old = old.Substring(0, old.Length - 1);
 				if(gnu != old)
 					MessageBox.Show("E' disponibile una nuova versione! [" + gnu + "]" +
@@ -95,12 +95,12 @@ namespace DiagramDrawer.Forms {
 			Controller.SetCursor(CrossCursor);
 			linkModeTS.Owner.Refresh();
 		}
-		private void SetDefaultObject(IShape e) {
+		void SetDefaultObject(IShape e) {
 			libraryTS.Image = e.Image;
 			libraryTS.Tag = e.GetType();
 			libraryTS.Text = e.ToString();
 		}
-		private static void AddShapeType(Type t, ToolStripDropDownItem dropDownItem,
+		static void AddShapeType(Type t, ToolStripDropDownItem dropDownItem,
 			EventHandler handler) {
 			var istance = GetIstance<IShape>(t);
 			if(istance == null)
@@ -136,25 +136,23 @@ namespace DiagramDrawer.Forms {
 			libraryTS.Text = istance.ToString();
 			Controller.ShapeType = t;
 		}
-		private static T GetIstance<T>(Type t) where T : class {
+		static T GetIstance<T>(Type t) where T : class {
 			if(t == null)
 				throw new ArgumentNullException("t", "type cannot be null");
 			return t.GetConstructor(Type.EmptyTypes).Invoke(new object[] { }) as T;
 		}
-		private void LibraryTsButtonClick(object sender, EventArgs e) {
+		void LibraryTsButtonClick(object sender, EventArgs e) {
 			if(libraryTS.Tag == null)
 				return;
 			Controller.AddCurrentShapeAtPoint(Point.Empty);
 		}
-		private Cursor CrossCursor {
+		Cursor CrossCursor {
 			get {
-				if(locks.Values.Any(ls => ls != LockState.Off))
-					return Cursors.Cross;
+				return locks.Values.All (ls => ls == LockState.Off) ? Cursors.Default : Cursors.Cross;
 
-				return Cursors.Default;
 			}
 		}
-		private void ShapeContainer1Click(object sender, ShapeEventArgs e) {
+		void ShapeContainer1Click(object sender, ShapeEventArgs e) {
 			if(CrossCursor == Cursors.Default)
 				return;
 			if(fontTS.Checked)
@@ -171,13 +169,13 @@ namespace DiagramDrawer.Forms {
 				SetLock(t, LockChange.Click);
 			Controller.ForceRefresh();
 		}
-		private void AboutToolStripMenuItemClick(object sender, EventArgs e) {
+		void AboutToolStripMenuItemClick(object sender, EventArgs e) {
 			new AboutBox().Show(this);
 		}
-		private void PrintDocument1PrintPage(object sender, PrintPageEventArgs e) {
+		void PrintDocument1PrintPage(object sender, PrintPageEventArgs e) {
 			Controller.PrintTo(e.Graphics, e.MarginBounds);
 		}
-		private void PrintToolStripButtonClick(object sender, EventArgs e) {
+		void PrintToolStripButtonClick(object sender, EventArgs e) {
 			try {
 				printDocument1.Print();
 			}
@@ -185,66 +183,66 @@ namespace DiagramDrawer.Forms {
 				MessageBox.Show("Nessuna stampante!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, Rtl());
 			}
 		}
-		private MessageBoxOptions Rtl() {
-			if(RightToLeft == RightToLeft.Yes)
-				return MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading;
-			return 0;
+		MessageBoxOptions Rtl() {
+			return RightToLeft == RightToLeft.Yes
+				? MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+				: 0;
 		}
-		private void PrintPreviewToolStripMenuItemClick(object sender, EventArgs e) {
+		void PrintPreviewToolStripMenuItemClick(object sender, EventArgs e) {
 			printPreviewDialog1.ShowDialog(this);
 		}
-		private void PrintToolStripMenuItemClick(object sender, EventArgs e) {
+		void PrintToolStripMenuItemClick(object sender, EventArgs e) {
 			printDocument1.Print();
 		}
-		private void OpenToolStripButtonClick(object sender, EventArgs e) {
+		void OpenToolStripButtonClick(object sender, EventArgs e) {
 			Open();
 		}
-		private void OpenToolStripMenuItemClick(object sender, EventArgs e) {
+		void OpenToolStripMenuItemClick(object sender, EventArgs e) {
 			Open();
 		}
-		private void Open() {
+		void Open() {
 			if(openFileDialog1.ShowDialog() != DialogResult.OK)
 				return;
 			Controller.Open(openFileDialog1.FileName);
 		}
-		private void SaveToolStripButtonClick(object sender, EventArgs e) {
+		void SaveToolStripButtonClick(object sender, EventArgs e) {
 			Save();
 		}
-		private void SaveToolStripMenuItemClick(object sender, EventArgs e) {
+		void SaveToolStripMenuItemClick(object sender, EventArgs e) {
 			Save();
 		}
-		private void Save() {
+		void Save() {
 			if(Controller.Filename.Length == 0)
 				SaveAs();
 			else
 				Controller.Save();
 		}
-		private void SaveAs() {
+		void SaveAs() {
 			if(saveFileDialog1.ShowDialog() != DialogResult.OK)
 				return;
 			Save(saveFileDialog1.FileName);
 		}
-		private void Save(string filename) {
+		void Save(string filename) {
 			Controller.Save(filename);
 			modified = false;
 		}
-		private void NewToolStripMenuItemClick(object sender, EventArgs e) {
+		void NewToolStripMenuItemClick(object sender, EventArgs e) {
 			New();
 		}
-		private void New() {
+		void New() {
 			Controller.New();
 			Text = "Diagram Drawer";
 		}
-		private void NewToolStripButtonClick(object sender, EventArgs e) {
+		void NewToolStripButtonClick(object sender, EventArgs e) {
 			New();
 		}
-		private void ShapeContainer1Link(object sender, EventArgs e) {
+		void ShapeContainer1Link(object sender, EventArgs e) {
 			if(locks[linkModeTS] == LockState.Locked)
 				Controller.LinkMode = true;
 			else
 				SetLock(linkModeTS, LockChange.Clear);
 		}
-		private void SaveAsToolStripMenuItemClick(object sender, EventArgs e) {
+		void SaveAsToolStripMenuItemClick(object sender, EventArgs e) {
 			SaveAs();
 		}
 		enum LockChange {
@@ -253,7 +251,7 @@ namespace DiagramDrawer.Forms {
 			Clear,
 			Set
 		}
-		private void SetLock(CheckableToolStripSplitButton button, LockChange lockChange) {
+		void SetLock(CheckableToolStripSplitButton button, LockChange lockChange) {
 			if(lockChange == LockChange.Clear) {
 				if(!locks.ContainsKey(button))
 					locks.Add(button, LockState.Off);
@@ -271,7 +269,7 @@ namespace DiagramDrawer.Forms {
 			if(button == linkModeTS)
 				Controller.LinkMode = linkModeTS.Checked;
 		}
-		private void SetButton(CheckableToolStripSplitButton button, LockChange lockChange) {
+		void SetButton(CheckableToolStripSplitButton button, LockChange lockChange) {
 			switch(locks[button]) {
 				case LockState.On:
 					if(lockChange == LockChange.Click)
@@ -284,10 +282,9 @@ namespace DiagramDrawer.Forms {
 						ClearLocks();
 					else
 						SetLock(linkModeTS, LockChange.Clear);
-					if(lockChange == LockChange.DoubleClick)
-						locks[button] = LockState.Locked;
-					else
-						locks[button] = LockState.On;
+					locks [button] = lockChange == LockChange.DoubleClick
+						? LockState.Locked
+						: LockState.On;
 					break;
 				case LockState.Locked:
 					if(lockChange == LockChange.DoubleClick)
@@ -295,7 +292,7 @@ namespace DiagramDrawer.Forms {
 					break;
 			}
 		}
-		private void AddButton(CheckableToolStripSplitButton button, LockChange lockChange) {
+		void AddButton(CheckableToolStripSplitButton button, LockChange lockChange) {
 			if(button == linkModeTS)
 				ClearLocks();
 			else
@@ -304,28 +301,28 @@ namespace DiagramDrawer.Forms {
 			locks.Add(button, lockChange == LockChange.DoubleClick ? LockState.Locked : LockState.On);
 		}
 
-		private void ClearLocks() {
+		void ClearLocks() {
 			var l = new CheckableToolStripSplitButton[locks.Count];
 			locks.Keys.CopyTo(l, 0);
 			foreach(var t in l.Where(t => t != linkModeTS))
 				SetLock(t, LockChange.Clear);
 		}
-		private void ShapeContainer1MouseClick(object sender, MouseEventArgs e) {
+		void ShapeContainer1MouseClick(object sender, MouseEventArgs e) {
 			if(e.Button == MouseButtons.Middle)
 				if(locks.ContainsKey(linkModeTS) && locks[linkModeTS] == LockState.Locked)
 					SetLock(linkModeTS, LockChange.Clear);
 				else
 					SetLock(linkModeTS, LockChange.Click);
 		}
-		private void ExitToolStripMenuItemClick(object sender, EventArgs e) {
+		void ExitToolStripMenuItemClick(object sender, EventArgs e) {
 			Close();
 		}
-		private void AltriToolStripMenuItemClick(object sender, EventArgs e) {
+		void AltriToolStripMenuItemClick(object sender, EventArgs e) {
 			if(fontDialog1.ShowDialog() != DialogResult.OK)
 				return;
 			FontSelected();
 		}
-		private void FontSelected() {
+		void FontSelected() {
 			SetLock(fontTS, LockChange.Set);
 			AddCurrentFont();
 			Controller.SetCursor(CrossCursor);
@@ -334,7 +331,7 @@ namespace DiagramDrawer.Forms {
 			fontDialog1.Font = ((ToolStripItem)(sender)).Tag as Font;
 			FontSelected();
 		}
-		private void AddCurrentFont() {
+		void AddCurrentFont() {
 			if(fontTS.DropDownItems.Count == 10)
 				fontTS.DropDownItems.RemoveAt(9);
 			ToolStripItem tsi = new ToolStripMenuItem(fontDialog1.Font.Name + " " + fontDialog1.Font.SizeInPoints + "pt") {
@@ -343,13 +340,13 @@ namespace DiagramDrawer.Forms {
 			tsi.Click += TsiFontClick;
 			fontTS.DropDownItems.Add(tsi);
 		}
-		private void ShowTsmiClick(object sender, EventArgs e) {
+		void ShowTsmiClick(object sender, EventArgs e) {
 			Controller.ShowPoints();
 		}
-		private void HideTsmiClick(object sender, EventArgs e) {
+		void HideTsmiClick(object sender, EventArgs e) {
 			Controller.HidePoints();
 		}
-		private void AltriToolStripMenuItem1Click(object sender, EventArgs e) {
+		void AltriToolStripMenuItem1Click(object sender, EventArgs e) {
 			if(fColorDialog.ShowDialog() != DialogResult.OK)
 				return;
 			while(fColorDialog.Color == Color.Magenta)
@@ -359,7 +356,7 @@ namespace DiagramDrawer.Forms {
 					);
 			FColorSelected();
 		}
-		private void FColorSelected() {
+		void FColorSelected() {
 			var current = fColorTS.Image as Bitmap;
 			if(current != null)
 				using(var g = Graphics.FromImage(current))
@@ -371,7 +368,7 @@ namespace DiagramDrawer.Forms {
 			AddCurrentFColor();
 			Controller.SetCursor(CrossCursor);
 		}
-		private void AddCurrentFColor() {
+		void AddCurrentFColor() {
 			ToolStripItem p = null;
 			foreach(ToolStripItem item in fColorTS.DropDownItems)
 				if(item.Text == fColorDialog.Color.Name)
@@ -401,7 +398,7 @@ namespace DiagramDrawer.Forms {
 			fColorDialog.Color = (Color)((ToolStripItem)sender).Tag;
 			FColorSelected();
 		}
-		private void AltriToolStripMenuItem2Click(object sender, EventArgs e) {
+		void AltriToolStripMenuItem2Click(object sender, EventArgs e) {
 			if(bColorDialog.ShowDialog() != DialogResult.OK)
 				return;
 			while(bColorDialog.Color == Color.Magenta)
@@ -411,7 +408,7 @@ namespace DiagramDrawer.Forms {
 					);
 			BColorSelected();
 		}
-		private void BColorSelected() {
+		void BColorSelected() {
 			var current = bColorTS.Image as Bitmap;
 			if(current != null)
 				using(var g = Graphics.FromImage(current))
@@ -423,7 +420,7 @@ namespace DiagramDrawer.Forms {
 			AddCurrentBColor();
 			Controller.SetCursor(CrossCursor);
 		}
-		private void BorderColorSelected() {
+		void BorderColorSelected() {
 			var current = borderColorTS.Image as Bitmap;
 			if(current != null)
 				using(var g = Graphics.FromImage(current))
@@ -435,7 +432,7 @@ namespace DiagramDrawer.Forms {
 			AddCurrentBorderColor();
 			Controller.SetCursor(CrossCursor);
 		}
-		private void AddCurrentBorderColor() {
+		void AddCurrentBorderColor() {
 			ToolStripItem p = null;
 			foreach(ToolStripItem item in borderColorTS.DropDownItems)
 				if(item.Text == borderColorDialog.Color.Name)
@@ -461,7 +458,7 @@ namespace DiagramDrawer.Forms {
 			tsi.Click += TsiborderColorClick;
 			borderColorTS.DropDownItems.Insert(0, tsi);
 		}
-		private void AddCurrentBColor() {
+		void AddCurrentBColor() {
 			ToolStripItem p = null;
 			foreach(ToolStripItem item in
 				bColorTS.DropDownItems.Cast<ToolStripItem>().Where(item => item.Text == bColorDialog.Color.Name))
@@ -496,11 +493,11 @@ namespace DiagramDrawer.Forms {
 			borderColorDialog.Color = (Color)((ToolStripItem)sender).Tag;
 			BorderColorSelected();
 		}
-		private void ResizeButtonClick(object sender, EventArgs e) {
+		void ResizeButtonClick(object sender, EventArgs e) {
 			new SizeForm(Controller).ShowDialog(this);
 			Controller.ForceRefresh();
 		}
-		private void ExportImageToolStripMenuItemClick(object sender, EventArgs e) {
+		void ExportImageToolStripMenuItemClick(object sender, EventArgs e) {
 			if(saveFileDialog2.ShowDialog() != DialogResult.OK)
 				return;
 			var format = ImageFormat.Png;
@@ -523,7 +520,7 @@ namespace DiagramDrawer.Forms {
 			}
 			Controller.ExportImage(saveFileDialog2.FileName, format);
 		}
-		private void OptionsToolStripMenuItemClick(object sender, EventArgs e) {
+		void OptionsToolStripMenuItemClick(object sender, EventArgs e) {
 			new OptionsForm().ShowDialog();
 		}
 		enum LockState {
@@ -534,21 +531,21 @@ namespace DiagramDrawer.Forms {
 
 		readonly Dictionary<CheckableToolStripSplitButton, LockState> locks = new Dictionary<CheckableToolStripSplitButton, LockState>();
 
-		private void TsDoubleClick(object sender, EventArgs e) {
+		void TsDoubleClick(object sender, EventArgs e) {
 			SetLock(sender as CheckableToolStripSplitButton, LockChange.DoubleClick);
 		}
-		private void TsButtonClick(object sender, EventArgs e) {
+		void TsButtonClick(object sender, EventArgs e) {
 			SetLock(sender as CheckableToolStripSplitButton, LockChange.Click);
 		}
-		private void GridTsClick(object sender, EventArgs e) {
+		void GridTsClick(object sender, EventArgs e) {
 			Controller.Grid ^= true;
 			gridTS.Checked ^= true;
 		}
-		private void GridTsDoubleClick(object sender, EventArgs e) {
+		void GridTsDoubleClick(object sender, EventArgs e) {
 			Controller.AlignToGrid();
 			gridTS.Checked = true;
 		}
-		private void AltriToolStripMenuItem3Click(object sender, EventArgs e) {
+		void AltriToolStripMenuItem3Click(object sender, EventArgs e) {
 			if(borderColorDialog.ShowDialog() != DialogResult.OK)
 				return;
 			while(borderColorDialog.Color == Color.Magenta)
@@ -559,7 +556,7 @@ namespace DiagramDrawer.Forms {
 			BorderColorSelected();
 		}
 		bool modified;
-		private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+		void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
 			if(!modified || !Options.AskForSave)
 				return;
 			switch(
@@ -573,10 +570,10 @@ namespace DiagramDrawer.Forms {
 					break;
 			}
 		}
-		private void ShapeContainer1MouseDown(object sender, MouseEventArgs e) {
+		void ShapeContainer1MouseDown(object sender, MouseEventArgs e) {
 			modified = true;
 		}
-		private void ComeImmagineVettorialeToolStripMenuItemClick(object sender, EventArgs e) {
+		void ComeImmagineVettorialeToolStripMenuItemClick(object sender, EventArgs e) {
 			if(saveFileDialog3.ShowDialog() != DialogResult.OK)
 				return;
 			Controller.ExportSvg(saveFileDialog3.FileName);

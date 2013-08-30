@@ -12,13 +12,13 @@ namespace DiagramDrawer.Forms {
 			LoadTree();
 			tableLayoutPanel1.SetColumnSpan(panel, 2);
 		}
-		private void LoadPanes() {
+		void LoadPanes() {
 			IOptionPane general = new General();
 			panes.Add(general);
 			IOptionPane objects = new Objects();
 			panes.Add(objects);
 		}
-		private void LoadTree() {
+		void LoadTree() {
 			foreach(var pane in panes) {
 				var t = treeView1.Nodes.Add(pane.Name);
 				t.Tag = pane;
@@ -27,28 +27,28 @@ namespace DiagramDrawer.Forms {
 					AddChildren(child, t);
 			}
 		}
-		private static void AddChildren(IOptionPane child, TreeNode treeNode) {
+		static void AddChildren(IOptionPane child, TreeNode treeNode) {
 			var t = treeNode.Nodes.Add(child.Name);
 			t.Tag = child;
 			child.Load();
 			foreach(var cchild in child.Children)
 				AddChildren(cchild, t);
 		}
-		private void Button1Click(object sender, EventArgs e) {
+		void Button1Click(object sender, EventArgs e) {
 			Close();
 		}
-		private void Button2Click(object sender, EventArgs e) {
+		void Button2Click(object sender, EventArgs e) {
 			foreach(var child in panes)
 				Save(child);
 			Close();
 		}
-		private static void Save(IOptionPane child) {
+		static void Save(IOptionPane child) {
 			child.Save();
 			foreach(var cchild in child.Children)
 				Save(cchild);
 		}
 
-		private void TreeView1AfterSelect (object sender, TreeViewEventArgs e)
+		void TreeView1AfterSelect (object sender, TreeViewEventArgs e)
 		{
 			var c = e.Node.Tag as Control;
 			if (c == null)

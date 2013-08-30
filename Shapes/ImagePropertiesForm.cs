@@ -32,18 +32,18 @@ namespace DiagramDrawer.Shapes {
 			h = val.Height;
 			UpdateSize();
 		}
-		private void TrackBar1Scroll(object sender, EventArgs e) {
+		void TrackBar1Scroll(object sender, EventArgs e) {
 			UpdateSize();
 		}
 
-		private void UpdateSize() {
+		void UpdateSize() {
 			pictureBox1.Width = w * trackBar1.Value / 10;
 			pictureBox1.Height = h * trackBar2.Value / 10;
 		}
-		private void Button2Click(object sender, EventArgs e) {
+		void Button2Click(object sender, EventArgs e) {
 			Close();
 		}
-		private void Button1Click(object sender, EventArgs e) {
+		void Button1Click(object sender, EventArgs e) {
 			if(!loaded)
 				val.ShownImage = pictureBox1.BackgroundImage;
 			else
@@ -53,7 +53,7 @@ namespace DiagramDrawer.Shapes {
 			Close();
 		}
 		bool loaded;
-		private void Button3Click(object sender, EventArgs e) {
+		void Button3Click(object sender, EventArgs e) {
 			if(openFileDialog1.ShowDialog() != DialogResult.OK)
 				return;
 			var temp = Image.FromFile(openFileDialog1.FileName);

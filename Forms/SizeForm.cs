@@ -64,7 +64,7 @@ namespace DiagramDrawer.Forms {
 		void Button1Click(object sender, EventArgs e) {
 			Ok();
 		}
-		private void Ok() {
+		void Ok() {
 			if(asi != null) {
 				asi.AutoResizeHeight = checkBox1.Checked;
 				asi.AutoResizeWidth = checkBox2.Checked;
@@ -80,13 +80,13 @@ namespace DiagramDrawer.Forms {
 			s.Refresh();
 			Close();
 		}
-		private void TextBoxKeyUp(object sender, KeyEventArgs e) {
+		void TextBoxKeyUp(object sender, KeyEventArgs e) {
 			if(e.KeyCode == Keys.Enter)
 				Ok();
 			if(e.KeyCode == Keys.Escape)
 				Close();
 		}
-		private void TextBoxValidating(object sender, CancelEventArgs e) {
+		void TextBoxValidating(object sender, CancelEventArgs e) {
 			var senderBox = sender as TextBox;
 			int o;
 			if(senderBox == null)
@@ -98,10 +98,10 @@ namespace DiagramDrawer.Forms {
 			else
 				senderBox.BackColor = SystemColors.Window;
 		}
-		private void Button2Click(object sender, EventArgs e) {
+		void Button2Click(object sender, EventArgs e) {
 			Close();
 		}
-		private void CheckBox1CheckedChanged(object sender, EventArgs e) {
+		void CheckBox1CheckedChanged(object sender, EventArgs e) {
 			checkBox1.Focus();
 			textBox1.Enabled = !checkBox1.Checked;
 			textBox2.Enabled = !checkBox2.Checked;

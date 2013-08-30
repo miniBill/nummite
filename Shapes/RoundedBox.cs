@@ -34,22 +34,14 @@ namespace DiagramDrawer.Shapes {
 			var m1 = -Height / (Width - 2F * ROUNDNESS);
 			var m2 = -Height / (float)Width + (2F * ROUNDNESS) / Width;
 			PointF t;
-			if(m < m1)
-				t = VerticalIntersection(m, oy);
-			else {
-				if(m < m2)
-					t = RoundIntersection(ox, oy);
-				else {
-					if(m < -m2)
-						t = HorizontalIntersection(m, ox);
-					else {
-						t = m < -m1 ? RoundIntersection(ox, oy) : VerticalIntersection(m, oy);
-					}
-				}
-			}
+			t = (m < m1 || (m >= m2 && m >= -m2 && m >= -m1))
+				? VerticalIntersection (m, oy)
+				: (m < m2 || m >= -m2)
+					? RoundIntersection (ox, oy)
+					: HorizontalIntersection (m, ox);
 			return new PointF(t.X + c.X, t.Y + c.Y);
 		}
-		private PointF HorizontalIntersection(float m, float ox) {
+		PointF HorizontalIntersection(float m, float ox) {
 			//a=w/2 b=h/2
 			//x=a*Sgn(ox)
 			//y=mx
@@ -57,7 +49,7 @@ namespace DiagramDrawer.Shapes {
 			var y = m * x;
 			return new PointF(x, y);
 		}
-		private PointF RoundIntersection(float ox, float oy) {
+		PointF RoundIntersection(float ox, float oy) {
 			//A=w/2 B=h/2
 			//y=mx+q
 			//x^2+y^2=r^2
@@ -83,7 +75,7 @@ namespace DiagramDrawer.Shapes {
 			var y = m * x + q;
 			return new PointF(x + x0, y + y0);
 		}
-		private PointF VerticalIntersection(float m, float oy) {
+		PointF VerticalIntersection(float m, float oy) {
 			//a=w/2 b=h/2
 			//y=mx
 			//y=b*Sng(oy)
@@ -121,7 +113,7 @@ namespace DiagramDrawer.Shapes {
 			graphics.DrawArc(BorderPen, g.X - ROUNDNESS * 2, g.Y - ROUNDNESS * 2, ROUNDNESS * 2, ROUNDNESS * 2, 0, 90);
 			graphics.DrawArc(BorderPen, h.X, h.Y - ROUNDNESS * 2, ROUNDNESS * 2, ROUNDNESS * 2, 90, 90);
 		}
-		private void SetPoints(Point c) {
+		void SetPoints(Point c) {
 			var a = Width / 2F;
 			var b = Height / 2F;
 			//e  1---2  f

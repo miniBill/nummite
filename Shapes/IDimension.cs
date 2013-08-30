@@ -1,4 +1,4 @@
-﻿/* Copyright (C) 2009 Leonardo Taglialegne <leonardotaglialegne@gmail.com>
+/* Copyright (C) 2008 Leonardo Taglialegne <leonardotaglialegne@gmail.com>
  *
  * This file is part of Diagram Drawer.
  *
@@ -16,20 +16,11 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Windows.Forms;
-
-namespace DiagramDrawer.Forms{
-	public partial class ErrorForm : Form {
-		public ErrorForm(string error) {
-			InitializeComponent();
-			textBox1.Text = error;
-		}
-		void Button2Click(object sender, EventArgs e) {
-			Close();
-		}
-		void Button1Click(object sender, EventArgs e) {
-			Clipboard.SetText(textBox1.Text);
-		}
+namespace DiagramDrawer.Shapes
+{
+	public interface IDimension
+	{
+		int Width{ get; }
+		int Height{ get; }
 	}
 }

@@ -57,7 +57,7 @@ namespace DiagramDrawer.Shapes {
 			textchanged = true;
 			base.OnTextChange();
 		}
-		private IShape origin;
+		IShape origin;
 		public IShape Origin {
 			get {
 				return origin;
@@ -77,7 +77,7 @@ namespace DiagramDrawer.Shapes {
 		void OnDeleted(object sender, EventArgs e) {
 			ShapeContainer.RemoveShape(this);
 		}
-		private IShape pointed;
+		IShape pointed;
 		public IShape Pointed {
 			get {
 				return pointed;
@@ -103,7 +103,7 @@ namespace DiagramDrawer.Shapes {
 		protected virtual void OnMoving(object sender, EventArgs e) {
 			Moved();
 		}
-		private void Moved() {
+		void Moved() {
 			if(origin == null || pointed == null ||
 						 origin.Contains(pointed.Center) || pointed.Contains(origin.Center)) {
 				Start = End = new PointF(0, 0);
@@ -157,9 +157,7 @@ namespace DiagramDrawer.Shapes {
 			}
 		}
 		public override bool Contains(PointF point) {
-			if((Start.X == 0 && Start.Y == 0) || (End.X == 0 && End.Y == 0))
-				return false;
-			return DistanceHelper.LinePointDist(Start, End, point, true) < 10;
+			return (Start.X != 0 || Start.Y != 0) && (End.X != 0 || End.Y != 0) && DistanceHelper.LinePointDist (Start, End, point, true) < 10;
 			/*
 			//caso ay=by
 			//y=k
@@ -228,7 +226,7 @@ namespace DiagramDrawer.Shapes {
 			if(BackgroundColor == ForegroundColor)
 				BackgroundColor = Color.FromArgb(255 - ForegroundColor.R, 255 - ForegroundColor.G, 255 - ForegroundColor.B);
 		}
-		private void ReadEndpoints(XmlReader reader) {
+		void ReadEndpoints(XmlReader reader) {
 			if(reader.Name == "origin") {
 				ReadEndpointCheck(reader);
 				originName = reader.Value;
@@ -238,7 +236,7 @@ namespace DiagramDrawer.Shapes {
 				pointedName = reader.Value;
 			}
 		}
-		private static void ReadEndpointCheck(XmlReader reader) {
+		static void ReadEndpointCheck(XmlReader reader) {
 			reader.MoveToAttribute("name");
 			if(!reader.ReadAttributeValue())
 				throw new ArgumentException("Cannot read endpoint");
@@ -251,12 +249,12 @@ namespace DiagramDrawer.Shapes {
 			SaveColors(writer);
 			SaveText(writer);
 		}
-		private void SavePointed(XmlWriter writer) {
+		void SavePointed(XmlWriter writer) {
 			writer.WriteStartElement("pointed");
 			writer.WriteAttributeString("name", pointed.Name);
 			writer.WriteEndElement();
 		}
-		private void SaveOrigin(XmlWriter writer) {
+		void SaveOrigin(XmlWriter writer) {
 			writer.WriteStartElement("origin");
 			writer.WriteAttributeString("name", origin.Name);
 			writer.WriteEndElement();
@@ -301,7 +299,7 @@ namespace DiagramDrawer.Shapes {
 			base.DrawTo(graphics);
 			graphics.FillPolygon(BorderBrush, new[] { l, End, r, l });
 		}
-		private void Recalculate() {
+		void Recalculate() {
 			var otherPointX = Start.X - End.X;
 			var otherPointY = Start.Y - End.Y;
 			var m = otherPointY / otherPointX;
@@ -322,7 +320,7 @@ namespace DiagramDrawer.Shapes {
 					RecalculateMath(otherPointX, m, out l, out r);
 				}
 		}
-		private void RecalculateMath(float otherPointX, float m, out PointF l, out PointF r) {
+		void RecalculateMath(float otherPointX, float m, out PointF l, out PointF r) {
 			//       c
 			//      /|\
 			//     / | \
@@ -405,7 +403,7 @@ namespace DiagramDrawer.Shapes {
 			base.DrawTo(graphics);
 			Swap();
 		}
-		private void Swap() {
+		void Swap() {
 			var c = Pointed;
 			Pointed = Origin;
 			Origin = c;
@@ -498,7 +496,7 @@ namespace DiagramDrawer.Shapes {
 				foreach(var l in SubLines)
 					l.DrawTo(graphics);
 		}
-		private void Moved() {
+		void Moved() {
 			if(!ShouldDraw())
 				return;
 			SetShapeContainer();
@@ -611,7 +609,7 @@ namespace DiagramDrawer.Shapes {
 			base.OnPointedChange(value);
 		}
 
-		private List<InvisiblePoint> SubPoints {
+		List<InvisiblePoint> SubPoints {
 			get;
 			set;
 		}
@@ -683,7 +681,7 @@ namespace DiagramDrawer.Shapes {
 				foreach(var l in SubLines)
 					l.DrawTo(graphics);
 		}
-		private void Moved() {
+		void Moved() {
 			if(Origin == null || Pointed == null || ShapeContainer == null)
 				return;
 			CheckShapeContainer();
@@ -702,7 +700,7 @@ namespace DiagramDrawer.Shapes {
 					SubPoints[0].Move(new Point(Pointed.Center.X, (int)m1Int.Y));
 				}
 		}
-		private void CheckShapeContainer() {
+		void CheckShapeContainer() {
 			if(SubPoints[0].ShapeContainer == null) {
 				foreach(var l in SubLines)
 					l.ShapeContainer = ShapeContainer;

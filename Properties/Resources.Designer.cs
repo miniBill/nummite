@@ -18,12 +18,12 @@ namespace DiagramDrawer.Properties {
     // con l'opzione /str oppure ricompilare il progetto VS.
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
     internal class Resources {
         
-        private static global::System.Resources.ResourceManager resourceMan;
+        static global::System.Resources.ResourceManager resourceMan;
         
-        private static global::System.Globalization.CultureInfo resourceCulture;
+        static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
@@ -36,7 +36,7 @@ namespace DiagramDrawer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DiagramDrawer.Properties.Resources", typeof(Resources).Assembly);
+                    var temp = new global::System.Resources.ResourceManager("DiagramDrawer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,7 +63,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Book {
             get {
                 object obj = ResourceManager.GetObject("Book", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return (System.Drawing.Bitmap)obj;
             }
         }
         
@@ -73,7 +73,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Border {
             get {
                 object obj = ResourceManager.GetObject("Border", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return (System.Drawing.Bitmap)obj;
             }
         }
         
@@ -83,7 +83,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Ellipse {
             get {
                 object obj = ResourceManager.GetObject("Ellipse", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return (System.Drawing.Bitmap)obj;
             }
         }
         
@@ -93,7 +93,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Fill {
             get {
                 object obj = ResourceManager.GetObject("Fill", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return (System.Drawing.Bitmap)obj;
             }
         }
         
@@ -103,7 +103,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap FontColor {
             get {
                 object obj = ResourceManager.GetObject("FontColor", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+				return (System.Drawing.Bitmap)obj;
             }
         }
         
@@ -113,7 +113,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Grid {
             get {
                 object obj = ResourceManager.GetObject("Grid", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return (System.Drawing.Bitmap)obj;
             }
         }
         
@@ -290,7 +290,7 @@ namespace DiagramDrawer.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] version {
+        internal static byte[] Version {
             get {
                 object obj = ResourceManager.GetObject("version", resourceCulture);
                 return ((byte[])(obj));

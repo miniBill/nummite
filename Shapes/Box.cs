@@ -28,7 +28,7 @@ using DiagramDrawer.Export;
 
 namespace DiagramDrawer.Shapes
 {
-	public class Box : IShape
+	public class Box : IShape, IAutoSizeable
 	{
 		public Font Font
 		{
@@ -81,7 +81,7 @@ namespace DiagramDrawer.Shapes
 		}
 		public event EventHandler BackgroundColorChange;
 
-		private void OnBackgroundColorChange()
+		void OnBackgroundColorChange()
 		{
 			if (BackBrush != null)
 				BackBrush.Dispose();
@@ -216,7 +216,7 @@ namespace DiagramDrawer.Shapes
 			graphics.DrawRectangle(BorderPen, bounds);
 		}
 
-		private void DrawText(Graphics graphics)
+		void DrawText(Graphics graphics)
 		{
 			var sf = new StringFormat
 			{
@@ -445,7 +445,7 @@ namespace DiagramDrawer.Shapes
 				}
 			}
 		}
-		private void ReadAutoResize(XmlReader reader)
+		void ReadAutoResize(XmlReader reader)
 		{
 			switch (reader.Name)
 			{
@@ -532,7 +532,7 @@ namespace DiagramDrawer.Shapes
 			SaveText(writer);
 			SaveAuto(writer);
 		}
-		private void SaveAuto(XmlWriter writer)
+		void SaveAuto(XmlWriter writer)
 		{
 			writer.WriteElementString("autoresizewidth", AutoResizeWidth.ToString());
 			writer.WriteElementString("autoresizeheight", AutoResizeHeight.ToString());
@@ -580,7 +580,7 @@ namespace DiagramDrawer.Shapes
 			ArgbColor
 		}
 
-		private static string SerializeColor(Color color)
+		static string SerializeColor(Color color)
 		{
 			if (color.IsNamedColor)
 				return string.Format(CultureInfo.InvariantCulture, "{0}:{1}",
@@ -590,7 +590,7 @@ namespace DiagramDrawer.Shapes
 								 color.A, color.R, color.G, color.B);
 		}
 
-		private static Color DeserializeColor(string color)
+		static Color DeserializeColor(string color)
 		{
 			var pieces = color.Split(new[] { ':' });
 
@@ -684,13 +684,7 @@ namespace DiagramDrawer.Shapes
 			Svg.WriteRectangle(writer, Location, new Size(Width, Height), BackgroundColor, BorderPen);
 			Svg.WriteText(writer, Center, ForegroundColor, Font, Text);
 		}
-		public bool AutoResizeable
-		{
-			get
-			{
-				return true;
-			}
-		}
+
 		bool autoresizewidth;
 		public bool AutoResizeWidth
 		{
