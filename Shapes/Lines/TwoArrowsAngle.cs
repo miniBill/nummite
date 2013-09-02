@@ -34,7 +34,7 @@ namespace Nummite.Shapes.Lines {
 			base.DrawTo (graphics);
 		}
 
-		public readonly static new ILineCreator Creator = new LineCreator<TwoArrowsAngle>(Description, Resources.TwoArrowsAngle);
+		public readonly static new ILineHelper Helper = new LineHelper<TwoArrowsAngle>(Description, Resources.TwoArrowsAngle);
 
 		public static new string Description { 
 			get {

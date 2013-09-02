@@ -43,6 +43,6 @@ namespace Nummite.Shapes.Lines {
 			}
 		}
 
-		public readonly static new ILineCreator Creator = new LineCreator<TwoArrowsFragmented>(Description, Resources.TwoArrowsFragmented);
+		public readonly static new ILineHelper Helper = new LineHelper<TwoArrowsFragmented>(Description, Resources.TwoArrowsFragmented);
 	}
 }

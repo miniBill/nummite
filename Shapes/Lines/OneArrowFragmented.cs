@@ -44,6 +44,6 @@ namespace Nummite.Shapes.Lines {
 			}
 		}
 
-		public readonly static new ILineCreator Creator = new LineCreator<OneArrowFragmented>(Description, Resources.OneArrowFragmented);
+		public readonly static new ILineHelper Helper = new LineHelper<OneArrowFragmented>(Description, Resources.OneArrowFragmented);
 	}
 }

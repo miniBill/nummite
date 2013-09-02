@@ -29,7 +29,7 @@ namespace Nummite.Shapes {
 			Height = 40;
 		}
 
-		public readonly static new IShapeCreator Creator = new ShapeCreator<LabelShape> (Description, Resources.Text);
+		public readonly static new IShapeHelper Helper = new ShapeHelper<LabelShape> (Description, Resources.Text);
 
 		public override PointF GetIntersection (PointF other)
 		{

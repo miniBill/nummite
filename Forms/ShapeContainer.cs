@@ -51,8 +51,8 @@ namespace Nummite.Forms {
 
 		public ShapeContainer ()
 		{
-			ShapeType = RoundedBox.Creator;
-			LineType = Line.Creator;
+			ShapeType = RoundedBox.Helper;
+			LineType = Line.Helper;
 			ShapeList = new ShapeCollection ();
 			back = new Bitmap (Width, Height);
 			current = new Bitmap (Width, Height);
@@ -94,7 +94,7 @@ namespace Nummite.Forms {
 					s.DrawTo (f);
 		}
 
-		public ILineCreator LineType {
+		public ILineHelper LineType {
 			get;
 			set;
 		}
@@ -273,7 +273,7 @@ namespace Nummite.Forms {
 
 		}
 
-		public IShapeCreator ShapeType {
+		public IShapeHelper ShapeType {
 			get;
 			set;
 		}
@@ -368,11 +368,7 @@ namespace Nummite.Forms {
 				if (!hidePoints || !(s is VisiblePoint))
 					s.DrawTo (graphics);
 		}
-		/*
-				public void DrawTo(Graphics graphics) {
-					DrawTo(graphics, false);
-				}
-		*/
+
 		public void PrintTo (Graphics graphics, Rectangle rectangle)
 		{
 			using (Image i = new Bitmap(Width, Height))

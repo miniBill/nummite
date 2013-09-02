@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
+using Nummite.Gencode;
 using Nummite.Properties;
 using Nummite.Shapes;
 using System.Drawing.Imaging;
@@ -16,45 +17,14 @@ namespace Nummite.Forms
 	{
 		readonly ShapeContainer container;
 
-		public ShapeCreatorCollection ShapeTypes { get; private set; }
-
-		public LineCreatorCollection ArrowTypes { get; private set; }
-
 		public ShapeController(ShapeContainer container)
 		{
-			ArrowTypes = new LineCreatorCollection();
-			ShapeTypes = new ShapeCreatorCollection();
 			this.container = container;
-			//Shapes
-			ShapeTypes.AddRange(
-				RoundedBox.Creator,
-				Ellipse.Creator,
-				Box.Creator,
-				LabelShape.Creator,
-				Rhombus.Creator,
-				Parallelogram.Creator,
-				VisiblePoint.Creator,
-				ImageBox.Creator,
-				Link.Creator
-			);
-
-			//Arrow Kinds
-			ArrowTypes.AddRange(
-				Line.Creator,
-				OneArrow.Creator,
-				TwoArrows.Creator,
-				OneArrowAngle.Creator,
-				TwoArrowsAngle.Creator,
-				NoArrowFragmented.Creator,
-				OneArrowFragmented.Creator,
-				TwoArrowsFragmented.Creator
-			);
-
 			this.container.MouseDoubleClick += MouseDoubleClick;
 			Filename = string.Empty;
 		}
 
-		public IShapeCreator ShapeType
+		public IShapeHelper ShapeType
 		{
 			get
 			{
@@ -124,65 +94,16 @@ namespace Nummite.Forms
 					filename = nfilename;
 				else
 				{
-					MessageBox.Show(string.Format ("File non trovato: {0}", filename), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
-					MessageBox.Show(string.Format ("File non trovato: {0}", nfilename), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(string.Format("File non trovato: {0}", filename), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(string.Format("File non trovato: {0}", nfilename), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 			}
-			var sett = new XmlReaderSettings
-			{
-				IgnoreWhitespace = true
-			};
 			try
 			{
-				using (var reader = XmlReader.Create(filename, sett))
+				using (var reader = File.OpenText(filename))
 				{
-					reader.ReadToFollowing("size");
-					Width = reader.MoveToAttribute("width")
-						? Convert.ToInt32(reader.Value, CultureInfo.InvariantCulture)
-						: 1000;
-					Height = reader.MoveToAttribute("height")
-						? Convert.ToInt32(reader.Value, CultureInfo.InvariantCulture)
-						: 800;
-					reader.MoveToElement();
-					var toLoad = new ShapeCollection();
-					do
-					{
-						reader.Read();
-						IShapeCreator creator = null;
-						switch (reader.Name)
-						{
-							case "shape":
-								if (reader.MoveToAttribute("type"))
-								{
-									var type = reader.ReadContentAsString();
-									creator = ShapeTypes[type];
-								}
-								else
-									creator = RoundedBox.Creator;
-								break;
-							case "line":
-								if (reader.MoveToAttribute("type"))
-								{
-									var type = reader.ReadContentAsString();
-									creator = ArrowTypes[type];
-								}
-								else
-									creator = Line.Creator;
-								break;
-						}
-						IPersistableShape s;
-						if (creator != null)
-							s = creator.Create();
-						else
-							break;//We're done!
-						reader.MoveToElement();
-						using (var r = reader.ReadSubtree())
-							s.Load(r);
-						toLoad.Add(s);
-					} while (true);
-					container.ClearShapes();
-					container.LoadShapes(toLoad);
+					Open(reader);
 				}
 
 				container.ForceRefresh();
@@ -192,8 +113,30 @@ namespace Nummite.Forms
 			}
 			catch (FileNotFoundException fnfe)
 			{
-				MessageBox.Show(string.Format ("File non trovato: {0}", fnfe.FileName), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(string.Format("File non trovato: {0}", fnfe.FileName), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
+		}
+
+		private void Open(StreamReader reader)
+		{
+			var decoder = new GDecoder(reader);
+			GDictionary file = decoder.ReadDictionary();
+			var attributes = file.GetObject<GDictionary>("attributes");
+			Width = attributes.GetValue<int>("width") ?? 1000;
+			Height = attributes.GetValue<int>("height") ?? 800;
+			var toLoad = new ShapeCollection();
+			var shapes = file.GetObject<GList>("shapes");
+			foreach (GDictionary shape in shapes)
+			{
+				var type = shape.GetObject<string>("type");
+				var helper = ShapeDictionary.GetHelper(type) as IPersistableHelper;
+				if (helper == null)
+					throw new ArgumentException(String.Format("Found a non-persistable type {0} in file", type));
+				IShape s = helper.Load(decoder);
+				toLoad.Add(s);
+			}
+			container.ClearShapes();
+			container.LoadShapes(toLoad);
 		}
 
 		public event EventHandler Opened;
@@ -205,31 +148,30 @@ namespace Nummite.Forms
 
 		public void Save(string filename)
 		{
-			var sett = new XmlWriterSettings
+			using (var stream = File.OpenWrite(filename))
+			using (var writer = new StreamWriter(stream))
 			{
-				Indent = true,
-				IndentChars = "  "
-			};
-			using (var writer = XmlWriter.Create(filename, sett))
-			{
-				writer.WriteStartDocument();
-				writer.WriteStartElement("shapes");
-
-				SaveSize(writer);
-
-				foreach (var s in container.ShapeList)
+				var encoder = new GEncoder(writer);
+				encoder.BeginDictionary();
+				encoder.WriteString("attributes");
 				{
-					var persistable = s as IPersistableShape;
-					if (persistable == null)
-						continue;
-					bool line = s is Line;
-					writer.WriteStartElement(line ? "line" : "shape");
-					writer.WriteAttributeString("type", s.GetType().FullName);
-					persistable.Save(writer);
-					writer.WriteEndElement();
+					encoder.BeginDictionary();
+					encoder.WritePair("width", container.Width);
+					encoder.WritePair("height", container.Height);
+					encoder.EndDictionary();
 				}
 
-				writer.WriteEndDocument();
+				encoder.WriteString("shapes");
+				foreach (var s in container.ShapeList)
+				{
+					IShapeHelper helper = ShapeDictionary.GetHelper(s.GetType().Name);
+					var persistable = helper as IPersistableHelper;
+					if (persistable == null)
+						continue;
+					persistable.Save(s, encoder);
+				}
+
+				encoder.EndDictionary();
 			}
 			Filename = filename;
 			if (Saved != null)
@@ -237,14 +179,6 @@ namespace Nummite.Forms
 		}
 
 		public event EventHandler Saved;
-
-		void SaveSize(XmlWriter writer)
-		{
-			writer.WriteStartElement("size");
-			writer.WriteAttributeString("width", container.Width.ToString(CultureInfo.InvariantCulture));
-			writer.WriteAttributeString("height", container.Height.ToString(CultureInfo.InvariantCulture));
-			writer.WriteEndElement();
-		}
 
 		public void New()
 		{
@@ -267,28 +201,15 @@ namespace Nummite.Forms
 			container.HidePoints();
 		}
 
-		public int Height
+		public Size Size
 		{
 			get
 			{
-				return container.Height;
+				return container.Size;
 			}
 			set
 			{
-				container.Height = value;
-				container.ForceRefresh();
-			}
-		}
-
-		public int Width
-		{
-			get
-			{
-				return container.Width;
-			}
-			set
-			{
-				container.Width = value;
+				container.Size = value;
 				container.ForceRefresh();
 			}
 		}
@@ -327,13 +248,16 @@ namespace Nummite.Forms
 			Grid = true;
 		}
 
-		public ILineCreator LineType
+		public ILineHelper LineType
 		{
 			set
 			{
 				container.LineType = value;
 			}
 		}
+
+		public int Width { get { return Size.Width; } set { Size = new Size(value,Height); } }
+		public int Height { get { return Size.Height; } set { Size = new Size(Width, value); } }
 
 		public void Save()
 		{

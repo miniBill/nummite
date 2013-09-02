@@ -64,12 +64,12 @@ namespace Nummite.Shapes {
 			base.OnSizeChange ();
 		}
 
-		public readonly static new IShapeCreator Creator = new ShapeCreator<Link> (Name, Resources.WLink);
+		public readonly static new IShapeHelper Helper = new ShapeHelper<Link> (Name, Resources.WLink);
 
 		public override void SvgSave (XmlWriter writer)
 		{
 			Svg.WriteStartLink (writer, Text.Replace (".xml", ".svg"));
-			Svg.WriteEllipse (writer, Center, new Size (Width, Height), BackgroundColor, BorderPen);
+			Svg.WriteEllipse (writer, Center, Size, BackgroundColor, BorderPen);
 			Svg.WriteEndLink (writer);
 		}
 	}

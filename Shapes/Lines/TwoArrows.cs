@@ -23,7 +23,7 @@ using Nummite.Properties;
 namespace Nummite.Shapes.Lines {
 	class TwoArrows : OneArrow
 	{
-		public readonly static new ILineCreator Creator = new LineCreator<TwoArrows> (Description, Resources.TwoArrows);
+		public readonly static new ILineHelper Helper = new LineHelper<TwoArrows> (Description, Resources.TwoArrows);
 
 		public override void DrawTo (Graphics graphics)
 		{

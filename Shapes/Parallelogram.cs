@@ -99,7 +99,7 @@ namespace Nummite.Shapes {
 			return new PointF (x + c.X, y + c.Y);
 		}
 
-		public readonly static new IShapeCreator Creator = new ShapeCreator<Parallelogram> (Name, Resources.Parallelogram);
+		public readonly static new IShapeHelper Helper = new ShapeHelper<Parallelogram> (Name, Resources.Parallelogram);
 
 		public static new string Name { 
 			get {

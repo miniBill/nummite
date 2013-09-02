@@ -16,11 +16,15 @@
  * along with Nummite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Drawing;
+
 namespace Nummite.Shapes
 {
 	interface IDimension
 	{
-		int Width{ get; }
-		int Height{ get; }
+		Size Size { get; }
+
+		int Width { get; }
+		int Height { get; }
 	}
 }

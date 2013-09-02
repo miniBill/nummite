@@ -113,7 +113,7 @@ namespace Nummite.Shapes.Lines {
 			r.Y += end.Y;
 		}
 
-		public readonly static new ILineCreator Creator = new LineCreator<OneArrow> (Description, Resources.OneArrow);
+		public readonly static new ILineHelper Helper = new LineHelper<OneArrow> (Description, Resources.OneArrow);
 
 		public static new string Description { 
 			get {

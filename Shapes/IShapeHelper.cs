@@ -16,14 +16,17 @@
  * along with Nummite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.Xml;
+using System.Drawing;
 
-namespace Nummite.Shapes
-{
-	interface IPersistableShape : IShape
+namespace Nummite.Shapes {
+	interface IShapeHelper
 	{
-		void Load(XmlReader reader);
-		void Save(XmlWriter writer);
-		void SvgSave(XmlWriter writer);
+		string Description { get; }
+
+		string TypeName { get; }
+
+		Image Image { get; }
+
+		IShape Create ();
 	}
 }

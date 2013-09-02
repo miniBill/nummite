@@ -67,15 +67,20 @@ namespace Nummite.Shapes {
 
 		public Point Offset { get; set; }
 
-		public int Width {
+		public Size Size {
 			get {
-				return 0;
+				return Size.Empty;
 			}
 		}
-		public int Height {
-			get {
-				return 0;
-			}
+
+		public int Width
+		{
+			get { return 0; }
+		}
+
+		public int Height
+		{
+			get { return 0; }
 		}
 
 		public string Text { get; set; }

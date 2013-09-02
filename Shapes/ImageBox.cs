@@ -1,4 +1,4 @@
-/* Copyright (C) 2008 Leonardo Taglialegne <leonardotaglialegne@gmail.com>
+﻿/* Copyright (C) 2008 Leonardo Taglialegne <leonardotaglialegne@gmail.com>
  *
  * This file is part of Nummite.
  *
@@ -29,6 +29,7 @@ namespace Nummite.Shapes {
 		string filename = String.Empty;
 
 		public string FileName {
+			get { return filename; }
 			set {
 				filename = value;
 				if (value.Length == 0) {
@@ -104,13 +105,7 @@ namespace Nummite.Shapes {
 			graphics.DrawImage (image, bounds, src, GraphicsUnit.Pixel);
 		}
 
-		public static new string Name {
-			get {
-				return "Immagine";
-			}
-		}
-
-		public readonly static new IShapeCreator Creator = new ShapeCreator<ImageBox> (Name, Resources.PictureBox);
+		public readonly static new IShapeHelper Helper = new ImageBoxHelper ();
 
 		public override void Load (XmlReader reader)
 		{
@@ -139,21 +134,6 @@ namespace Nummite.Shapes {
 				FileName = reader.ReadString ();
 			else
 				MessageBox.Show (Resources.ErrorLoadingImageBox);
-		}
-
-		public override void Save (XmlWriter writer)
-		{
-			SaveName (writer);
-			SaveLocation (writer);
-			SaveSize (writer);
-			SaveImage (writer);
-		}
-
-		void SaveImage (XmlWriter writer)
-		{
-			writer.WriteStartElement ("image");
-			writer.WriteAttributeString ("path", filename);
-			writer.WriteEndElement ();
 		}
 	}
 }

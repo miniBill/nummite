@@ -16,17 +16,11 @@
  * along with Nummite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.Drawing;
 
-namespace Nummite.Shapes {
-	interface IShapeCreator
+namespace Nummite.Shapes.Lines
+{
+	interface ILineHelper : IShapeHelper
 	{
-		string Description { get; }
-
-		string TypeName { get; }
-
-		Image Image { get; }
-
-		IPersistableShape Create ();
+		new Line Create ();
 	}
 }

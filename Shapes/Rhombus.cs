@@ -89,6 +89,6 @@ namespace Nummite.Shapes {
 			}
 		}
 
-		public readonly static new IShapeCreator Creator = new ShapeCreator<Rhombus> (Description, Resources.Rhombus);
+		public readonly static new IShapeHelper Helper = new ShapeHelper<Rhombus> (Description, Resources.Rhombus);
 	}
 }

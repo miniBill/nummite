@@ -88,7 +88,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HelpResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LineCreatorCollection.cs" />
+    <Compile Include="Gencode\GDecoder.cs" />
+    <Compile Include="Gencode\GDictionary.cs" />
+    <Compile Include="Gencode\GList.cs" />
+    <Compile Include="Gencode\GObject.cs" />
+    <Compile Include="Gencode\GObjectHelper.cs" />
+    <Compile Include="Shapes\LineHelperCollection.cs" />
     <Compile Include="Forms\OptionPanes\IOptionPane.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -133,6 +138,7 @@
     <Compile Include="Forms\StringInput.Designer.cs">
       <DependentUpon>StringInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gencode\GEncoder.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,9 +187,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Shapes\BoxHelper.cs" />
     <Compile Include="Shapes\DistanceHelper.cs" />
     <Compile Include="Shapes\Ellipse.cs" />
     <Compile Include="Shapes\ImageBox.cs" />
+    <Compile Include="Shapes\ImageBoxHelper.cs" />
     <Compile Include="Shapes\ImagePropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,14 +205,14 @@
     <Compile Include="Shapes\Box.cs" />
     <Compile Include="Shapes\Rhombus.cs" />
     <Compile Include="Shapes\RoundedBox.cs" />
+    <Compile Include="Shapes\ShapeDictionary.cs" />
     <Compile Include="Shapes\Text.cs" />
     <Compile Include="Shapes\VisiblePoint.cs" />
     <Compile Include="Shapes\IDimension.cs" />
     <Compile Include="Shapes\IStyleable.cs" />
-    <Compile Include="Shapes\IShapeCreator.cs" />
-    <Compile Include="Shapes\IPersistableShape.cs" />
+    <Compile Include="Shapes\IShapeHelper.cs" />
     <Compile Include="Forms\ShapeEventArgs.cs" />
-    <Compile Include="Forms\ShapeCollection.cs" />
+    <Compile Include="Shapes\ShapeCollection.cs" />
     <Compile Include="Shapes\TextLabel.cs" />
     <Compile Include="Shapes\IAutoSizeable.cs" />
     <Compile Include="Shapes\ISizeable.cs" />
@@ -216,10 +224,10 @@
     <Compile Include="Shapes\Lines\TwoArrows.cs" />
     <Compile Include="Shapes\Lines\TwoArrowsAngle.cs" />
     <Compile Include="Shapes\Lines\TwoArrowsFragmented.cs" />
-    <Compile Include="Shapes\ShapeCreator.cs" />
-    <Compile Include="Forms\ShapeCreatorCollection.cs" />
-    <Compile Include="Shapes\Lines\ILineCreator.cs" />
-    <Compile Include="Shapes\Lines\LineCreator.cs" />
+    <Compile Include="Shapes\ShapeHelper.cs" />
+    <Compile Include="Shapes\ShapeHelperCollection.cs" />
+    <Compile Include="Shapes\Lines\ILineHelper.cs" />
+    <Compile Include="Shapes\Lines\LineHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Book.png" />

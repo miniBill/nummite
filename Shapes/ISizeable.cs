@@ -16,19 +16,20 @@
  * along with Nummite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Nummite.Shapes {
+using System.Drawing;
+
+namespace Nummite.Shapes
+{
 	interface ISizeable : IDimension
 	{
-		new int Height {
+		new Size Size
+		{
 			get;
 			set;
 		}
 
-		new int Width {
-			get;
-			set;
-		}
-
-		void Refresh ();
+		new int Width { get; set; }
+		new int Height { get; set; }
+		void Refresh();
 	}
 }

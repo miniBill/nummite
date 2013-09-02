@@ -87,7 +87,7 @@ namespace Nummite.Shapes {
 			                      Width / 3F, Height / 3F);
 		}
 
-		public readonly static new IShapeCreator Creator = new ShapeCreator<VisiblePoint> (Description, Resources.Point);
+		public readonly static new IShapeHelper Helper = new ShapeHelper<VisiblePoint> (Description, Resources.Point);
 
 		public override PointF GetIntersection (PointF other)
 		{

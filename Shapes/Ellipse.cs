@@ -66,11 +66,11 @@ namespace Nummite.Shapes {
 			}
 		}
 
-		public readonly static new IShapeCreator Creator = new ShapeCreator<Ellipse> (Name, Resources.Ellipse);
+		public readonly static new IShapeHelper Helper = new ShapeHelper<Ellipse> (Name, Resources.Ellipse);
 
 		public override void SvgSave (XmlWriter writer)
 		{
-			Svg.WriteEllipse (writer, Center, new Size (Width, Height), BackgroundColor, BorderPen);
+			Svg.WriteEllipse (writer, Center, Size, BackgroundColor, BorderPen);
 			Svg.WriteText (writer, Center, ForegroundColor, Font, Text);
 		}
 	}

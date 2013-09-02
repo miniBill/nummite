@@ -56,19 +56,19 @@ namespace Nummite.Forms
 			};
 
 			EventHandler libraryHandler = LibraryItemClick;
-			foreach (IShapeCreator creator in Controller.ShapeTypes)
+			foreach (IShapeHelper creator in ShapeDictionary.ShapeTypes)
 			{
 				AddShapeType(creator, libraryTS, libraryHandler);
 				AddShapeType(creator, objectsTSMI, libraryHandler);
 			}
 
 			EventHandler lTypeHandler = LineItemClick;
-			foreach (var t in Controller.ArrowTypes)
+			foreach (var t in ShapeDictionary.ArrowTypes)
 			{
 				AddShapeType(t, linkModeTS, lTypeHandler);
 				AddShapeType(t, lineKindTSMI, lTypeHandler);
 			}
-			SetDefaultObject(RoundedBox.Creator);
+			SetDefaultObject(RoundedBox.Helper);
 			new Thread(CheckForUpdates).Start();
 
 			//the following code recreates the shapeContainer back image
@@ -119,19 +119,19 @@ namespace Nummite.Forms
 			linkModeTS.Owner.Refresh();
 		}
 
-		void SetDefaultObject(IShapeCreator e)
+		void SetDefaultObject(IShapeHelper e)
 		{
 			libraryTS.Image = e.Image;
 			libraryTS.Tag = e.GetType();
 			libraryTS.Text = e.ToString();
 		}
 
-		static void AddShapeType(IShapeCreator creator, ToolStripDropDownItem dropDownItem,
+		static void AddShapeType(IShapeHelper helper, ToolStripDropDownItem dropDownItem,
 								  EventHandler handler)
 		{
-			var i = new ToolStripMenuItem(creator.Description, creator.Image ?? Resources.Link, handler)
+			var i = new ToolStripMenuItem(helper.Description, helper.Image ?? Resources.Link, handler)
 			{
-				Tag = creator,
+				Tag = helper,
 				ImageTransparentColor = Color.Magenta
 			};
 			dropDownItem.DropDownItems.Add(i);
@@ -142,7 +142,7 @@ namespace Nummite.Forms
 			var senderTsi = sender as ToolStripMenuItem;
 			if (senderTsi == null)
 				return;
-			var creator = senderTsi.Tag as ILineCreator;
+			var creator = senderTsi.Tag as ILineHelper;
 			if (creator == null)
 				return;
 			Controller.LineType = creator;
@@ -159,7 +159,7 @@ namespace Nummite.Forms
 			var s = sender as ToolStripMenuItem;
 			if (s == null)
 				return;
-			var creator = s.Tag as IShapeCreator;
+			var creator = s.Tag as IShapeHelper;
 			if (creator == null) return;
 			libraryTS.Image = creator.Image ?? Resources.Book;
 			libraryTS.Tag = s.Tag;
@@ -191,7 +191,7 @@ namespace Nummite.Forms
 			if (styleable != null)
 			{
 				if (fontTS.Checked)
-					styleable.Font = fontDialog1.Font;
+					styleable.Font = fontDialog.Font;
 				if (bColorTS.Checked)
 					styleable.BackgroundColor = bColorDialog.Color;
 				if (fColorTS.Checked)
@@ -220,7 +220,7 @@ namespace Nummite.Forms
 		{
 			try
 			{
-				printDocument1.Print();
+				printDocument.Print();
 			}
 			catch (InvalidPrinterException)
 			{
@@ -237,12 +237,12 @@ namespace Nummite.Forms
 
 		void PrintPreviewToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			printPreviewDialog1.ShowDialog(this);
+			printPreviewDialog.ShowDialog(this);
 		}
 
 		void PrintToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			printDocument1.Print();
+			printDocument.Print();
 		}
 
 		void OpenToolStripButtonClick(object sender, EventArgs e)
@@ -257,9 +257,9 @@ namespace Nummite.Forms
 
 		void Open()
 		{
-			if (openFileDialog1.ShowDialog() != DialogResult.OK)
+			if (openFileDialog.ShowDialog() != DialogResult.OK)
 				return;
-			Controller.Open(openFileDialog1.FileName);
+			Controller.Open(openFileDialog.FileName);
 		}
 
 		void SaveToolStripButtonClick(object sender, EventArgs e)
@@ -282,9 +282,9 @@ namespace Nummite.Forms
 
 		void SaveAs()
 		{
-			if (saveFileDialog1.ShowDialog() != DialogResult.OK)
+			if (saveFileDialogXml.ShowDialog() != DialogResult.OK)
 				return;
-			Save(saveFileDialog1.FileName);
+			Save(saveFileDialogXml.FileName);
 		}
 
 		void Save(string filename)
@@ -410,7 +410,7 @@ namespace Nummite.Forms
 
 		void AltriToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if (fontDialog1.ShowDialog() != DialogResult.OK)
+			if (fontDialog.ShowDialog() != DialogResult.OK)
 				return;
 			FontSelected();
 		}
@@ -424,7 +424,7 @@ namespace Nummite.Forms
 
 		void TsiFontClick(object sender, EventArgs e)
 		{
-			fontDialog1.Font = ((ToolStripItem)(sender)).Tag as Font;
+			fontDialog.Font = ((ToolStripItem)(sender)).Tag as Font;
 			FontSelected();
 		}
 
@@ -432,9 +432,9 @@ namespace Nummite.Forms
 		{
 			if (fontTS.DropDownItems.Count == 10)
 				fontTS.DropDownItems.RemoveAt(9);
-			ToolStripItem tsi = new ToolStripMenuItem(fontDialog1.Font.Name + " " + fontDialog1.Font.SizeInPoints + "pt")
+			ToolStripItem tsi = new ToolStripMenuItem(fontDialog.Font.Name + " " + fontDialog.Font.SizeInPoints + "pt")
 			{
-				Tag = fontDialog1.Font
+				Tag = fontDialog.Font
 			};
 			tsi.Click += TsiFontClick;
 			fontTS.DropDownItems.Add(tsi);
@@ -639,10 +639,10 @@ namespace Nummite.Forms
 
 		void ExportImageToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if (saveFileDialog2.ShowDialog() != DialogResult.OK)
+			if (saveFileDialogRaster.ShowDialog() != DialogResult.OK)
 				return;
 			var format = ImageFormat.Png;
-			switch (saveFileDialog2.FilterIndex)
+			switch (saveFileDialogRaster.FilterIndex)
 			{
 				case 1:
 					format = ImageFormat.Png;
@@ -660,7 +660,7 @@ namespace Nummite.Forms
 					format = ImageFormat.Tiff;
 					break;
 			}
-			Controller.ExportImage(saveFileDialog2.FileName, format);
+			Controller.ExportImage(saveFileDialogRaster.FileName, format);
 		}
 
 		void OptionsToolStripMenuItemClick(object sender, EventArgs e)
@@ -737,9 +737,9 @@ namespace Nummite.Forms
 
 		void ComeImmagineVettorialeToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if (saveFileDialog3.ShowDialog() != DialogResult.OK)
+			if (saveFileDialogSvg.ShowDialog() != DialogResult.OK)
 				return;
-			Controller.ExportSvg(saveFileDialog3.FileName);
+			Controller.ExportSvg(saveFileDialogSvg.FileName);
 		}
 	}
 

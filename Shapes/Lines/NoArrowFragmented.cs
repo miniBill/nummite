@@ -26,7 +26,7 @@ using Nummite.Properties;
 namespace Nummite.Shapes.Lines {
 	class NoArrowFragmented : Line
 	{
-		public readonly static new ILineCreator Creator = new LineCreator<NoArrowFragmented>(Description, Resources.NoArrowFragmented);
+		public readonly static new ILineHelper Helper = new LineHelper<NoArrowFragmented>(Description, Resources.NoArrowFragmented);
 
 		protected override void OnOriginChange (IShape value)
 		{

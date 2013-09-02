@@ -280,30 +280,6 @@ namespace Nummite.Shapes.Lines {
 				throw new ArgumentException ("Cannot read endpoint");
 		}
 
-		public override void Save (XmlWriter writer)
-		{
-			SaveOrigin (writer);
-			SavePointed (writer);
-			SaveName (writer);
-			SaveFont (writer);
-			SaveColors (writer);
-			SaveText (writer);
-		}
-
-		void SavePointed (XmlWriter writer)
-		{
-			writer.WriteStartElement ("pointed");
-			writer.WriteAttributeString ("name", pointed.Name);
-			writer.WriteEndElement ();
-		}
-
-		void SaveOrigin (XmlWriter writer)
-		{
-			writer.WriteStartElement ("origin");
-			writer.WriteAttributeString ("name", origin.Name);
-			writer.WriteEndElement ();
-		}
-
 		string originName;
 		string pointedName;
 
@@ -325,7 +301,7 @@ namespace Nummite.Shapes.Lines {
 			}
 		}
 
-		public readonly static new ILineCreator Creator = new LineCreator<Line> (Description, Resources.NoArrow);
+		public readonly static new ILineHelper Helper = new LineHelper<Line> (Description, Resources.NoArrow);
 
 		public static new string Description {
 			get {
@@ -336,7 +312,7 @@ namespace Nummite.Shapes.Lines {
 		public override void SvgSave (XmlWriter writer)
 		{
 			Svg.WriteLine (writer, Start, End, BorderPen);
-			Svg.WriteRectangle (writer, label.Location, new Size (label.Width, label.Height), BackgroundColor, BackPen);
+			Svg.WriteRectangle (writer, label.Location, label.Size, BackgroundColor, BackPen);
 			Svg.WriteText (writer, label.Center, ForegroundColor, Font, label.Text);
 		}
 	}

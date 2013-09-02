@@ -26,7 +26,7 @@ using Nummite.Properties;
 namespace Nummite.Shapes.Lines {
 	class OneArrowAngle : OneArrow
 	{
-		public readonly static new ILineCreator Creator = new LineCreator<OneArrowAngle> (Description, Resources.OneArrowAngle);
+		public readonly static new ILineHelper Helper = new LineHelper<OneArrowAngle> (Description, Resources.OneArrowAngle);
 
 		protected override void OnOriginChange (IShape value)
 		{

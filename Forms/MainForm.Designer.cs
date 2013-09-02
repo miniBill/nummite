@@ -7,7 +7,9 @@ namespace Nummite.Forms {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
+#pragma warning disable 649
 		System.ComponentModel.IContainer components;
+#pragma warning restore 649
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -27,12 +29,11 @@ namespace Nummite.Forms {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.shapeContainer1 = new Nummite.Forms.ShapeContainer();
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,7 +70,7 @@ namespace Nummite.Forms {
 			this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -95,24 +96,23 @@ namespace Nummite.Forms {
 			this.gridTS = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.fColorDialog = new System.Windows.Forms.ColorDialog();
-			this.fontDialog1 = new System.Windows.Forms.FontDialog();
+			this.fontDialog = new System.Windows.Forms.FontDialog();
 			this.bColorDialog = new System.Windows.Forms.ColorDialog();
-			this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-			this.printDialog1 = new System.Windows.Forms.PrintDialog();
-			this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-			this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
+			this.printDocument = new System.Drawing.Printing.PrintDocument();
+			this.printDialog = new System.Windows.Forms.PrintDialog();
+			this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.saveFileDialogXml = new System.Windows.Forms.SaveFileDialog();
+			this.saveFileDialogRaster = new System.Windows.Forms.SaveFileDialog();
 			this.borderColorDialog = new System.Windows.Forms.ColorDialog();
-			this.saveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
+			this.saveFileDialogSvg = new System.Windows.Forms.SaveFileDialog();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
 			this.panel1.SuspendLayout();
-			this.menuStrip1.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
+			this.menuStrip.SuspendLayout();
+			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStripContainer1
@@ -131,8 +131,8 @@ namespace Nummite.Forms {
 			// 
 			// toolStripContainer1.TopToolStripPanel
 			// 
-			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
-			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip);
+			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip);
 			// 
 			// panel1
 			// 
@@ -158,21 +158,21 @@ namespace Nummite.Forms {
 			this.shapeContainer1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ShapeContainer1MouseClick);
 			this.shapeContainer1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShapeContainer1MouseDown);
 			// 
-			// menuStrip1
+			// menuStrip
 			// 
-			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.objectsTSMI,
             this.lineKindTSMI,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(804, 24);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(804, 24);
+			this.menuStrip.TabIndex = 0;
+			this.menuStrip.Text = "menuStrip1";
 			// 
 			// fileToolStripMenuItem
 			// 
@@ -470,10 +470,10 @@ namespace Nummite.Forms {
 			this.aboutToolStripMenuItem.Text = "Informazioni su...";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
 			// 
-			// toolStrip1
+			// toolStrip
 			// 
-			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripButton,
             this.saveToolStripButton,
             this.openToolStripButton,
@@ -495,10 +495,10 @@ namespace Nummite.Forms {
             this.gridTS,
             this.toolStripSeparator10,
             this.helpToolStripButton});
-			this.toolStrip1.Location = new System.Drawing.Point(3, 24);
-			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(360, 25);
-			this.toolStrip1.TabIndex = 1;
+			this.toolStrip.Location = new System.Drawing.Point(3, 24);
+			this.toolStrip.Name = "toolStrip";
+			this.toolStrip.Size = new System.Drawing.Size(360, 25);
+			this.toolStrip.TabIndex = 1;
 			// 
 			// newToolStripButton
 			// 
@@ -739,83 +739,73 @@ namespace Nummite.Forms {
 			this.helpToolStripButton.Text = "He&lp";
 			this.helpToolStripButton.Visible = false;
 			// 
-			// imageList1
-			// 
-			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-			this.imageList1.TransparentColor = System.Drawing.Color.Magenta;
-			this.imageList1.Images.SetKeyName(0, "ellipse.bmp");
-			this.imageList1.Images.SetKeyName(1, "rectangle.bmp");
-			this.imageList1.Images.SetKeyName(2, "Simple.bmp");
-			this.imageList1.Images.SetKeyName(3, "Point1.bmp");
-			this.imageList1.Images.SetKeyName(4, "Point2.bmp");
-			// 
 			// fColorDialog
 			// 
 			this.fColorDialog.AnyColor = true;
 			// 
-			// fontDialog1
+			// fontDialog
 			// 
-			this.fontDialog1.FontMustExist = true;
+			this.fontDialog.FontMustExist = true;
 			// 
 			// bColorDialog
 			// 
 			this.bColorDialog.AnyColor = true;
 			this.bColorDialog.Color = System.Drawing.Color.White;
 			// 
-			// printDocument1
+			// printDocument
 			// 
-			this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.PrintDocument1PrintPage);
+			this.printDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.PrintDocument1PrintPage);
 			// 
-			// printDialog1
+			// printDialog
 			// 
-			this.printDialog1.Document = this.printDocument1;
-			this.printDialog1.UseEXDialog = true;
+			this.printDialog.Document = this.printDocument;
+			this.printDialog.UseEXDialog = true;
 			// 
-			// printPreviewDialog1
+			// printPreviewDialog
 			// 
-			this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-			this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-			this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-			this.printPreviewDialog1.Document = this.printDocument1;
-			this.printPreviewDialog1.Enabled = true;
-			this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-			this.printPreviewDialog1.Name = "printPreviewDialog1";
-			this.printPreviewDialog1.Visible = false;
+			this.printPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+			this.printPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+			this.printPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
+			this.printPreviewDialog.Document = this.printDocument;
+			this.printPreviewDialog.Enabled = true;
+			this.printPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog.Icon")));
+			this.printPreviewDialog.Name = "printPreviewDialog1";
+			this.printPreviewDialog.Visible = false;
 			// 
-			// openFileDialog1
+			// openFileDialog
 			// 
-			this.openFileDialog1.DefaultExt = "xml";
-			this.openFileDialog1.FileName = "openFileDialog1";
-			this.openFileDialog1.Filter = "File xml (*.xml)|*.xml|Tutti i files (*.*)|*.*";
+			this.openFileDialog.DefaultExt = "xml";
+			this.openFileDialog.FileName = "openFileDialog1";
+			this.openFileDialog.Filter = "File xml (*.xml)|*.xml|Tutti i files (*.*)|*.*";
 			// 
-			// saveFileDialog1
+			// saveFileDialogXml
 			// 
-			this.saveFileDialog1.DefaultExt = "xml";
-			this.saveFileDialog1.FileName = "nummite";
-			this.saveFileDialog1.Filter = "File xml (*.xml)|*.xml|Tutti i files (*.*)|*.*";
-			this.saveFileDialog1.RestoreDirectory = true;
+			this.saveFileDialogXml.DefaultExt = "xml";
+			this.saveFileDialogXml.FileName = "nummite";
+			this.saveFileDialogXml.Filter = "File xml (*.xml)|*.xml|Tutti i files (*.*)|*.*";
+			this.saveFileDialogXml.RestoreDirectory = true;
 			// 
-			// saveFileDialog2
+			// saveFileDialogRaster
 			// 
-			this.saveFileDialog2.FileName = "export";
-			this.saveFileDialog2.Filter = "File png (*.png)|*.png|File jpeg (*.jpg,*.jpeg)|*.jpg,*.jpeg|File bitmap (*.bmp)|" +
+			this.saveFileDialogRaster.FileName = "export";
+			this.saveFileDialogRaster.Filter = "File png (*.png)|*.png|File jpeg (*.jpg,*.jpeg)|*.jpg,*.jpeg|File bitmap (*.bmp)|" +
     "*.bmp|File gif (*.gif)|*.gif|File tiff (*.tif,*.tiff)|*.tif,*.tiff";
-			this.saveFileDialog2.RestoreDirectory = true;
+			this.saveFileDialogRaster.RestoreDirectory = true;
 			// 
 			// borderColorDialog
 			// 
 			this.borderColorDialog.AnyColor = true;
 			// 
-			// saveFileDialog3
+			// saveFileDialogSvg
 			// 
-			this.saveFileDialog3.DefaultExt = "svg";
-			this.saveFileDialog3.Filter = "File svg (*.svg)|*.svg|Tutti i files (*.*)|*.*";
+			this.saveFileDialogSvg.DefaultExt = "svg";
+			this.saveFileDialogSvg.Filter = "File svg (*.svg)|*.svg|Tutti i files (*.*)|*.*";
 			// 
 			// MainForm
 			// 
 			this.ClientSize = new System.Drawing.Size(804, 578);
 			this.Controls.Add(this.toolStripContainer1);
-			this.MainMenuStrip = this.menuStrip1;
+			this.MainMenuStrip = this.menuStrip;
 			this.Name = "MainForm";
 			this.Text = "Nummite";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -826,10 +816,10 @@ namespace Nummite.Forms {
 			this.toolStripContainer1.ResumeLayout(false);
 			this.toolStripContainer1.PerformLayout();
 			this.panel1.ResumeLayout(false);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.toolStrip.ResumeLayout(false);
+			this.toolStrip.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -837,7 +827,7 @@ namespace Nummite.Forms {
 		#endregion
 
 		ToolStripContainer toolStripContainer1;
-		MenuStrip menuStrip1;
+		MenuStrip menuStrip;
 		ToolStripMenuItem fileToolStripMenuItem;
 		ToolStripMenuItem newToolStripMenuItem;
 		ToolStripMenuItem openToolStripMenuItem;
@@ -867,7 +857,7 @@ namespace Nummite.Forms {
 		ToolStripMenuItem searchToolStripMenuItem;
 		ToolStripSeparator toolStripSeparator5;
 		ToolStripMenuItem aboutToolStripMenuItem;
-		ToolStrip toolStrip1;
+		ToolStrip toolStrip;
 		ToolStripButton newToolStripButton;
 		ToolStripButton openToolStripButton;
 		ToolStripButton saveToolStripButton;
@@ -878,17 +868,16 @@ namespace Nummite.Forms {
 		ToolStripButton pasteToolStripButton;
 		ToolStripSeparator toolStripSeparator7;
 		ToolStripButton helpToolStripButton;
-		ImageList imageList1;
 		ToolStripSplitButton libraryTS;
 		ToolStripSeparator toolStripSeparator9;
-		FontDialog fontDialog1;
+		FontDialog fontDialog;
 		ColorDialog bColorDialog;
-		PrintDialog printDialog1;
-		PrintPreviewDialog printPreviewDialog1;
+		PrintDialog printDialog;
+		PrintPreviewDialog printPreviewDialog;
 		ColorDialog fColorDialog;
-		System.Drawing.Printing.PrintDocument printDocument1;
-		OpenFileDialog openFileDialog1;
-		SaveFileDialog saveFileDialog1;
+		System.Drawing.Printing.PrintDocument printDocument;
+		OpenFileDialog openFileDialog;
+		SaveFileDialog saveFileDialogXml;
 		CheckableToolStripSplitButton linkModeTS;
 		Panel panel1;
 		ShapeContainer shapeContainer1;
@@ -906,14 +895,14 @@ namespace Nummite.Forms {
 		ToolStripSeparator toolStripSeparator10;
 		ToolStripMenuItem exportToolStripMenuItem;
 		ToolStripMenuItem exportImageToolStripMenuItem;
-		SaveFileDialog saveFileDialog2;
+		SaveFileDialog saveFileDialogRaster;
 		ToolStripSeparator toolStripSeparator8;
 		ToolStripButton gridTS;
 		CheckableToolStripSplitButton borderColorTS;
 		ColorDialog borderColorDialog;
 		ToolStripMenuItem altriToolStripMenuItem3;
 		ToolStripMenuItem comeImmagineVettorialeToolStripMenuItem;
-		SaveFileDialog saveFileDialog3;
+		SaveFileDialog saveFileDialogSvg;
 	}
 }
 
