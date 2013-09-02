@@ -49,6 +49,7 @@ namespace Nummite {
 
 		}
 
+// ReSharper disable once UnusedMember.Local
 		static string Inspect (string p, Exception e)
 		{
 			while (true) {

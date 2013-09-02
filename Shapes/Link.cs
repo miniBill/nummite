@@ -21,7 +21,6 @@ using System.Windows.Forms;
 using System.Xml;
 using Nummite.Export;
 using Nummite.Properties;
-using Nummite.Shapes;
 using Nummite.Forms;
 
 namespace Nummite.Shapes {

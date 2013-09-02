@@ -42,12 +42,14 @@ namespace Nummite.Shapes.Lines {
 			var otherPointX = Start.X - End.X;
 			var otherPointY = Start.Y - End.Y;
 			var m = otherPointY / otherPointX;
-			if (otherPointX == 0) {
+			if (Math.Abs(otherPointX) < Options.TOLERANCE) {
 				var y = (End.Y > Start.Y) ? (End.Y - DISTANZA) : (End.Y + DISTANZA);
 				l.Y = r.Y = y;
 				l.X = End.X - APERTURA;
 				r.X = End.X + APERTURA;
-			} else if (otherPointY == 0) {
+			}
+			else if (Math.Abs(otherPointY) < Options.TOLERANCE)
+			{
 				var x = (End.X > Start.X) ? (End.X - DISTANZA) : (End.X + DISTANZA);
 				l.X = r.X = x;
 				l.Y = End.Y - APERTURA;

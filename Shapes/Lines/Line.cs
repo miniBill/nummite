@@ -166,7 +166,9 @@ namespace Nummite.Shapes.Lines {
 
 		protected virtual bool ShouldDraw ()
 		{
-			return (Start.X != 0 || Start.Y == 0) && (End.X != 0 || End.Y != 0) && !Pointed.Contains (Start) && !Origin.Contains (End);
+			return (Math.Abs(Start.X) > Options.TOLERANCE || Math.Abs(Start.Y) < Options.TOLERANCE)
+				&& (Math.Abs(End.X) > Options.TOLERANCE || Math.Abs(End.Y) > Options.TOLERANCE)
+				&& !Pointed.Contains(Start) && !Origin.Contains(End);
 		}
 
 		protected override void OnSizeChange ()
@@ -184,7 +186,9 @@ namespace Nummite.Shapes.Lines {
 
 		public override bool Contains (PointF point)
 		{
-			return (Start.X != 0 || Start.Y != 0) && (End.X != 0 || End.Y != 0) && DistanceHelper.LinePointDist (Start, End, point, true) < 10;
+			return (Math.Abs(Start.X) > Options.TOLERANCE || Math.Abs(Start.Y) > Options.TOLERANCE)
+				&& (Math.Abs(End.X) > Options.TOLERANCE || Math.Abs(End.Y) > Options.TOLERANCE)
+				&& DistanceHelper.LinePointDist(Start, End, point, true) < 10;
 			/*
 			//caso ay=by
 			//y=k

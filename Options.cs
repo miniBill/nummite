@@ -2,6 +2,7 @@
 	static class Options
 	{
 		public const string UPDATE_URL = "http://raw.github.com/miniBill/nummite/master/version";
+		public const float TOLERANCE = 1e-10f;
 
 		static Options ()
 		{

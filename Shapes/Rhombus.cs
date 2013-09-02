@@ -28,9 +28,9 @@ namespace Nummite.Shapes {
 			var c = Center;
 			var ox = point.X - c.X;
 			var oy = point.Y - c.Y;
-			if (ox == 0)
+			if (Math.Abs (ox) < Options.TOLERANCE)
 				return Math.Abs (oy) <= (Height / 2F);
-			if (oy == 0)
+			if (Math.Abs(oy) < Options.TOLERANCE)
 				return Math.Abs (ox) <= (Width / 2F);
 			var m = oy / ox;
 			if (m > 0) {
@@ -54,9 +54,9 @@ namespace Nummite.Shapes {
 			PointF c = Center;
 			var ox = other.X - c.X;
 			var oy = other.Y - c.Y;
-			if (ox == 0)
+			if (Math.Abs(ox) < Options.TOLERANCE)
 				return new PointF (c.X, c.Y + Height / 2 * Math.Sign (oy));
-			if (oy == 0)
+			if (Math.Abs(oy) < Options.TOLERANCE)
 				return new PointF (c.X + Width / 2 * Math.Sign (ox), c.Y);
 			var m = oy / ox;
 			var qa = Height / 2F * Math.Sign (oy);

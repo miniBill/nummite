@@ -110,7 +110,7 @@ namespace Nummite.Shapes.Lines {
 				return;
 			float dx = Origin.Center.X - Pointed.Center.X;
 			float dy = Origin.Center.Y - Pointed.Center.Y;
-			if (dx == 0 || dy == 0)
+			if (Math.Abs(dx) < Options.TOLERANCE || Math.Abs(dy) < Options.TOLERANCE)
 				base.DrawTo (graphics);
 			else
 				foreach (var l in SubLines)
@@ -171,7 +171,7 @@ namespace Nummite.Shapes.Lines {
 		{
 			float dx = Origin.Center.X - Pointed.Center.X;
 			float dy = Origin.Center.Y - Pointed.Center.Y;
-			if (dx == 0 || dy == 0)
+			if (Math.Abs(dx) < Options.TOLERANCE || Math.Abs(dy) < Options.TOLERANCE)
 				base.SvgSave (writer);
 			else
 				foreach (var l in SubLines)

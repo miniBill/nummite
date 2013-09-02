@@ -192,7 +192,7 @@ namespace Nummite.Forms
 			}
 			catch (FileNotFoundException fnfe)
 			{
-				MessageBox.Show("[WAAAAAAAAA]\nFile non trovato: " + fnfe.FileName, "Nummite", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(string.Format ("File non trovato: {0}", fnfe.FileName), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 

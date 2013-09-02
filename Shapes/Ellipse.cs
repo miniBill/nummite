@@ -40,7 +40,7 @@ namespace Nummite.Shapes {
 			PointF c = Center;
 			var ox = other.X - c.X;
 			var oy = other.Y - c.Y;
-			if (ox == 0)
+			if (Math.Abs(ox) < Options.TOLERANCE)
 				return new PointF (c.X, c.Y + Height / 2F * Math.Sign (oy));
 			var a = Width / 2F;
 			var b = Height / 2F;
