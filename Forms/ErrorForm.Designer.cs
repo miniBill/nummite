@@ -1,4 +1,4 @@
-﻿namespace DiagramDrawer.Forms {
+﻿namespace Nummite.Forms {
 	partial class ErrorForm {
 		/// <summary>
 		/// Required designer variable.

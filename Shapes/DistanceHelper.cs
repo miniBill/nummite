@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace DiagramDrawer.Shapes {
+namespace Nummite.Shapes {
 	static class DistanceHelper {
 		//Compute the dot product AB ⋅ BC
 		static float Dot(PointF a, PointF b, PointF c) {

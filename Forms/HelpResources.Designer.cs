@@ -8,8 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DiagramDrawer.Forms {
-	/// <summary>
+namespace Nummite.Forms {
+    using System;
+    
+    
+    /// <summary>
     ///   Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
     /// </summary>
     // Questa classe è stata generata automaticamente dalla classe StronglyTypedResourceBuilder.
@@ -17,13 +20,13 @@ namespace DiagramDrawer.Forms {
     // Per aggiungere o rimuovere un membro, modificare il file con estensione ResX ed eseguire nuovamente ResGen
     // con l'opzione /str oppure ricompilare il progetto VS.
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-    class HelpResources {
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    internal class HelpResources {
         
-        static global::System.Resources.ResourceManager resourceMan;
+        private static global::System.Resources.ResourceManager resourceMan;
         
-        static global::System.Globalization.CultureInfo resourceCulture;
+        private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal HelpResources() {
@@ -36,7 +39,7 @@ namespace DiagramDrawer.Forms {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    var temp = new global::System.Resources.ResourceManager("DiagramDrawer.Forms.HelpResources", typeof(HelpResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Nummite.Forms.HelpResources", typeof(HelpResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

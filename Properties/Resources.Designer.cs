@@ -8,8 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DiagramDrawer.Properties {
-	/// <summary>
+namespace Nummite.Properties {
+    using System;
+    
+    
+    /// <summary>
     ///   Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
     /// </summary>
     // Questa classe è stata generata automaticamente dalla classe StronglyTypedResourceBuilder.
@@ -17,13 +20,13 @@ namespace DiagramDrawer.Properties {
     // Per aggiungere o rimuovere un membro, modificare il file con estensione ResX ed eseguire nuovamente ResGen
     // con l'opzione /str oppure ricompilare il progetto VS.
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-    class Resources {
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    internal class Resources {
         
-        static global::System.Resources.ResourceManager resourceMan;
+        private static global::System.Resources.ResourceManager resourceMan;
         
-        static global::System.Globalization.CultureInfo resourceCulture;
+        private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
@@ -36,7 +39,7 @@ namespace DiagramDrawer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    var temp = new global::System.Resources.ResourceManager("DiagramDrawer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Nummite.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,7 +66,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Book {
             get {
                 object obj = ResourceManager.GetObject("Book", resourceCulture);
-                return (System.Drawing.Bitmap)obj;
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -73,7 +76,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Border {
             get {
                 object obj = ResourceManager.GetObject("Border", resourceCulture);
-                return (System.Drawing.Bitmap)obj;
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -83,7 +86,25 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Ellipse {
             get {
                 object obj = ResourceManager.GetObject("Ellipse", resourceCulture);
-                return (System.Drawing.Bitmap)obj;
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Error loading imageBox: path couldn&apos;t be read.
+        /// </summary>
+        internal static string ErrorLoadingImageBox {
+            get {
+                return ResourceManager.GetString("ErrorLoadingImageBox", resourceCulture);
             }
         }
         
@@ -93,7 +114,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Fill {
             get {
                 object obj = ResourceManager.GetObject("Fill", resourceCulture);
-                return (System.Drawing.Bitmap)obj;
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -103,7 +124,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap FontColor {
             get {
                 object obj = ResourceManager.GetObject("FontColor", resourceCulture);
-				return (System.Drawing.Bitmap)obj;
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -113,7 +134,7 @@ namespace DiagramDrawer.Properties {
         internal static System.Drawing.Bitmap Grid {
             get {
                 object obj = ResourceManager.GetObject("Grid", resourceCulture);
-                return (System.Drawing.Bitmap)obj;
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -144,6 +165,33 @@ namespace DiagramDrawer.Properties {
             get {
                 object obj = ResourceManager.GetObject("NoArrowFragmented", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Nessuna stampante!.
+        /// </summary>
+        internal static string NoPrinter {
+            get {
+                return ResourceManager.GetString("NoPrinter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Nummite.
+        /// </summary>
+        internal static string Nummite {
+            get {
+                return ResourceManager.GetString("Nummite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Nummite: {0}.
+        /// </summary>
+        internal static string NummiteFmt {
+            get {
+                return ResourceManager.GetString("NummiteFmt", resourceCulture);
             }
         }
         
@@ -248,6 +296,15 @@ namespace DiagramDrawer.Properties {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Salvare le modifiche?.
+        /// </summary>
+        internal static string SaveEdits {
+            get {
+                return ResourceManager.GetString("SaveEdits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Text {
@@ -290,7 +347,7 @@ namespace DiagramDrawer.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] Version {
+        internal static byte[] version {
             get {
                 object obj = ResourceManager.GetObject("version", resourceCulture);
                 return ((byte[])(obj));

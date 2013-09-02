@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace DiagramDrawer.Shapes {
+namespace Nummite.Shapes {
 	partial class ImagePropertiesForm {
 		/// <summary>
 		/// Required designer variable.

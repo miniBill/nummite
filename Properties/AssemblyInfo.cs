@@ -6,11 +6,11 @@ using System;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Diagram Drawer")]
-[assembly: AssemblyDescription("A program to create diagrams")]
+[assembly: AssemblyTitle("Nummite")]
+[assembly: AssemblyDescription("A program to aid penetration testing")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Diagram Drawer")]
+[assembly: AssemblyProduct("Nummite")]
 [assembly: AssemblyCopyright("Copyright © Leonardo Taglialegne 2009-2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -30,7 +30,7 @@ using System;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.2.0")]
-[assembly: AssemblyFileVersion("0.2.0")]
+[assembly: AssemblyVersion("0.1.0")]
+[assembly: AssemblyFileVersion("0.1.0")]
 [assembly: CLSCompliant(true)]
-[assembly: NeutralResourcesLanguage("it-IT")]
+[assembly: NeutralResourcesLanguage("en-US")]

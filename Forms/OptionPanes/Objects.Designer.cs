@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace DiagramDrawer.Forms.OptionPanes {
+namespace Nummite.Forms.OptionPanes {
 	partial class Objects {
 		/// <summary> 
 		/// Required designer variable.

@@ -1,4 +1,4 @@
-﻿namespace DiagramDrawer.Forms {
+﻿namespace Nummite.Forms {
 	partial class OptionsForm {
 		/// <summary>
 		/// Required designer variable.

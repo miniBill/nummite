@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace DiagramDrawer.Forms {
+namespace Nummite.Forms {
 	partial class HelpForm : Form {
 		public HelpForm() {
 			InitializeComponent();

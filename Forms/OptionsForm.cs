@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using DiagramDrawer.Forms.OptionPanes;
+using Nummite.Forms.OptionPanes;
 
-namespace DiagramDrawer.Forms {
+namespace Nummite.Forms {
 	partial class OptionsForm : Form {
 		readonly List<IOptionPane> panes = new List<IOptionPane>();
 		public OptionsForm() {

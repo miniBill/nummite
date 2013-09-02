@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using DiagramDrawer.Shapes.Lines;
+using Nummite.Shapes.Lines;
 
-namespace DiagramDrawer.Forms
+namespace Nummite.Forms
 {
 	class LineCreatorCollection : KeyedCollection<string, ILineCreator>
 	{

@@ -1,4 +1,4 @@
-﻿namespace DiagramDrawer.Forms.OptionPanes {
+﻿namespace Nummite.Forms.OptionPanes {
 	partial class General {
 		/// <summary> 
 		/// Required designer variable.
@@ -46,7 +46,7 @@
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(282, 17);
 			this.checkBox2.TabIndex = 1;
-			this.checkBox2.Text = "Chiedi conferma prima di chiudere diagrammi modificati";
+			this.checkBox2.Text = "Chiedi conferma prima di chiudere i diagrammi modificati";
 			// 
 			// General
 			// 

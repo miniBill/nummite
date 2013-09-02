@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
-using DiagramDrawer.Shapes;
+using Nummite.Shapes;
 
-namespace DiagramDrawer.Forms {
+namespace Nummite.Forms {
 	class ShapeCreatorCollection : KeyedCollection<string, IShapeCreator>
 	{
 		public void AddRange (params IShapeCreator[] shapeCreators)

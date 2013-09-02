@@ -1,4 +1,4 @@
-﻿namespace DiagramDrawer.Forms {
+﻿namespace Nummite.Forms {
 	partial class SizeForm {
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.

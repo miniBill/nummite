@@ -1,8 +1,7 @@
-﻿namespace DiagramDrawer {
+﻿namespace Nummite {
 	static class Options
 	{
-		public const string UPDATE_URL = "http://raw.github.com/miniBill/DiagramDrawer/master/version";
-		public const bool CHECK_FOR_UPDATES = true;
+		public const string UPDATE_URL = "http://raw.github.com/miniBill/nummite/master/version";
 
 		static Options ()
 		{

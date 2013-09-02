@@ -3,13 +3,14 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
-using DiagramDrawer.Shapes;
+using Nummite.Properties;
+using Nummite.Shapes;
 using System.Drawing.Imaging;
 using System.IO;
-using DiagramDrawer.Export;
-using DiagramDrawer.Shapes.Lines;
+using Nummite.Shapes.Lines;
+using Nummite.Export;
 
-namespace DiagramDrawer.Forms
+namespace Nummite.Forms
 {
 	class ShapeController : ISizeable
 	{
@@ -115,7 +116,7 @@ namespace DiagramDrawer.Forms
 				var directoryName = Path.GetDirectoryName(Filename);
 				if (directoryName == null)
 				{
-					MessageBox.Show("Error?!?");
+					MessageBox.Show(Resources.Error);
 					return;
 				}
 				var nfilename = Path.Combine(directoryName, Path.GetFileName(filename));
@@ -123,8 +124,8 @@ namespace DiagramDrawer.Forms
 					filename = nfilename;
 				else
 				{
-					MessageBox.Show("File non trovato:\n" + filename, "Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					MessageBox.Show("File non trovato:\n" + nfilename, "Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(string.Format ("File non trovato: {0}", filename), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(string.Format ("File non trovato: {0}", nfilename), Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 			}
@@ -191,7 +192,7 @@ namespace DiagramDrawer.Forms
 			}
 			catch (FileNotFoundException fnfe)
 			{
-				MessageBox.Show("[WAAAAAAAAA]\nFile non trovato: " + fnfe.FileName, "Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("[WAAAAAAAAA]\nFile non trovato: " + fnfe.FileName, "Nummite", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
