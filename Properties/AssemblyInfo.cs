@@ -11,7 +11,7 @@ using System;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Diagram Drawer")]
-[assembly: AssemblyCopyright("Copyright © Leonardo Taglialegne 2009")]
+[assembly: AssemblyCopyright("Copyright © Leonardo Taglialegne 2009-2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -30,7 +30,7 @@ using System;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.0.8")]
-[assembly: AssemblyFileVersion("0.1.0.8")]
+[assembly: AssemblyVersion("0.2.0")]
+[assembly: AssemblyFileVersion("0.2.0")]
 [assembly: CLSCompliant(true)]
 [assembly: NeutralResourcesLanguage("it-IT")]
