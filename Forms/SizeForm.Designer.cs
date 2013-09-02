@@ -3,7 +3,9 @@
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
 		/// </summary>
+#pragma warning disable 649
 		readonly System.ComponentModel.IContainer components;
+#pragma warning restore 649
 
 		/// <summary>
 		/// Disposes resources used by the form.

@@ -18,12 +18,15 @@
 
 using System.Drawing;
 
-namespace DiagramDrawer.Shapes
-{
-	interface IMenu
+namespace DiagramDrawer.Shapes {
+	interface IShapeCreator
 	{
-		Image Image {
-			get;
-		}
+		string Description { get; }
+
+		string TypeName { get; }
+
+		Image Image { get; }
+
+		IPersistableShape Create ();
 	}
 }

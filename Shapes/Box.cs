@@ -26,157 +26,143 @@ using DiagramDrawer.Forms;
 using DiagramDrawer.Properties;
 using DiagramDrawer.Export;
 
-namespace DiagramDrawer.Shapes
-{
-	class Box : IShape, IAutoSizeable, IMenu
+namespace DiagramDrawer.Shapes {
+	class Box : IPersistableShape, IAutoSizeable, IStyleable
 	{
-		public Font Font
-		{
+		public Font Font {
 			protected get;
 			set;
 		}
 
 		string text;
-		public string Text
-		{
-			get
-			{
+
+		public string Text {
+			get {
 				return text;
 			}
-			set
-			{
+			set {
 				text = value;
-				OnTextChange();
+				OnTextChange ();
 			}
 		}
-		protected virtual void OnTextChange()
+
+		protected virtual void OnTextChange ()
 		{
 			if (AutoResizeWidth || AutoResizeHeight)
-				DoAutoResize();
+				DoAutoResize ();
 		}
 
-		protected Brush BackBrush
-		{
+		protected Brush BackBrush {
 			get;
 			private set;
 		}
 
-		protected Pen BackPen
-		{
+		protected Pen BackPen {
 			get;
 			private set;
 		}
+
 		Color backgroundColor;
-		public Color BackgroundColor
-		{
-			protected get
-			{
+
+		public Color BackgroundColor {
+			protected get {
 				return backgroundColor;
 			}
-			set
-			{
+			set {
 				backgroundColor = value;
-				OnBackgroundColorChange();
+				OnBackgroundColorChange ();
 			}
 		}
+
 		public event EventHandler BackgroundColorChange;
 
-		void OnBackgroundColorChange()
+		void OnBackgroundColorChange ()
 		{
 			if (BackBrush != null)
-				BackBrush.Dispose();
+				BackBrush.Dispose ();
 			if (BackPen != null)
-				BackPen.Dispose();
-			BackBrush = new SolidBrush(backgroundColor);
-			BackPen = new Pen(backgroundColor);
+				BackPen.Dispose ();
+			BackBrush = new SolidBrush (backgroundColor);
+			BackPen = new Pen (backgroundColor);
 			if (BackgroundColorChange != null)
-				BackgroundColorChange(this, EventArgs.Empty);
+				BackgroundColorChange (this, EventArgs.Empty);
 		}
 
-
-		protected Brush ForeBrush
-		{
+		protected Brush ForeBrush {
 			get;
 			private set;
 		}
 
-		protected Pen ForePen
-		{
+		protected Pen ForePen {
 			get;
 			private set;
 		}
 
 		Color foregroundColor;
-		public Color ForegroundColor
-		{
-			get
-			{
+
+		public Color ForegroundColor {
+			get {
 				return foregroundColor;
 			}
-			set
-			{
+			set {
 				foregroundColor = value;
 				if (ForeBrush != null)
-					ForeBrush.Dispose();
+					ForeBrush.Dispose ();
 				if (ForePen != null)
-					ForePen.Dispose();
-				ForeBrush = new SolidBrush(foregroundColor);
-				ForePen = new Pen(foregroundColor);
+					ForePen.Dispose ();
+				ForeBrush = new SolidBrush (foregroundColor);
+				ForePen = new Pen (foregroundColor);
 				if (ForegroundColorChange != null)
-					ForegroundColorChange(this, EventArgs.Empty);
+					ForegroundColorChange (this, EventArgs.Empty);
 			}
 		}
-		public event EventHandler ForegroundColorChange;
 
+		public event EventHandler ForegroundColorChange;
 		public event EventHandler BorderColorChange;
-		protected Pen BorderPen
-		{
+
+		protected Pen BorderPen {
 			get;
 			private set;
 		}
 
-		protected Brush BorderBrush
-		{
+		protected Brush BorderBrush {
 			get;
 			private set;
 		}
 
 		Color borderColor;
 
-		public Color BorderColor
-		{
-			get
-			{
+		public Color BorderColor {
+			get {
 				return borderColor;
 			}
-			set
-			{
+			set {
 				if (ForeBrush != null)
-					ForeBrush.Dispose();
+					ForeBrush.Dispose ();
 				if (ForePen != null)
-					ForePen.Dispose();
-				ForeBrush = new SolidBrush(foregroundColor);
-				ForePen = new Pen(foregroundColor);
+					ForePen.Dispose ();
+				ForeBrush = new SolidBrush (foregroundColor);
+				ForePen = new Pen (foregroundColor);
 				if (ForegroundColorChange != null)
-					ForegroundColorChange(this, EventArgs.Empty);
+					ForegroundColorChange (this, EventArgs.Empty);
 
 
 				borderColor = value;
 				if (BorderBrush != null)
-					BorderBrush.Dispose();
+					BorderBrush.Dispose ();
 				if (BorderPen != null)
-					BorderPen.Dispose();
-				BorderBrush = new SolidBrush(borderColor);
-				BorderPen = new Pen(borderColor);
+					BorderPen.Dispose ();
+				BorderBrush = new SolidBrush (borderColor);
+				BorderPen = new Pen (borderColor);
 				if (BorderColorChange != null)
-					BorderColorChange(this, EventArgs.Empty);
+					BorderColorChange (this, EventArgs.Empty);
 			}
 		}
 
-		public Box()
+		public Box ()
 		{
-			ContextMenu = new ContextMenu();
-			Center = new Point();
+			ContextMenu = new ContextMenu ();
+			Center = new Point ();
 			height = 50;
 			width = 100;
 			BackgroundColor = Color.White;
@@ -184,55 +170,59 @@ namespace DiagramDrawer.Shapes
 			BorderColor = Color.Black;
 			text = String.Empty;
 			Font = SystemFonts.DefaultFont;
-			ContextMenu.MenuItems.Add("Elimina", DelClick);
-			ContextMenu.MenuItems.Add("Dimensione", SizeClick);
-			ContextMenu.MenuItems.Add("Porta in primo piano", ForeBring);
+			ContextMenu.MenuItems.Add ("Elimina", DelClick);
+			ContextMenu.MenuItems.Add ("Dimensione", SizeClick);
+			ContextMenu.MenuItems.Add ("Porta in primo piano", ForeBring);
 		}
-		void ForeBring(object sender, EventArgs e)
+
+		void ForeBring (object sender, EventArgs e)
 		{
-			ShapeContainer.BringForeground(this);
+			ShapeContainer.BringForeground (this);
 		}
-		void DelClick(object sender, EventArgs e)
+
+		void DelClick (object sender, EventArgs e)
 		{
-			new MethodInvoker(Delete).BeginInvoke(null, null);
+			new MethodInvoker (Delete).BeginInvoke (null, null);
 		}
-		void SizeClick(object sender, EventArgs e)
+
+		void SizeClick (object sender, EventArgs e)
 		{
-			new SizeForm(this).Show();
+			new SizeForm (this).Show ();
 		}
-		public virtual bool Contains(PointF point)
+
+		public virtual bool Contains (PointF point)
 		{
 			return point.X > Location.X && point.X < Location.X + Width && point.Y > Location.Y && point.Y < Location.Y + Height;
 		}
-		public virtual void DrawTo(Graphics graphics)
+
+		public virtual void DrawTo (Graphics graphics)
 		{
-			DrawBackground(graphics);
-			DrawText(graphics);
-		}
-		protected virtual void DrawBackground(Graphics graphics)
-		{
-			var bounds = new Rectangle(Location.X, Location.Y, Width, Height);
-			graphics.FillRectangle(BackBrush, bounds);
-			graphics.DrawRectangle(BorderPen, bounds);
+			DrawBackground (graphics);
+			DrawText (graphics);
 		}
 
-		void DrawText(Graphics graphics)
+		protected virtual void DrawBackground (Graphics graphics)
 		{
-			var sf = new StringFormat
-			{
+			var bounds = new Rectangle (Location.X, Location.Y, Width, Height);
+			graphics.FillRectangle (BackBrush, bounds);
+			graphics.DrawRectangle (BorderPen, bounds);
+		}
+
+		void DrawText (Graphics graphics)
+		{
+			var sf = new StringFormat {
 				Alignment = StringAlignment.Center,
 				LineAlignment = StringAlignment.Center
 			};
-			graphics.DrawString(Text, Font, ForeBrush, Center, sf);
+			graphics.DrawString (Text, Font, ForeBrush, Center, sf);
 		}
 
-		public Point Center
-		{
+		public Point Center {
 			get;
 			private set;
 		}
 
-		public virtual PointF GetIntersection(PointF other)
+		public virtual PointF GetIntersection (PointF other)
 		{
 			float r = Height;
 			r /= Width;
@@ -241,35 +231,34 @@ namespace DiagramDrawer.Shapes
 			var ox = other.X - c.X;
 			var oy = other.Y - c.Y;
 			if (ox == 0)
-				return new PointF(c.X, c.Y + Height / 2F * Math.Sign(oy));
+				return new PointF (c.X, c.Y + Height / 2F * Math.Sign (oy));
 			var m = oy / ox;
 			float x, y;
-			if (l < m && m < r)
-			{
-				x = Width / 2F * Math.Sign(ox);
+			if (l < m && m < r) {
+				x = Width / 2F * Math.Sign (ox);
 				y = m * x;
-			}
-			else
-			{
-				y = Height / 2F * Math.Sign(oy);
+			} else {
+				y = Height / 2F * Math.Sign (oy);
 				x = y / m;
 			}
-			return new PointF(x + c.X, y + c.Y);
+			return new PointF (x + c.X, y + c.Y);
 		}
 
 		protected ContextMenu ContextMenu { get; private set; }
 
-		public virtual void OpenMenu(PointF point)
+		public virtual void OpenMenu (PointF point)
 		{
-			ContextMenu.Show(ShapeContainer, new Point((int)point.X, (int)point.Y));
+			ContextMenu.Show (ShapeContainer, new Point ((int)point.X, (int)point.Y));
 		}
-		protected void Delete()
+
+		protected void Delete ()
 		{
-			ShapeContainer.RemoveShape(this);
+			ShapeContainer.RemoveShape (this);
 			if (Deleted != null)
-				Deleted(this, EventArgs.Empty);
+				Deleted (this, EventArgs.Empty);
 		}
-		public void Move(Point point)
+
+		public void Move (Point point)
 		{
 			var x = point.X - Offset.X;
 			if (x < 0)
@@ -281,104 +270,98 @@ namespace DiagramDrawer.Shapes
 				y = 0;
 			if (y + Height > ShapeContainer.Height)
 				y = ShapeContainer.Height - Height;
-			Location = new Point(x, y);
+			Location = new Point (x, y);
 			if (ShapeContainer.Grid)
-				Location = ShapeContainer.CutToGrid(Location);
+				Location = ShapeContainer.CutToGrid (Location);
 			if (Moving != null)
-				Moving(this, EventArgs.Empty);
+				Moving (this, EventArgs.Empty);
 		}
-		public override string ToString()
-		{
-			return "Rettangolo";
+
+		public static string Description { 
+			get {
+				return "Rettangolo";
+			}
 		}
+
 		bool dragged;
-		public bool Dragged
-		{
-			get
-			{
+
+		public bool Dragged {
+			get {
 				return dragged;
 			}
-			set
-			{
-				if (value)
-				{
+			set {
+				if (value) {
 					if (DragStart != null)
-						DragStart(this, EventArgs.Empty);
-				}
-				else
-					if (dragged)
-						if (DragEnd != null)
-							DragEnd(this, EventArgs.Empty);
+						DragStart (this, EventArgs.Empty);
+				} else if (dragged)
+				if (DragEnd != null)
+					DragEnd (this, EventArgs.Empty);
 				dragged = value;
 			}
 		}
+
 		Point location;
-		public Point Location
-		{
-			get
-			{
+
+		public Point Location {
+			get {
 				return location;
 			}
-			protected set
-			{
+			protected set {
 				location = value;
 				Center = VCenter;
 			}
 		}
+
 		/// <summary>
 		/// For optimization issues, this is the "true" center proprierty, whereas Center is just a "buffer"
 		/// </summary>
-		protected virtual Point VCenter
-		{
-			get
-			{
-				return new Point(Location.X + Width / 2, Location.Y + Height / 2);
+		protected virtual Point VCenter {
+			get {
+				return new Point (Location.X + Width / 2, Location.Y + Height / 2);
 			}
 		}
 
-		public Point Offset
-		{
+		public Point Offset {
 			get;
 			set;
 		}
 
 		int width;
-		public int Width
-		{
-			get
-			{
+
+		public int Width {
+			get {
 				return width;
 			}
-			set
-			{
+			set {
 				if (width == value)
 					return;
 				width = value;
-				OnSizeChange();
+				OnSizeChange ();
 			}
 		}
-		protected virtual void OnSizeChange()
+
+		protected virtual void OnSizeChange ()
 		{
 			Center = VCenter;
 		}
+
 		int height;
-		public int Height
-		{
-			get
-			{
+
+		public int Height {
+			get {
 				return height;
 			}
-			set
-			{
+			set {
 				if (height == value)
 					return;
 				height = value;
-				OnSizeChange();
+				OnSizeChange ();
 			}
 		}
+
 		public event EventHandler Moving;
-		public bool Depends
-		{
+
+		public bool Depends {
 			get;
 			set;
 		}
@@ -386,331 +369,336 @@ namespace DiagramDrawer.Shapes
 		public event EventHandler DragStart;
 		public event EventHandler DragEnd;
 		public event EventHandler Deleted;
-		public string Name
-		{
+
+		public string Name {
 			get;
 			set;
 		}
 
-		public virtual void BeginInitialize()
+		public virtual void BeginInitialize ()
 		{
 		}
-		public virtual void EndInitialize(KeyedCollection<string, IShape> list)
+
+		public virtual void EndInitialize (KeyedCollection<string, IShape> list)
 		{
 		}
-		public virtual bool NeedInitialize
-		{
-			get
-			{
+
+		public virtual bool NeedInitialize {
+			get {
 				return false;
 			}
 		}
-		public virtual void Load(XmlReader reader)
+
+		public virtual void Load (XmlReader reader)
 		{
-			while (!reader.EOF)
-			{
-				reader.Read();
-				switch (reader.Name)
-				{
+			while (!reader.EOF) {
+				reader.Read ();
+				switch (reader.Name) {
 					case "name":
-						ReadName(reader);
+						ReadName (reader);
 						break;
 					case "location":
-						ReadLocation(reader);
+						ReadLocation (reader);
 						break;
 					case "size":
-						ReadSize(reader);
+						ReadSize (reader);
 						break;
 					case "font":
-						ReadFont(reader);
+						ReadFont (reader);
 						break;
 					case "foregroundColor":
-						ReadColors(reader);
+						ReadColors (reader);
 						break;
 					case "backgroundColor":
-						ReadColors(reader);
+						ReadColors (reader);
 						break;
 					case "borderColor":
-						ReadBorderColor(reader);
+						ReadBorderColor (reader);
 						break;
 					case "text":
-						ReadText(reader);
+						ReadText (reader);
 						break;
 					case "autoresizewidth":
-						ReadAutoResize(reader);
+						ReadAutoResize (reader);
 						break;
 					case "autoresizeheight":
-						ReadAutoResize(reader);
+						ReadAutoResize (reader);
 						break;
 				}
 			}
 		}
-		void ReadAutoResize(XmlReader reader)
+
+		void ReadAutoResize (XmlReader reader)
 		{
-			switch (reader.Name)
-			{
+			switch (reader.Name) {
 				case "autoresizeheight":
-					var s = reader.ReadString();
+					var s = reader.ReadString ();
 					if (s.Length == 0)
 						return;
-					AutoResizeHeight = bool.Parse(s);
+					AutoResizeHeight = bool.Parse (s);
 					break;
 				case "autoresizewidth":
-					var s2 = reader.ReadString();
+					var s2 = reader.ReadString ();
 					if (s2.Length == 0)
 						return;
-					AutoResizeWidth = bool.Parse(s2);
+					AutoResizeWidth = bool.Parse (s2);
 					break;
 			}
 		}
-		protected void ReadName(XmlReader reader)
+
+		protected void ReadName (XmlReader reader)
 		{
-			Name = reader.ReadString();
+			Name = reader.ReadString ();
 		}
-		protected void ReadBorderColor(XmlReader reader)
+
+		protected void ReadBorderColor (XmlReader reader)
 		{
-			BorderColor = DeserializeColor(reader.ReadString());
+			BorderColor = DeserializeColor (reader.ReadString ());
 		}
-		protected void ReadText(XmlReader reader)
+
+		protected void ReadText (XmlReader reader)
 		{
-			Text = reader.ReadString().Replace(@"\n", Environment.NewLine);
+			Text = reader.ReadString ().Replace (@"\n", Environment.NewLine);
 		}
-		protected void ReadColors(XmlReader reader)
+
+		protected void ReadColors (XmlReader reader)
 		{
-			switch (reader.Name)
-			{
+			switch (reader.Name) {
 				case "foregroundColor":
-					ForegroundColor = DeserializeColor(reader.ReadString());
+					ForegroundColor = DeserializeColor (reader.ReadString ());
 					break;
 				case "backgroundColor":
-					BackgroundColor = DeserializeColor(reader.ReadString());
+					BackgroundColor = DeserializeColor (reader.ReadString ());
 					break;
 				case "borderColo":
-					BorderColor = DeserializeColor(reader.ReadString());
+					BorderColor = DeserializeColor (reader.ReadString ());
 					break;
 			}
 		}
-		protected void ReadFont(XmlReader reader)
+
+		protected void ReadFont (XmlReader reader)
 		{
-			reader.ReadStartElement("font");
-			reader.ReadStartElement("name");
-			var fontName = reader.ReadString();
-			reader.ReadEndElement();
-			reader.ReadStartElement("unit");
-			var fontUnit = (GraphicsUnit)Enum.Parse(typeof(GraphicsUnit), reader.ReadString());
-			reader.ReadEndElement();
-			reader.ReadStartElement("size");
-			var val = reader.ReadString();
-			val = val.Replace(',', '.');//HACK: find a way to understand numbers culture-invariantly
-			var fontSize = float.Parse(val, CultureInfo.InvariantCulture);
-			reader.ReadEndElement();
-			reader.ReadStartElement("style");
-			var fontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), reader.ReadString());
-			Font = new Font(fontName, fontSize, fontStyle, fontUnit);
-			reader.ReadEndElement();
+			reader.ReadStartElement ("font");
+			reader.ReadStartElement ("name");
+			var fontName = reader.ReadString ();
+			reader.ReadEndElement ();
+			reader.ReadStartElement ("unit");
+			var fontUnit = (GraphicsUnit)Enum.Parse (typeof(GraphicsUnit), reader.ReadString ());
+			reader.ReadEndElement ();
+			reader.ReadStartElement ("size");
+			var val = reader.ReadString ();
+			val = val.Replace (',', '.');//HACK: find a way to understand numbers culture-invariantly
+			var fontSize = float.Parse (val, CultureInfo.InvariantCulture);
+			reader.ReadEndElement ();
+			reader.ReadStartElement ("style");
+			var fontStyle = (FontStyle)Enum.Parse (typeof(FontStyle), reader.ReadString ());
+			Font = new Font (fontName, fontSize, fontStyle, fontUnit);
+			reader.ReadEndElement ();
 		}
-		protected void ReadSize(XmlReader reader)
+
+		protected void ReadSize (XmlReader reader)
 		{
-			reader.ReadToFollowing("width");
-			Width = reader.ReadElementContentAsInt();
-			Height = reader.ReadElementContentAsInt();
+			reader.ReadToFollowing ("width");
+			Width = reader.ReadElementContentAsInt ();
+			Height = reader.ReadElementContentAsInt ();
 		}
-		protected void ReadLocation(XmlReader reader)
+
+		protected void ReadLocation (XmlReader reader)
 		{
-			reader.ReadToFollowing("x");
-			var x = reader.ReadElementContentAsInt();
-			var y = reader.ReadElementContentAsInt();
-			Location = new Point(x, y);
+			reader.ReadToFollowing ("x");
+			var x = reader.ReadElementContentAsInt ();
+			var y = reader.ReadElementContentAsInt ();
+			Location = new Point (x, y);
 		}
-		public virtual void Save(XmlWriter writer)
+
+		public virtual void Save (XmlWriter writer)
 		{
-			SaveName(writer);
-			SaveLocation(writer);
-			SaveSize(writer);
-			SaveFont(writer);
-			SaveColors(writer);
-			SaveText(writer);
-			SaveAuto(writer);
+			SaveName (writer);
+			SaveLocation (writer);
+			SaveSize (writer);
+			SaveFont (writer);
+			SaveColors (writer);
+			SaveText (writer);
+			SaveAuto (writer);
 		}
-		void SaveAuto(XmlWriter writer)
+
+		void SaveAuto (XmlWriter writer)
 		{
-			writer.WriteElementString("autoresizewidth", AutoResizeWidth.ToString());
-			writer.WriteElementString("autoresizeheight", AutoResizeHeight.ToString());
+			writer.WriteElementString ("autoresizewidth", AutoResizeWidth.ToString ());
+			writer.WriteElementString ("autoresizeheight", AutoResizeHeight.ToString ());
 		}
-		protected void SaveText(XmlWriter writer)
+
+		protected void SaveText (XmlWriter writer)
 		{
-			writer.WriteElementString("text", Text.Replace(Environment.NewLine, "\\n"));
+			writer.WriteElementString ("text", Text.Replace (Environment.NewLine, "\\n"));
 		}
-		protected void SaveColors(XmlWriter writer)
+
+		protected void SaveColors (XmlWriter writer)
 		{
-			writer.WriteElementString("foregroundColor", SerializeColor(ForegroundColor));
-			writer.WriteElementString("backgroundColor", SerializeColor(BackgroundColor));
-			writer.WriteElementString("borderColor", SerializeColor(BorderColor));
+			writer.WriteElementString ("foregroundColor", SerializeColor (ForegroundColor));
+			writer.WriteElementString ("backgroundColor", SerializeColor (BackgroundColor));
+			writer.WriteElementString ("borderColor", SerializeColor (BorderColor));
 		}
-		protected void SaveName(XmlWriter writer)
+
+		protected void SaveName (XmlWriter writer)
 		{
-			writer.WriteElementString("name", Name);
+			writer.WriteElementString ("name", Name);
 		}
-		protected void SaveSize(XmlWriter writer)
+
+		protected void SaveSize (XmlWriter writer)
 		{
-			writer.WriteStartElement("size");
-			writer.WriteElementString("width", Width.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("height", Height.ToString(CultureInfo.InvariantCulture));
-			writer.WriteEndElement();
+			writer.WriteStartElement ("size");
+			writer.WriteElementString ("width", Width.ToString (CultureInfo.InvariantCulture));
+			writer.WriteElementString ("height", Height.ToString (CultureInfo.InvariantCulture));
+			writer.WriteEndElement ();
 		}
-		protected void SaveLocation(XmlWriter writer)
+
+		protected void SaveLocation (XmlWriter writer)
 		{
-			writer.WriteStartElement("location");
-			writer.WriteElementString("x", Location.X.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("y", Location.Y.ToString(CultureInfo.InvariantCulture));
-			writer.WriteEndElement();
+			writer.WriteStartElement ("location");
+			writer.WriteElementString ("x", Location.X.ToString (CultureInfo.InvariantCulture));
+			writer.WriteElementString ("y", Location.Y.ToString (CultureInfo.InvariantCulture));
+			writer.WriteEndElement ();
 		}
-		protected void SaveFont(XmlWriter writer)
+
+		protected void SaveFont (XmlWriter writer)
 		{
-			writer.WriteStartElement("font");
-			writer.WriteElementString("name", Font.FontFamily.Name);
-			writer.WriteElementString("unit", Font.Unit.ToString());
-			writer.WriteElementString("size", Font.Size.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("style", Font.Style.ToString());
-			writer.WriteEndElement();
+			writer.WriteStartElement ("font");
+			writer.WriteElementString ("name", Font.FontFamily.Name);
+			writer.WriteElementString ("unit", Font.Unit.ToString ());
+			writer.WriteElementString ("size", Font.Size.ToString (CultureInfo.InvariantCulture));
+			writer.WriteElementString ("style", Font.Style.ToString ());
+			writer.WriteEndElement ();
 		}
+
 		enum ColorFormat
 		{
 			NamedColor,
 			ArgbColor
 		}
 
-		static string SerializeColor(Color color)
+		static string SerializeColor (Color color)
 		{
 			if (color.IsNamedColor)
-				return string.Format(CultureInfo.InvariantCulture, "{0}:{1}",
-					ColorFormat.NamedColor, color.Name);
-			return string.Format(CultureInfo.InvariantCulture, "{0}:{1}:{2}:{3}:{4}",
-								 ColorFormat.ArgbColor,
-								 color.A, color.R, color.G, color.B);
+				return string.Format (CultureInfo.InvariantCulture, "{0}:{1}",
+				                      ColorFormat.NamedColor, color.Name);
+			return string.Format (CultureInfo.InvariantCulture, "{0}:{1}:{2}:{3}:{4}",
+			                      ColorFormat.ArgbColor,
+			                      color.A, color.R, color.G, color.B);
 		}
 
-		static Color DeserializeColor(string color)
+		static Color DeserializeColor (string color)
 		{
-			var pieces = color.Split(new[] { ':' });
+			var pieces = color.Split (new[] { ':' });
 
 			var colorType = (ColorFormat)
-				Enum.Parse(typeof(ColorFormat), pieces[0], true);
+				Enum.Parse (typeof(ColorFormat), pieces [0], true);
 
-			switch (colorType)
-			{
+			switch (colorType) {
 				case ColorFormat.NamedColor:
-					return Color.FromName(pieces[1]);
+					return Color.FromName (pieces [1]);
 
 				case ColorFormat.ArgbColor:
-					var a = byte.Parse(pieces[1], CultureInfo.InvariantCulture);
-					var r = byte.Parse(pieces[2], CultureInfo.InvariantCulture);
-					var g = byte.Parse(pieces[3], CultureInfo.InvariantCulture);
-					var b = byte.Parse(pieces[4], CultureInfo.InvariantCulture);
+					var a = byte.Parse (pieces [1], CultureInfo.InvariantCulture);
+					var r = byte.Parse (pieces [2], CultureInfo.InvariantCulture);
+					var g = byte.Parse (pieces [3], CultureInfo.InvariantCulture);
+					var b = byte.Parse (pieces [4], CultureInfo.InvariantCulture);
 
-					return Color.FromArgb(a, r, g, b);
+					return Color.FromArgb (a, r, g, b);
 			}
 			return Color.Empty;
 		}
 
-		public ShapeContainer ShapeContainer
-		{
+		public ShapeContainer ShapeContainer {
 			get;
 			set;
 		}
 
-		public virtual bool Linkable
-		{
-			get
-			{
+		public virtual bool Linkable {
+			get {
 				return true;
 			}
 		}
-		public virtual Image Image
+
+		public readonly static IShapeCreator Creator = new ShapeCreator<Box> (Description, Resources.Rectangle);
+
+		public void Refresh ()
 		{
-			get
-			{
-				return Resources.Rectangle;
-			}
+			ShapeContainer.ForceRefresh ();
 		}
-		public void Refresh()
-		{
-			ShapeContainer.ForceRefresh();
-		}
-		public void SetLocation(Point point)
+
+		public void SetLocation (Point point)
 		{
 			Location = point;
 		}
-		public void Dispose()
+
+		public void Dispose ()
 		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
+			Dispose (true);
+			GC.SuppressFinalize (this);
 		}
-		protected virtual void Dispose(bool disposing)
+
+		protected virtual void Dispose (bool disposing)
 		{
 			if (!disposing)
 				return;
-			BackBrush.Dispose();
-			ForeBrush.Dispose();
-			BorderBrush.Dispose();
-			BackPen.Dispose();
-			ForePen.Dispose();
-			BorderPen.Dispose();
-			Font.Dispose();
-			ContextMenu.Dispose();
+			BackBrush.Dispose ();
+			ForeBrush.Dispose ();
+			BorderBrush.Dispose ();
+			BackPen.Dispose ();
+			ForePen.Dispose ();
+			BorderPen.Dispose ();
+			Font.Dispose ();
+			ContextMenu.Dispose ();
 		}
-		protected void DoAutoResize()
+
+		protected void DoAutoResize ()
 		{
 			if (!(AutoResizeHeight || AutoResizeWidth) || ShapeContainer == null)
 				return;
-			using (var g = ShapeContainer.CreateGraphics())
-			{
-				var size = g.MeasureString(Text, Font);
-				if (AutoResizeWidth)
-				{
+			using (var g = ShapeContainer.CreateGraphics()) {
+				var size = g.MeasureString (Text, Font);
+				if (AutoResizeWidth) {
 					var w = (int)size.Width + 10;
-					Width = Math.Max(w, Options.MinimumWidth);
+					Width = Math.Max (w, Options.MinimumWidth);
 				}
-				if (AutoResizeHeight)
-				{
+				if (AutoResizeHeight) {
 					var h = (int)size.Height + 5;
-					Height = Math.Max(h, Options.MinimumHeight);
+					Height = Math.Max (h, Options.MinimumHeight);
 				}
-				ShapeContainer.ForceRefresh();
+				ShapeContainer.ForceRefresh ();
 			}
 		}
-		public virtual void SvgSave(XmlWriter writer)
+
+		public virtual void SvgSave (XmlWriter writer)
 		{
-			Svg.WriteRectangle(writer, Location, new Size(Width, Height), BackgroundColor, BorderPen);
-			Svg.WriteText(writer, Center, ForegroundColor, Font, Text);
+			Svg.WriteRectangle (writer, Location, new Size (Width, Height), BackgroundColor, BorderPen);
+			Svg.WriteText (writer, Center, ForegroundColor, Font, Text);
 		}
 
 		bool autoresizewidth;
-		public bool AutoResizeWidth
-		{
-			get
-			{
+
+		public bool AutoResizeWidth {
+			get {
 				return autoresizewidth;
 			}
-			set
-			{
+			set {
 				autoresizewidth = value;
 				if (value)
-					DoAutoResize();
+					DoAutoResize ();
 			}
 		}
+
 		bool autoresizeheight;
-		public bool AutoResizeHeight
-		{
-			get
-			{
+
+		public bool AutoResizeHeight {
+			get {
 				return autoresizeheight;
 			}
-			set
-			{
+			set {
 				autoresizeheight = value;
 				if (value)
-					DoAutoResize();
+					DoAutoResize ();
 			}
 		}
 	}

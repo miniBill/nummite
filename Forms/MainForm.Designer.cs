@@ -1,3 +1,4 @@
+
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Forms {
@@ -136,7 +137,7 @@ namespace DiagramDrawer.Forms {
 			// 
 			panel1.AutoScroll = true;
 			panel1.AutoSize = true;
-			panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+			panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			panel1.Controls.Add(shapeContainer1);
 			panel1.Dock = DockStyle.Fill;
 			panel1.Location = new System.Drawing.Point(0, 0);

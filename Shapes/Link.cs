@@ -23,54 +23,54 @@ using DiagramDrawer.Forms;
 using DiagramDrawer.Export;
 using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes
-{
+namespace DiagramDrawer.Shapes {
 	class Link : Ellipse
 	{
-		public Link()
+		public Link ()
 		{
 			BackgroundColor = Color.LightBlue;
 			Width = Height = 10;
-			var mi = new MenuItem("Vai", delegate
-			{
+			var mi = new MenuItem ("Vai", delegate {
 				if (ShapeContainer.ParentForm != null)
-					((MainForm)ShapeContainer.ParentForm).Controller.Open(Text);
+					((MainForm)ShapeContainer.ParentForm).Controller.Open (Text);
 			});
-			ContextMenu.MenuItems.Add(0, mi);
+			ContextMenu.MenuItems.Add (0, mi);
 		}
-		public override void DrawTo(Graphics graphics)
+
+		public override void DrawTo (Graphics graphics)
 		{
 			DrawBackground (graphics);
 		}
-		public override string ToString()
-		{
-			return "Collegamento";
+
+		public static new string Name { 
+			get{
+				return "Collegamento";
+			}
 		}
-		protected override void OnTextChange()
+
+		protected override void OnTextChange ()
 		{
 			if (Text == "...")
 				Text = string.Empty;
-			base.OnTextChange();
+			base.OnTextChange ();
 		}
+
 		const int RADIUS = 10;
-		protected override void OnSizeChange()
+
+		protected override void OnSizeChange ()
 		{
 			Width = RADIUS;
 			Height = RADIUS;
-			base.OnSizeChange();
+			base.OnSizeChange ();
 		}
-		public override Image Image
+
+		public readonly static new IShapeCreator Creator = new ShapeCreator<Link> (Name, Resources.WLink);
+
+		public override void SvgSave (XmlWriter writer)
 		{
-			get
-			{
-				return Resources.WLink;
-			}
-		}
-		public override void SvgSave(XmlWriter writer)
-		{
-			Svg.WriteStartLink(writer, Text.Replace(".xml", ".svg"));
-			Svg.WriteEllipse(writer, Center, new Size(Width, Height), BackgroundColor, BorderPen);
-			Svg.WriteEndLink(writer);
+			Svg.WriteStartLink (writer, Text.Replace (".xml", ".svg"));
+			Svg.WriteEllipse (writer, Center, new Size (Width, Height), BackgroundColor, BorderPen);
+			Svg.WriteEndLink (writer);
 		}
 	}
 }

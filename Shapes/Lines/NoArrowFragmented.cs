@@ -16,21 +16,17 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.Linq;
-using DiagramDrawer.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Xml;
+using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes {
+namespace DiagramDrawer.Shapes.Lines {
 	class NoArrowFragmented : Line
 	{
-		public override Image Image {
-			get {
-				return Resources.NoArrowFragmented;
-			}
-		}
+		public readonly static new ILineCreator Creator = new LineCreator<NoArrowFragmented>(Description, Resources.NoArrowFragmented);
 
 		protected override void OnOriginChange (IShape value)
 		{
@@ -165,9 +161,10 @@ namespace DiagramDrawer.Shapes {
 			base.OnTextChange ();
 		}
 
-		public override string ToString ()
-		{
-			return "Spezzata";
+		public static new string Description { 
+			get {
+				return "Spezzata";
+			}
 		}
 
 		public override void SvgSave (XmlWriter writer)

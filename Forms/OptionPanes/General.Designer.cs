@@ -3,7 +3,9 @@
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>
+#pragma warning disable 649
 		readonly System.ComponentModel.IContainer components;
+#pragma warning restore 649
 
 		/// <summary> 
 		/// Clean up any resources being used.

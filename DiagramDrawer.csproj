@@ -88,6 +88,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HelpResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LineCreatorCollection.cs" />
     <Compile Include="Forms\OptionPanes\IOptionPane.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -214,6 +215,10 @@
     <Compile Include="Shapes\Lines\TwoArrows.cs" />
     <Compile Include="Shapes\Lines\TwoArrowsAngle.cs" />
     <Compile Include="Shapes\Lines\TwoArrowsFragmented.cs" />
+    <Compile Include="Shapes\ShapeCreator.cs" />
+    <Compile Include="Forms\ShapeCreatorCollection.cs" />
+    <Compile Include="Shapes\Lines\ILineCreator.cs" />
+    <Compile Include="Shapes\Lines\LineCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Book.png" />
@@ -284,7 +289,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Shapes\Lines\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

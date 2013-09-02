@@ -22,37 +22,45 @@ using DiagramDrawer.Properties;
 using System.Text;
 
 namespace DiagramDrawer.Shapes {
-	class LabelShape : Box {
-		public LabelShape() {
+	class LabelShape : Box
+	{
+		public LabelShape ()
+		{
 			Height = 40;
 		}
-		public override Image Image {
-			get {
-				return Resources.Text;
-			}
-		}
-		public override PointF GetIntersection(PointF other) {
+
+		public readonly static new IShapeCreator Creator = new ShapeCreator<LabelShape> (Description, Resources.Text);
+
+		public override PointF GetIntersection (PointF other)
+		{
 			PointF p = Center;
 			p.Y += Height / 2F;
 			return p;
 		}
-		public override void DrawTo(Graphics graphics) {
+
+		public override void DrawTo (Graphics graphics)
+		{
 #if DEBUG
-			if(Text.StartsWith("'shapes'")) {
-				var sb = new StringBuilder();
-				sb.Append("'shapes'" + Environment.NewLine);
-				foreach(var s in ShapeContainer.ShapeList)
-					if(!(s is LabelShape))
-						sb.Append(s.Text + ":" + s.Location + Environment.NewLine);
-				Text = sb.ToString();
+			if (Text.StartsWith ("'shapes'")) {
+				var sb = new StringBuilder ();
+				sb.Append ("'shapes'" + Environment.NewLine);
+				foreach (var s in ShapeContainer.ShapeList)
+					if (!(s is LabelShape))
+						sb.Append (s.Text + ":" + s.Location + Environment.NewLine);
+				Text = sb.ToString ();
 			}
 #endif
-			base.DrawTo(graphics);
+			base.DrawTo (graphics);
 		}
-		protected override void DrawBackground(Graphics graphics) {
+
+		protected override void DrawBackground (Graphics graphics)
+		{
 		}
-		public override string ToString() {
-			return "Testo";
+
+		public static new string Description { 
+			get {
+				return "Testo";
+			}
 		}
 	}
 }

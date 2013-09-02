@@ -21,42 +21,47 @@ using System.Drawing;
 using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes {
-	class Parallelogram : Box {
-		protected override void DrawBackground(Graphics graphics) {
+	class Parallelogram : Box
+	{
+		protected override void DrawBackground (Graphics graphics)
+		{
 			var i = Width / 10F;
 			var a = Width / 2F;
 			var b = Height / 2F;
 			PointF c = Center;
 			var points = new[] { 
-				new PointF(c.X - a + i, c.Y - b),
-				new PointF(c.X - a, c.Y + b),
-				new PointF(c.X + a - i, c.Y + b),
-				new PointF(c.X + a, c.Y - b),
-				new PointF(c.X - a + i, c.Y - b)
+				new PointF (c.X - a + i, c.Y - b),
+				new PointF (c.X - a, c.Y + b),
+				new PointF (c.X + a - i, c.Y + b),
+				new PointF (c.X + a, c.Y - b),
+				new PointF (c.X - a + i, c.Y - b)
 			};
-			graphics.FillPolygon(BackBrush, points);
-			graphics.DrawPolygon(BorderPen, points);
+			graphics.FillPolygon (BackBrush, points);
+			graphics.DrawPolygon (BorderPen, points);
 		}
-		public override bool Contains(PointF point) {
-			if(point.Y > Location.Y + Height || point.Y < Location.Y)
+
+		public override bool Contains (PointF point)
+		{
+			if (point.Y > Location.Y + Height || point.Y < Location.Y)
 				return false;
-			if(point.X < Center.X) {
+			if (point.X < Center.X) {
 				float m = -Height * 10;
 				m /= Width;
 				var q = Center.Y - m * (Location.X + Width / 20F);
-				if(point.Y > (m * point.X + q))
+				if (point.Y > (m * point.X + q))
 					return true;
-			}
-			else {
+			} else {
 				float m = -Height * 10;
 				m /= Width;
 				var q = Center.Y - m * (Location.X + Width - Width / 20F);
-				if(point.Y < (m * point.X + q))
+				if (point.Y < (m * point.X + q))
 					return true;
 			}
 			return false;
 		}
-		public override PointF GetIntersection(PointF other) {
+
+		public override PointF GetIntersection (PointF other)
+		{
 			float r = -Height;
 			r /= Width;
 			var l = 5F * Height;
@@ -64,12 +69,12 @@ namespace DiagramDrawer.Shapes {
 			PointF c = Center;
 			var ox = other.X - c.X;
 			var oy = other.Y - c.Y;
-			if(ox == 0)
-				return new PointF(c.X, c.Y + Height / 2F * Math.Sign(oy));
+			if (ox == 0)
+				return new PointF (c.X, c.Y + Height / 2F * Math.Sign (oy));
 			var om = oy / ox;
 			var oq = oy - om * ox;
 			float x, y;
-			if(r < om && om < l) {
+			if (r < om && om < l) {
 				float m = -Height * 10;
 				m /= Width;
 				//q=y-mx
@@ -78,7 +83,7 @@ namespace DiagramDrawer.Shapes {
 				//q=-H*(-9/2)
 				//q=9H/2
 				var q = 4.5F * Height;
-				if(other.X < Center.X)
+				if (other.X < Center.X)
 					q = -q;
 				//y=mx+q
 				//y=omx
@@ -87,20 +92,19 @@ namespace DiagramDrawer.Shapes {
 				//x=q/(om-m)
 				x = q / (om - m);
 				y = om * x;
-			}
-			else {
-				y = Height / 2F * Math.Sign(oy);
+			} else {
+				y = Height / 2F * Math.Sign (oy);
 				x = (y - oq) / om;
 			}
-			return new PointF(x + c.X, y + c.Y);
+			return new PointF (x + c.X, y + c.Y);
 		}
-		public override Image Image {
+
+		public readonly static new IShapeCreator Creator = new ShapeCreator<Parallelogram> (Name, Resources.Parallelogram);
+
+		public static new string Name { 
 			get {
-				return Resources.Parallelogram;
+				return "Parallelogramma";
 			}
-		}
-		public override string ToString() {
-			return "Parallelogramma";
 		}
 	}
 }

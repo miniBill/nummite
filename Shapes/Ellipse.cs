@@ -23,8 +23,10 @@ using DiagramDrawer.Properties;
 using DiagramDrawer.Export;
 
 namespace DiagramDrawer.Shapes {
-	class Ellipse : Box {
-		public override bool Contains(PointF point) {
+	class Ellipse : Box
+	{
+		public override bool Contains (PointF point)
+		{
 			var c = Center;
 			var ox = point.X - c.X;
 			var oy = point.Y - c.Y;
@@ -32,38 +34,44 @@ namespace DiagramDrawer.Shapes {
 			var b = Height / 2F;
 			return ox * ox / (a * a) + oy * oy / (b * b) <= 1;
 		}
-		public override PointF GetIntersection(PointF other) {
+
+		public override PointF GetIntersection (PointF other)
+		{
 			PointF c = Center;
 			var ox = other.X - c.X;
 			var oy = other.Y - c.Y;
-			if(ox == 0)
-				return new PointF(c.X, c.Y + Height / 2F * Math.Sign(oy));
+			if (ox == 0)
+				return new PointF (c.X, c.Y + Height / 2F * Math.Sign (oy));
 			var a = Width / 2F;
 			var b = Height / 2F;
 			var m = oy / ox;
 			var x = 1F / (1F / (a * a) + m * m / (b * b));
-			x = (float)Math.Sqrt(x);
-			if(ox < 0)
+			x = (float)Math.Sqrt (x);
+			if (ox < 0)
 				x = -x;
 			var y = m * x;
-			return new PointF(x + c.X, y + c.Y);
+			return new PointF (x + c.X, y + c.Y);
 		}
-		protected override void DrawBackground(Graphics graphics) {
-			var bounds = new Rectangle(Location.X, Location.Y, Width, Height);
-			graphics.FillEllipse(BackBrush, bounds);
-			graphics.DrawEllipse(BorderPen, bounds);
+
+		protected override void DrawBackground (Graphics graphics)
+		{
+			var bounds = new Rectangle (Location.X, Location.Y, Width, Height);
+			graphics.FillEllipse (BackBrush, bounds);
+			graphics.DrawEllipse (BorderPen, bounds);
 		}
-		public override string ToString() {
-			return "Ellisse";
-		}
-		public override Image Image {
+
+		public new static string Name {
 			get {
-				return Resources.Ellipse;
+				return "Ellisse"; 
 			}
 		}
-		public override void SvgSave(XmlWriter writer) {
-			Svg.WriteEllipse(writer, Center, new Size(Width, Height), BackgroundColor, BorderPen);
-			Svg.WriteText(writer, Center, ForegroundColor, Font, Text);
+
+		public readonly static new IShapeCreator Creator = new ShapeCreator<Ellipse> (Name, Resources.Ellipse);
+
+		public override void SvgSave (XmlWriter writer)
+		{
+			Svg.WriteEllipse (writer, Center, new Size (Width, Height), BackgroundColor, BorderPen);
+			Svg.WriteText (writer, Center, ForegroundColor, Font, Text);
 		}
 	}
 }

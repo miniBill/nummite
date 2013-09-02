@@ -16,13 +16,13 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using DiagramDrawer.Export;
-using DiagramDrawer.Properties;
 using System;
 using System.Drawing;
 using System.Xml;
+using DiagramDrawer.Export;
+using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes {
+namespace DiagramDrawer.Shapes.Lines {
 	class OneArrow : Line
 	{
 		const float DISTANZA = 10F;
@@ -53,11 +53,11 @@ namespace DiagramDrawer.Shapes {
 				l.Y = End.Y - APERTURA;
 				r.Y = End.Y + APERTURA;
 			} else {
-				RecalculateMath (otherPointX, m, out l, out r);
+				RecalculateMath (otherPointX, m, out l, out r, End);
 			}
 		}
 
-		void RecalculateMath (float otherPointX, float m, out PointF l, out PointF r)
+		static void RecalculateMath (float otherPointX, float m, out PointF l, out PointF r, PointF end)
 		{
 			//       c
 			//      /|\
@@ -103,23 +103,20 @@ namespace DiagramDrawer.Shapes {
 			var discriminantRoot = (float)Math.Sqrt (discriminant);
 			l.X = (-b + discriminantRoot) / (2F * a);
 			l.Y = l.X * inverseM + inverseQ;
-			l.X += End.X;
-			l.Y += End.Y;
+			l.X += end.X;
+			l.Y += end.Y;
 			r.X = (-b - discriminantRoot) / (2F * a);
 			r.Y = r.X * inverseM + inverseQ;
-			r.X += End.X;
-			r.Y += End.Y;
+			r.X += end.X;
+			r.Y += end.Y;
 		}
 
-		public override Image Image {
+		public readonly static new ILineCreator Creator = new LineCreator<OneArrow> (Description, Resources.OneArrow);
+
+		public static new string Description { 
 			get {
-				return Resources.OneArrow;
+				return "Punta singola";
 			}
-		}
-
-		public override string ToString ()
-		{
-			return "Punta singola";
 		}
 
 		protected override void OnMoving (object sender, EventArgs e)

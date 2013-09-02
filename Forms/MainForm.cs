@@ -29,6 +29,7 @@ using DiagramDrawer.Shapes;
 using System.Text;
 using System.Net;
 using System.Threading;
+using DiagramDrawer.Shapes.Lines;
 
 namespace DiagramDrawer.Forms {
 	partial class MainForm : Form
@@ -51,9 +52,9 @@ namespace DiagramDrawer.Forms {
 			};
 
 			EventHandler libraryHandler = LibraryItemClick;
-			foreach (var t in Controller.ShapeTypes) {
-				AddShapeType (t, libraryTS, libraryHandler);
-				AddShapeType (t, objectsTSMI, libraryHandler);
+			foreach (IShapeCreator creator in Controller.ShapeTypes) {
+				AddShapeType (creator, libraryTS, libraryHandler);
+				AddShapeType (creator, objectsTSMI, libraryHandler);
 			}
 
 			EventHandler lTypeHandler = LineItemClick;
@@ -61,19 +62,19 @@ namespace DiagramDrawer.Forms {
 				AddShapeType (t, linkModeTS, lTypeHandler);
 				AddShapeType (t, lineKindTSMI, lTypeHandler);
 			}
-			SetDefaultObject (new RoundedBox ());
-			if (Options.CheckForUpdates)
+			SetDefaultObject (RoundedBox.Creator);
+			if (Options.CHECK_FOR_UPDATES)
 				new Thread (CheckForUpdates).Start ();
 
 			//the following code recreates the shapeContainer back image
 			Controller.Width = shapeContainer1.Width;
 		}
 
-		void CheckForUpdates ()
+		static void CheckForUpdates ()
 		{
 			try {
 				var client = new WebClient ();
-				var buff = client.DownloadData (Options.UpdateUrl);
+				var buff = client.DownloadData (Options.UPDATE_URL);
 				var gnu = Encoding.UTF8.GetString (buff);
 				gnu = gnu.Substring (0, gnu.Length - 1);
 				var old = Encoding.UTF8.GetString (Resources.Version);
@@ -81,11 +82,11 @@ namespace DiagramDrawer.Forms {
 				if (gnu != old)
 					MessageBox.Show ("E' disponibile una nuova versione! [" + gnu + "]" +
 					Environment.NewLine + "(corrente: " + old + ")",
-					                "Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					                 "Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			} catch (Exception e) {
 				MessageBox.Show ("Errore nel tentativo di controllare nuove versioni:" +
-				Environment.NewLine + e.Message + "[" + e.GetType () + "].",
-				                "Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				Environment.NewLine + "\""+ e.Message + "\" [" + e.GetType () + "].",
+				                 "Diagram Drawer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
 		}
 
@@ -101,23 +102,18 @@ namespace DiagramDrawer.Forms {
 			linkModeTS.Owner.Refresh ();
 		}
 
-		void SetDefaultObject (IMenu e)
+		void SetDefaultObject (IShapeCreator e)
 		{
 			libraryTS.Image = e.Image;
 			libraryTS.Tag = e.GetType ();
 			libraryTS.Text = e.ToString ();
 		}
 
-		static void AddShapeType (Type t, ToolStripDropDownItem dropDownItem,
-		                         EventHandler handler)
+		static void AddShapeType (IShapeCreator creator, ToolStripDropDownItem dropDownItem,
+		                          EventHandler handler)
 		{
-			var istance = GetIstance<IMenu> (t);
-			if (istance == null)
-				return;
-			var i = new ToolStripMenuItem (istance.ToString (),
-			                              istance.Image ?? Resources.Link, handler
-			        ) {
-				Tag = t,
+			var i = new ToolStripMenuItem (creator.Description, creator.Image ?? Resources.Link, handler) {
+				Tag = creator,
 				ImageTransparentColor = Color.Magenta
 			};
 			dropDownItem.DropDownItems.Add (i);
@@ -128,33 +124,29 @@ namespace DiagramDrawer.Forms {
 			var senderTsi = sender as ToolStripMenuItem;
 			if (senderTsi == null)
 				return;
-			var t = senderTsi.Tag as Type;
-			Controller.LineType = t;
+			var creator = senderTsi.Tag as ILineCreator;
+			if (creator == null)
+				return;
+			Controller.LineType = creator;
 			foreach (ToolStripMenuItem tsi in linkModeTS.DropDownItems)
 				tsi.Checked = tsi.Tag == senderTsi.Tag;
 			foreach (ToolStripMenuItem tsmi in lineKindTSMI.DropDownItems)
 				tsmi.Checked = tsmi.Tag == senderTsi.Tag;
-			var istance = GetIstance<Line> (t);
-			linkModeTS.Image = istance.Image;
+			linkModeTS.Image = creator.Image;
 			SetLock (linkModeTS, LockChange.Set);
 		}
 
 		void LibraryItemClick (object sender, EventArgs e)
 		{
 			var s = sender as ToolStripMenuItem;
-			var t = s.Tag as Type;
-			var istance = GetIstance<IMenu> (t);
-			libraryTS.Image = istance.Image ?? Resources.Book;
+			if (s == null)
+				return;
+			var creator = s.Tag as IShapeCreator;
+			if (creator == null) return;
+			libraryTS.Image = creator.Image ?? Resources.Book;
 			libraryTS.Tag = s.Tag;
-			libraryTS.Text = istance.ToString ();
-			Controller.ShapeType = t;
-		}
-
-		static T GetIstance<T> (Type t) where T : class
-		{
-			if (t == null)
-				throw new ArgumentNullException ("t", "type cannot be null");
-			return t.GetConstructor (Type.EmptyTypes).Invoke (new object[] { }) as T;
+			libraryTS.Text = creator.Description;
+			Controller.ShapeType = creator;
 		}
 
 		void LibraryTsButtonClick (object sender, EventArgs e)
@@ -686,7 +678,7 @@ namespace DiagramDrawer.Forms {
 				return;
 			switch (
 				MessageBox.Show ("Salvare le modifiche?", "Diagram Drawer", MessageBoxButtons.YesNoCancel,
-			                 MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Rtl ())) {
+			                  MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Rtl ())) {
 				case DialogResult.Yes:
 					Save ();
 					break;

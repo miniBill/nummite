@@ -1,4 +1,4 @@
-/* Copyright (C) 2008 Leonardo Taglialegne <leonardotaglialegne@gmail.com>
+/* Copyright (C) 2009 Leonardo Taglialegne <leonardotaglialegne@gmail.com>
  *
  * This file is part of Diagram Drawer.
  *
@@ -17,29 +17,35 @@
  */
 
 using System.Drawing;
-using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes.Lines {
-	class TwoArrowsAngle : OneArrowAngle
+namespace DiagramDrawer.Shapes {
+	class ShapeCreator<T> : IShapeCreator where T: IPersistableShape, new()
 	{
-		public override void DrawTo (Graphics graphics)
+		public IPersistableShape Create ()
 		{
-			if (!(SubLines [0] is OneArrow)) {
-				var l = SubLines [0];
-				SubLines [0] = new OneArrow {
-					Origin = l.Pointed,
-					Pointed = l.Origin
-				};
-			}
-			base.DrawTo (graphics);
+			return new T ();
 		}
 
-		public readonly static new ILineCreator Creator = new LineCreator<TwoArrowsAngle>(Description, Resources.TwoArrowsAngle);
-
-		public static new string Description { 
-			get {
-				return "Ad angolo con doppia freccia";
+		public string TypeName { 
+			get { 
+				return typeof(T).Name;
 			}
+		}
+
+		public ShapeCreator (string description, Image image)
+		{
+			Description = description;
+			Image = image;
+		}
+
+		public string Description { 
+			get; 
+			private set; 
+		}
+
+		public Image Image {
+			get;
+			private set;
 		}
 	}
 }

@@ -16,33 +16,11 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.Drawing;
-using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes.Lines {
-	class TwoArrowsFragmented : OneArrowFragmented
+namespace DiagramDrawer.Shapes.Lines
+{
+	interface ILineCreator : IShapeCreator
 	{
-		public override void DrawTo (Graphics graphics)
-		{
-			SetShapeContainer ();
-			if (!ShouldDraw ())
-				return;
-			if (!(SubLines [0] is OneArrow)) {
-				SubLines [0] = new OneArrow {
-					Origin = SubPoints [0]
-				};
-				if (Origin != null)
-					SubLines [0].Pointed = Origin;
-			}
-			base.DrawTo (graphics);
-		}
-
-		public static new string Description { 
-			get {
-				return "Spezzata con doppia freccia";
-			}
-		}
-
-		public readonly static new ILineCreator Creator = new LineCreator<TwoArrowsFragmented>(Description, Resources.TwoArrowsFragmented);
+		new Line Create ();
 	}
 }

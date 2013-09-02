@@ -24,8 +24,10 @@ using DiagramDrawer.Properties;
 using System.Windows.Forms;
 
 namespace DiagramDrawer.Shapes {
-	class ImageBox : Box {
+	class ImageBox : Box
+	{
 		string filename = String.Empty;
+
 		public string FileName {
 			set {
 				filename = value;
@@ -55,7 +57,9 @@ namespace DiagramDrawer.Shapes {
 					}
 			}
 		}
-		Image image = new Bitmap(100, 50);
+
+		Image image = new Bitmap (100, 50);
+
 		public Image ShownImage {
 			get {
 				return image;
@@ -66,42 +70,50 @@ namespace DiagramDrawer.Shapes {
 				//h=ih*w/iw
 				Width = 100;
 				Height = value.Height * Width / value.Width;
-				if(ShapeContainer != null)
-					ShapeContainer.ForceRefresh();
+				if (ShapeContainer != null)
+					ShapeContainer.ForceRefresh ();
 			}
 		}
-		public ImageBox() {
-			using(var g = Graphics.FromImage(image)) {
-				g.DrawLine(Pens.Red, 0, 0, Width, Height);
-				g.DrawLine(Pens.Red, 0, Height, Width, 0);
-				g.DrawLines(Pens.Black, new[] {
-				new Point(0, 0),
-				new Point(Width - 1, 0),
-				new Point(Width - 1, Height - 1),
-				new Point(0, Height - 1),
-				new Point(0, 0)
-			});
+
+		public ImageBox ()
+		{
+			using (var g = Graphics.FromImage(image)) {
+				g.DrawLine (Pens.Red, 0, 0, Width, Height);
+				g.DrawLine (Pens.Red, 0, Height, Width, 0);
+				g.DrawLines (Pens.Black, new[] {
+					new Point (0, 0),
+					new Point (Width - 1, 0),
+					new Point (Width - 1, Height - 1),
+					new Point (0, Height - 1),
+					new Point (0, 0)
+				});
 			}
-			ContextMenu.MenuItems.Add("Proprietà", PropertiesClick);
+			ContextMenu.MenuItems.Add ("Proprietà", PropertiesClick);
 		}
-		void PropertiesClick(object sender, EventArgs e) {
-			new ImagePropertiesForm(this).ShowDialog();
-			ShapeContainer.ForceRefresh();
+
+		void PropertiesClick (object sender, EventArgs e)
+		{
+			new ImagePropertiesForm (this).ShowDialog ();
+			ShapeContainer.ForceRefresh ();
 		}
-		public override void DrawTo(Graphics graphics) {
-			var bounds = new Rectangle(Location.X, Location.Y, Width, Height);
-			var src = new Rectangle(0, 0, image.Width, image.Height);
-			graphics.DrawImage(image, bounds, src, GraphicsUnit.Pixel);
+
+		public override void DrawTo (Graphics graphics)
+		{
+			var bounds = new Rectangle (Location.X, Location.Y, Width, Height);
+			var src = new Rectangle (0, 0, image.Width, image.Height);
+			graphics.DrawImage (image, bounds, src, GraphicsUnit.Pixel);
 		}
-		public override string ToString() {
-			return "Immagine";
-		}
-		public override Image Image {
+
+		public static new string Name {
 			get {
-				return Resources.PictureBox;
+				return "Immagine";
 			}
 		}
-		public override void Load(XmlReader reader) {
+
+		public readonly static new IShapeCreator Creator = new ShapeCreator<ImageBox> (Name, Resources.PictureBox);
+
+		public override void Load (XmlReader reader)
+		{
 			while (!reader.EOF) {
 				switch (reader.Name) {
 					case "name":
@@ -120,19 +132,25 @@ namespace DiagramDrawer.Shapes {
 				reader.ReadEndElement ();
 			}
 		}
-		void ReadImage(XmlReader reader) {
+
+		void ReadImage (XmlReader reader)
+		{
 			if (reader.MoveToAttribute ("path"))
 				FileName = reader.ReadString ();
 			else
 				MessageBox.Show ("Error loading imageBox: path couldn't be read");
 		}
-		public override void Save(XmlWriter writer) {
+
+		public override void Save (XmlWriter writer)
+		{
 			SaveName (writer);
 			SaveLocation (writer);
 			SaveSize (writer);
 			SaveImage (writer);
 		}
-		void SaveImage(XmlWriter writer) {
+
+		void SaveImage (XmlWriter writer)
+		{
 			writer.WriteStartElement ("image");
 			writer.WriteAttributeString ("path", filename);
 			writer.WriteEndElement ();

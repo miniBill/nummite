@@ -16,21 +16,17 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.Linq;
-using DiagramDrawer.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Xml;
+using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes {
+namespace DiagramDrawer.Shapes.Lines {
 	class OneArrowAngle : OneArrow
 	{
-		public override Image Image {
-			get {
-				return Resources.OneArrowAngle;
-			}
-		}
+		public readonly static new ILineCreator Creator = new LineCreator<OneArrowAngle> (Description, Resources.OneArrowAngle);
 
 		protected override void OnOriginChange (IShape value)
 		{
@@ -169,9 +165,10 @@ namespace DiagramDrawer.Shapes {
 			return SubLines.Any (l => l.Contains (point));
 		}
 
-		public override string ToString ()
-		{
-			return "Ad angolo";
+		public static new string Description { 
+			get {
+				return "Ad angolo";
+			}
 		}
 
 		public override void SvgSave (XmlWriter writer)

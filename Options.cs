@@ -1,33 +1,32 @@
 ﻿namespace DiagramDrawer {
-	static class Options {
-		static Options() {
+	static class Options
+	{
+		public const string UPDATE_URL = "http://raw.github.com/miniBill/DiagramDrawer/master/version";
+		public const bool CHECK_FOR_UPDATES = true;
+
+		static Options ()
+		{
 			AutoCreateOnLink = true;
 			AskForSave = true;
 			MinimumHeight = MinimumWidth = 30;
-			CheckForUpdates = true;
-			UpdateUrl = "https://raw.github.com/miniBill/DiagramDrawer/master/version";
 		}
+
 		public static int MinimumWidth {
 			get;
 			set;
 		}
+
 		public static int MinimumHeight {
 			get;
 			set;
 		}
+
 		public static bool AutoCreateOnLink {
 			get;
 			set;
 		}
+
 		public static bool AskForSave {
-			get;
-			set;
-		}
-		public static bool CheckForUpdates {
-			get;
-			set;
-		}
-		public static string UpdateUrl {
 			get;
 			set;
 		}

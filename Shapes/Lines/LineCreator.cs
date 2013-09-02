@@ -17,32 +17,17 @@
  */
 
 using System.Drawing;
-using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes.Lines {
-	class TwoArrowsFragmented : OneArrowFragmented
+	class LineCreator<T> : ShapeCreator<T>, ILineCreator where T : Line, new()
 	{
-		public override void DrawTo (Graphics graphics)
+		public LineCreator (string name, Image image) : base(name,image)
 		{
-			SetShapeContainer ();
-			if (!ShouldDraw ())
-				return;
-			if (!(SubLines [0] is OneArrow)) {
-				SubLines [0] = new OneArrow {
-					Origin = SubPoints [0]
-				};
-				if (Origin != null)
-					SubLines [0].Pointed = Origin;
-			}
-			base.DrawTo (graphics);
 		}
 
-		public static new string Description { 
-			get {
-				return "Spezzata con doppia freccia";
-			}
+		public new Line Create ()
+		{
+			return new T ();
 		}
-
-		public readonly static new ILineCreator Creator = new LineCreator<TwoArrowsFragmented>(Description, Resources.TwoArrowsFragmented);
 	}
 }

@@ -23,60 +23,79 @@ using System.Xml;
 using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes {
-	class VisiblePoint : Box {
-		public VisiblePoint() {
+	class VisiblePoint : Box
+	{
+		public VisiblePoint ()
+		{
 			Width = Height = 20;
 			Text = String.Empty;
-			ContextMenu.MenuItems.Add("Mostra", ShowClick);
-			ContextMenu.MenuItems.Add("Nascondi", HideClick);
+			ContextMenu.MenuItems.Add ("Mostra", ShowClick);
+			ContextMenu.MenuItems.Add ("Nascondi", HideClick);
 		}
+
 		public override bool NeedInitialize {
 			get {
 				return true;
 			}
 		}
-		public override void BeginInitialize() {
+
+		public override void BeginInitialize ()
+		{
 			
 		}
-		public override void EndInitialize(KeyedCollection<string, IShape> list) {
+
+		public override void EndInitialize (KeyedCollection<string, IShape> list)
+		{
 			Open = false;
 		}
-		void ShowClick(object sender, EventArgs e) {
+
+		void ShowClick (object sender, EventArgs e)
+		{
 			Open = true;
 		}
-		void HideClick(object sender, EventArgs e) {
+
+		void HideClick (object sender, EventArgs e)
+		{
 			Open = false;
 		}
-		public override string ToString() {
-			return "Punto";
+
+		public static new string Description { 
+			get {
+				return "Punto";
+			}
 		}
+
 		bool open = true;
+
 		public bool Open {
 			private get {
 				return open;
 			}
 			set {
 				open = value;
-				ShapeContainer.ForceRefresh();
+				ShapeContainer.ForceRefresh ();
 			}
 		}
-		public override void DrawTo(Graphics graphics) {
-			if(!Open)
+
+		public override void DrawTo (Graphics graphics)
+		{
+			if (!Open)
 				return;
-			graphics.DrawEllipse(BorderPen, Location.X, Location.Y, Width, Height);
-			graphics.FillEllipse(ForeBrush,
-				Location.X + Width / 3F, Location.Y + Height / 3F,
-				Width / 3F, Height / 3F);
+			graphics.DrawEllipse (BorderPen, Location.X, Location.Y, Width, Height);
+			graphics.FillEllipse (ForeBrush,
+			                      Location.X + Width / 3F, Location.Y + Height / 3F,
+			                      Width / 3F, Height / 3F);
 		}
-		public override Image Image {
-			get {
-				return Resources.Point;
-			}
-		}
-		public override PointF GetIntersection(PointF other) {
+
+		public readonly static new IShapeCreator Creator = new ShapeCreator<VisiblePoint> (Description, Resources.Point);
+
+		public override PointF GetIntersection (PointF other)
+		{
 			return Center;
 		}
-		public override void SvgSave(XmlWriter writer) {
+
+		public override void SvgSave (XmlWriter writer)
+		{
 		}
 	}
 }

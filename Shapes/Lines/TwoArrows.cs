@@ -16,39 +16,44 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using DiagramDrawer.Properties;
 using System.Drawing;
 using System.Xml;
+using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes {
-	class TwoArrows : OneArrow {
-		public override Image Image {
-			get {
-				return Resources.TwoArrows;
-			}
-		}
-		public override void DrawTo(Graphics graphics) {
-			if(!ShouldDraw())
+namespace DiagramDrawer.Shapes.Lines {
+	class TwoArrows : OneArrow
+	{
+		public readonly static new ILineCreator Creator = new LineCreator<TwoArrows> (Description, Resources.TwoArrows);
+
+		public override void DrawTo (Graphics graphics)
+		{
+			if (!ShouldDraw ())
 				return;
-			base.DrawTo(graphics);
-			Swap();
-			base.DrawTo(graphics);
-			Swap();
+			base.DrawTo (graphics);
+			Swap ();
+			base.DrawTo (graphics);
+			Swap ();
 		}
-		void Swap() {
+
+		void Swap ()
+		{
 			var c = Pointed;
 			Pointed = Origin;
 			Origin = c;
 		}
-		public override string ToString() {
-			return "Doppia freccia";
+
+		public static new string Description { 
+			get {
+				return "Doppia freccia";
+			}
 		}
-		public override void SvgSave(XmlWriter writer) {
-			base.SvgSave(writer);
-			Swap();
-			base.SvgSave(writer);
-			Swap();
+
+		public override void SvgSave (XmlWriter writer)
+		{
+			base.SvgSave (writer);
+			Swap ();
+			base.SvgSave (writer);
+			Swap ();
 		}
 	}
-	
 }

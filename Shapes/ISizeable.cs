@@ -17,16 +17,18 @@
  */
 
 namespace DiagramDrawer.Shapes {
-	interface ISizeable : IDimension{
-		int Height {
+	interface ISizeable : IDimension
+	{
+		new int Height {
 			get;
 			set;
 		}
-		int Width {
+
+		new int Width {
 			get;
 			set;
 		}
-		void Refresh();
+
+		void Refresh ();
 	}
-	
 }

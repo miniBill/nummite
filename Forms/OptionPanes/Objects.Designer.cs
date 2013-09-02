@@ -5,7 +5,9 @@ namespace DiagramDrawer.Forms.OptionPanes {
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>
+#pragma warning disable 649
 		readonly System.ComponentModel.IContainer components;
+#pragma warning restore 649
 
 		/// <summary> 
 		/// Clean up any resources being used.
@@ -133,7 +135,7 @@ namespace DiagramDrawer.Forms.OptionPanes {
 			// Objects
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			Controls.Add(tableLayoutPanel1);
 			Name = "Objects";
 			Size = new System.Drawing.Size(277, 62);

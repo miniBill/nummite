@@ -16,11 +16,10 @@
  * along with Diagram Drawer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using DiagramDrawer.Properties;
-using System;
 using System.Drawing;
+using DiagramDrawer.Properties;
 
-namespace DiagramDrawer.Shapes {
+namespace DiagramDrawer.Shapes.Lines {
 	class OneArrowFragmented : NoArrowFragmented
 	{
 		public override void DrawTo (Graphics graphics)
@@ -39,15 +38,12 @@ namespace DiagramDrawer.Shapes {
 			base.DrawTo (graphics);
 		}
 
-		public override string ToString ()
-		{
-			return "Spezzata con freccia";
-		}
-
-		public override Image Image {
+		public static new string Description { 
 			get {
-				return Resources.OneArrowFragmented;
+				return "Spezzata con freccia";
 			}
 		}
+
+		public readonly static new ILineCreator Creator = new LineCreator<OneArrowFragmented>(Description, Resources.OneArrowFragmented);
 	}
 }

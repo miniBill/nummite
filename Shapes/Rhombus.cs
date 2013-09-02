@@ -21,68 +21,74 @@ using System;
 using DiagramDrawer.Properties;
 
 namespace DiagramDrawer.Shapes {
-	class Rhombus : Box {
-		public override bool Contains(PointF point) {
+	class Rhombus : Box
+	{
+		public override bool Contains (PointF point)
+		{
 			var c = Center;
 			var ox = point.X - c.X;
 			var oy = point.Y - c.Y;
-			if(ox == 0)
-				return Math.Abs(oy) <= (Height / 2F);
-			if(oy == 0)
-				return Math.Abs(ox) <= (Width / 2F);
+			if (ox == 0)
+				return Math.Abs (oy) <= (Height / 2F);
+			if (oy == 0)
+				return Math.Abs (ox) <= (Width / 2F);
 			var m = oy / ox;
-			if(m > 0) {
-				var qa = Height / 2F * Math.Sign(ox);
+			if (m > 0) {
+				var qa = Height / 2F * Math.Sign (ox);
 				float ma = -Height;
 				ma /= Width;
 				return oy >= 0
 					? oy < (ox * ma + qa)
 					: oy > (ox * ma + qa);
 			}
-			var qb = -Height / 2F * Math.Sign(ox);
+			var qb = -Height / 2F * Math.Sign (ox);
 			float mb = Height;
 			mb /= Width;
 			return oy >= 0
 				? oy < (ox * mb + qb)
 				: oy > (ox * mb + qb);
 		}
-		public override PointF GetIntersection(PointF other) {
+
+		public override PointF GetIntersection (PointF other)
+		{
 			PointF c = Center;
 			var ox = other.X - c.X;
 			var oy = other.Y - c.Y;
-			if(ox == 0)
-				return new PointF(c.X, c.Y + Height / 2 * Math.Sign(oy));
-			if(oy == 0)
-				return new PointF(c.X + Width / 2 * Math.Sign(ox), c.Y);
+			if (ox == 0)
+				return new PointF (c.X, c.Y + Height / 2 * Math.Sign (oy));
+			if (oy == 0)
+				return new PointF (c.X + Width / 2 * Math.Sign (ox), c.Y);
 			var m = oy / ox;
-			var qa = Height / 2F * Math.Sign(oy);
-			float ma = -Height * Math.Sign(m);
+			var qa = Height / 2F * Math.Sign (oy);
+			float ma = -Height * Math.Sign (m);
 			ma /= Width;
 			var x = qa / (m - ma);
 			var y = m * x;
-			return new PointF(x + c.X, y + c.Y);
+			return new PointF (x + c.X, y + c.Y);
 		}
-		protected override void DrawBackground(Graphics graphics) {
+
+		protected override void DrawBackground (Graphics graphics)
+		{
 			var a = Width / 2F;
 			var b = Height / 2F;
 			PointF c = Center;
-			var points = new[]{
-				new PointF(c.X - a, c.Y),
-				new PointF(c.X, c.Y + b),
-				new PointF(c.X + a, c.Y),
-				new PointF(c.X, c.Y - b),
-				new PointF(c.X - a, c.Y)
+			var points = new[] {
+				new PointF (c.X - a, c.Y),
+				new PointF (c.X, c.Y + b),
+				new PointF (c.X + a, c.Y),
+				new PointF (c.X, c.Y - b),
+				new PointF (c.X - a, c.Y)
 			};
-			graphics.FillPolygon(BackBrush, points);
-			graphics.DrawPolygon(BorderPen, points);
+			graphics.FillPolygon (BackBrush, points);
+			graphics.DrawPolygon (BorderPen, points);
 		}
-		public override string ToString() {
-			return "Rombo";
-		}
-		public override Image Image {
+
+		public static new string Description { 
 			get {
-				return Resources.Rhombus;
+				return "Rombo";
 			}
 		}
+
+		public readonly static new IShapeCreator Creator = new ShapeCreator<Rhombus> (Description, Resources.Rhombus);
 	}
 }
