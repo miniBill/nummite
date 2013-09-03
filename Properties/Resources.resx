@@ -211,4 +211,7 @@
   <data name="ErrorLoadingImageBox" xml:space="preserve">
     <value>Error loading imageBox: path couldn't be read</value>
   </data>
+  <data name="IncorrectShapeType" xml:space="preserve">
+    <value>Shape is of incorrect type</value>
+  </data>
 </root>

@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
@@ -71,8 +70,7 @@ namespace Nummite.Forms
 			SetDefaultObject(RoundedBox.Helper);
 			new Thread(CheckForUpdates).Start();
 
-			//the following code recreates the shapeContainer back image
-			Controller.Width = shapeContainer1.Width;
+			shapeContainer1.ForceRefresh ();
 		}
 
 		static void CheckForUpdates()
@@ -94,7 +92,7 @@ namespace Nummite.Forms
 						break;
 					case -1:
 #if DEBUG
-						MessageBox.Show(string.Format ("La versione installata ({0}) è più recente dell'ultima disponibile ({1}).", old, gnu),
+						MessageBox.Show(string.Format("La versione installata ({0}) è più recente dell'ultima disponibile ({1}).", old, gnu),
 							Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Information);
 						break;
 #endif
@@ -102,7 +100,7 @@ namespace Nummite.Forms
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(string.Format ("Errore nel tentativo di controllare nuove versioni:\"{0}\".", e.Message),
+				MessageBox.Show(string.Format("Errore nel tentativo di controllare nuove versioni:\"{0}\".", e.Message),
 								 Resources.Nummite, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
 		}
@@ -459,21 +457,13 @@ namespace Nummite.Forms
 					fColorDialog.Color.A, fColorDialog.Color.R - 1,
 					fColorDialog.Color.G, fColorDialog.Color.B
 				);
-			FColorSelected();
+			ForegroundColorSelected();
 		}
 
-		void FColorSelected()
+		void ForegroundColorSelected()
 		{
-			var current = fColorTS.Image as Bitmap;
-			if (current != null)
-				using (var g = Graphics.FromImage(current))
-				using (var tempPen = new Pen(fColorDialog.Color))
-					for (var y = 12; y < 16; y++)
-						g.DrawLine(tempPen, 0, y, 15, y);
-			fColorTS.Image = current;
-			SetLock(fColorTS, LockChange.Set);
+			UpdateColorButton(fColorTS, fColorDialog);
 			AddCurrentFColor();
-			Controller.SetCursor(CrossCursor);
 		}
 
 		void AddCurrentFColor()
@@ -511,7 +501,7 @@ namespace Nummite.Forms
 		void TsifColorClick(object sender, EventArgs e)
 		{
 			fColorDialog.Color = (Color)((ToolStripItem)sender).Tag;
-			FColorSelected();
+			ForegroundColorSelected();
 		}
 
 		void AltriToolStripMenuItem2Click(object sender, EventArgs e)
@@ -523,34 +513,33 @@ namespace Nummite.Forms
 					bColorDialog.Color.A, bColorDialog.Color.R - 1,
 					bColorDialog.Color.G, bColorDialog.Color.B
 				);
-			BColorSelected();
+			BackgroundColorSelected();
 		}
 
-		void BColorSelected()
+		void BackgroundColorSelected()
 		{
-			var current = bColorTS.Image as Bitmap;
-			if (current != null)
-				using (var g = Graphics.FromImage(current))
-				using (var tempPen = new Pen(bColorDialog.Color))
-					for (var y = 12; y < 16; y++)
-						g.DrawLine(tempPen, 0, y, 15, y);
-			bColorTS.Image = current;
-			SetLock(bColorTS, LockChange.Set);
+			UpdateColorButton(bColorTS, bColorDialog);
 			AddCurrentBColor();
-			Controller.SetCursor(CrossCursor);
 		}
 
 		void BorderColorSelected()
 		{
-			var current = borderColorTS.Image as Bitmap;
+			UpdateColorButton(borderColorTS, borderColorDialog);
+			AddCurrentBorderColor();
+		}
+
+		private void UpdateColorButton(CheckableToolStripSplitButton splitButton, ColorDialog dialog)
+		{
+			var current = splitButton.Image as Bitmap;
 			if (current != null)
 				using (var g = Graphics.FromImage(current))
-				using (var tempPen = new Pen(borderColorDialog.Color))
-					for (var y = 12; y < 16; y++)
-						g.DrawLine(tempPen, 0, y, 15, y);
-			borderColorTS.Image = current;
-			SetLock(borderColorTS, LockChange.Set);
-			AddCurrentBorderColor();
+				{
+					using (var tempPen = new Pen(dialog.Color))
+						for (var y = 12; y < 16; y++)
+							g.DrawLine(tempPen, 0, y, 15, y);
+				}
+			splitButton.Image = current;
+			SetLock(splitButton, LockChange.Set);
 			Controller.SetCursor(CrossCursor);
 		}
 
@@ -622,7 +611,7 @@ namespace Nummite.Forms
 		void TsibColorClick(object sender, EventArgs e)
 		{
 			bColorDialog.Color = (Color)((ToolStripItem)sender).Tag;
-			BColorSelected();
+			BackgroundColorSelected();
 		}
 
 		void TsiborderColorClick(object sender, EventArgs e)
@@ -740,96 +729,6 @@ namespace Nummite.Forms
 			if (saveFileDialogSvg.ShowDialog() != DialogResult.OK)
 				return;
 			Controller.ExportSvg(saveFileDialogSvg.FileName);
-		}
-	}
-
-	static class VersionComparer
-	{
-		public static int Compare(string s1, string s2)
-		{
-			var v1 = SemanticVersion.Parse(s1);
-			var v2 = SemanticVersion.Parse(s2);
-			return v1.CompareTo(v2);
-		}
-	}
-
-	class SemanticVersion : IComparable<SemanticVersion>
-	{
-		public int Major { get; private set; }
-		public int Minor { get; private set; }
-		public int Patch { get; private set; }
-		public string Prerelease { get; private set; }
-		public string Metadata { get; private set; }
-
-		public static SemanticVersion Parse(string input)
-		{
-			string[] split = input.Split('.');
-			int major = Int32.Parse(split[0]);
-			int minor = Int32.Parse(split[1]);
-			int hypenidx = split[2].IndexOf('-');
-			int patch = Int32.Parse(hypenidx < 0 ? split[2] : split[2].Substring(0, hypenidx));
-			string prerelease = null;
-			string metadata = null;
-			if (hypenidx >= 0)
-			{
-				int plusidx = split[2].IndexOf('+');
-				prerelease = plusidx < 0
-					? split[2].Substring(hypenidx + 1)
-					: split[2].Substring(hypenidx + 1, plusidx - hypenidx);
-				if (plusidx >= 0)
-					metadata = split[2].Substring(plusidx + 1);
-			}
-			return new SemanticVersion(major, minor, patch, prerelease, metadata);
-		}
-
-		public int CompareTo(SemanticVersion other)
-		{
-			if (other == null)
-				return 1;
-			if (Major != other.Major)
-				return Major.CompareTo(other.Major);
-			if (Minor != other.Minor)
-				return Minor.CompareTo(other.Minor);
-			if (Patch != other.Patch)
-				return Patch.CompareTo(other.Patch);
-			if (Prerelease == null)
-			{
-				if (other.Prerelease == null)
-					return 0;
-				if (other.Prerelease != null)
-					return 1;
-			}
-			if (Prerelease != null)
-			{
-				if (other.Prerelease == null)
-					return -1;
-				if (other.Prerelease != null)
-					return String.Compare(Prerelease, other.Prerelease, StringComparison.Ordinal);
-			}
-			return 0;
-		}
-
-		public SemanticVersion(int major, int minor, int patch, string prerelease, string metadata)
-		{
-			Major = major;
-			Minor = minor;
-			Patch = patch;
-			Prerelease = prerelease;
-			Metadata = metadata;
-		}
-	}
-
-	class TypeCollection : KeyedCollection<string, Type>
-	{
-		protected override string GetKeyForItem(Type item)
-		{
-			return item.FullName;
-		}
-
-		public void AddRange(IEnumerable<Type> types)
-		{
-			foreach (var t in types)
-				Add(t);
 		}
 	}
 }

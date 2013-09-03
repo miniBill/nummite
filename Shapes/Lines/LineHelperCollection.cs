@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using Nummite.Shapes.Lines;
+﻿using System;
+using System.Collections.ObjectModel;
 
-namespace Nummite.Forms
+namespace Nummite.Shapes.Lines
 {
 	class LineHelperCollection : KeyedCollection<string, ILineHelper>
 	{
@@ -13,6 +13,8 @@ namespace Nummite.Forms
 
 		protected override string GetKeyForItem(ILineHelper item)
 		{
+			if (item == null)
+				throw new ArgumentNullException ("item");
 			return item.TypeName;
 		}
 	}

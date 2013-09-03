@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Xml;
-using Nummite.Gencode;
 using Nummite.Shapes;
 using System.Text;
 
@@ -36,11 +35,7 @@ namespace Nummite.Export
 			writer.WriteStartDocument(false);
 			writer.WriteDocType("svg", "-//W3C//Dtd SVG 1.1//EN",
 				"http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd", null);
-			writer.WriteStartElement("svg", "http://www.w3.org/2000/svg");
-			writer.WriteAttributeString("width", SafeString(size.Width));
-			writer.WriteAttributeString("height", SafeString(size.Height));
-			writer.WriteAttributeString("version", "1.1");
-			writer.WriteAttributeString("preserveAspectratio", "xMidYMid");
+			WriteHeader (writer, size);
 			if (shapes != null)
 				foreach (var s in shapes)
 				{
@@ -49,6 +44,15 @@ namespace Nummite.Export
 						persister.SvgSave(s, writer);
 				}
 			writer.WriteEndElement();
+		}
+
+		private static void WriteHeader (XmlWriter writer, Size size)
+		{
+			writer.WriteStartElement ("svg", "http://www.w3.org/2000/svg");
+			writer.WriteAttributeString ("width", SafeString (size.Width));
+			writer.WriteAttributeString ("height", SafeString (size.Height));
+			writer.WriteAttributeString ("version", "1.1");
+			writer.WriteAttributeString ("preserveAspectratio", "xMidYMid");
 		}
 
 		internal static void WriteRectangle(XmlWriter writer, Point location, Size size, Color fill, Pen forePen)
@@ -178,13 +182,5 @@ namespace Nummite.Export
 
 			writer.WriteEndElement();
 		}
-	}
-
-
-	interface IPersistableHelper : IShapeHelper
-	{
-		IShape Load(GDecoder decoder);
-		void SvgSave(IShape shape, XmlWriter writer);
-		void Save(IShape shape, GEncoder encoder);
 	}
 }

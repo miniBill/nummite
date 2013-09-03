@@ -41,7 +41,7 @@ namespace Nummite.Shapes {
 		public override void DrawTo (Graphics graphics)
 		{
 #if DEBUG
-			if (Text.StartsWith ("'shapes'")) {
+			if (Text.StartsWith ("'shapes'", StringComparison.InvariantCulture)) {
 				var sb = new StringBuilder ();
 				sb.Append ("'shapes'" + Environment.NewLine);
 				foreach (var s in ShapeContainer.ShapeList)

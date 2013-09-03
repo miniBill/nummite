@@ -19,7 +19,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 using Nummite.Forms;
@@ -385,6 +384,9 @@ namespace Nummite.Shapes
 		public int Width { get { return Size.Width; } set { Size = new Size(value, Height); } }
 		public int Height { get { return Size.Height; } set { Size = new Size(Width, value); } }
 
+		public int X { get { return Location.X; } set { Location = new Point(value, Y); } }
+		public int Y { get { return Location.Y; } set { Location = new Point(X, value); } }
+
 		public event EventHandler Moving;
 
 		public bool Depends
@@ -418,156 +420,6 @@ namespace Nummite.Shapes
 				return false;
 			}
 		}
-
-		public virtual void Load(XmlReader reader)
-		{
-			while (!reader.EOF)
-			{
-				reader.Read();
-				switch (reader.Name)
-				{
-					case "name":
-						ReadName(reader);
-						break;
-					case "location":
-						ReadLocation(reader);
-						break;
-					case "size":
-						ReadSize(reader);
-						break;
-					case "font":
-						ReadFont(reader);
-						break;
-					case "foregroundColor":
-						ReadColors(reader);
-						break;
-					case "backgroundColor":
-						ReadColors(reader);
-						break;
-					case "borderColor":
-						ReadBorderColor(reader);
-						break;
-					case "text":
-						ReadText(reader);
-						break;
-					case "autoresizewidth":
-						ReadAutoResize(reader);
-						break;
-					case "autoresizeheight":
-						ReadAutoResize(reader);
-						break;
-				}
-			}
-		}
-
-		private void ReadAutoResize(XmlReader reader)
-		{
-			switch (reader.Name)
-			{
-				case "autoresizeheight":
-					var s = reader.ReadString();
-					if (s.Length == 0)
-						return;
-					AutoResizeHeight = bool.Parse(s);
-					break;
-				case "autoresizewidth":
-					var s2 = reader.ReadString();
-					if (s2.Length == 0)
-						return;
-					AutoResizeWidth = bool.Parse(s2);
-					break;
-			}
-		}
-
-		protected void ReadName(XmlReader reader)
-		{
-			Name = reader.ReadString();
-		}
-
-		protected void ReadBorderColor(XmlReader reader)
-		{
-			BorderColor = DeserializeColor(reader.ReadString());
-		}
-
-		protected void ReadText(XmlReader reader)
-		{
-			Text = reader.ReadString().Replace(@"\n", Environment.NewLine);
-		}
-
-		protected void ReadColors(XmlReader reader)
-		{
-			switch (reader.Name)
-			{
-				case "foregroundColor":
-					ForegroundColor = DeserializeColor(reader.ReadString());
-					break;
-				case "backgroundColor":
-					BackgroundColor = DeserializeColor(reader.ReadString());
-					break;
-				case "borderColo":
-					BorderColor = DeserializeColor(reader.ReadString());
-					break;
-			}
-		}
-
-		protected void ReadFont(XmlReader reader)
-		{
-			reader.ReadStartElement("font");
-			reader.ReadStartElement("name");
-			var fontName = reader.ReadString();
-			reader.ReadEndElement();
-			reader.ReadStartElement("unit");
-			var fontUnit = (GraphicsUnit)Enum.Parse(typeof(GraphicsUnit), reader.ReadString());
-			reader.ReadEndElement();
-			reader.ReadStartElement("size");
-			var val = reader.ReadString();
-			val = val.Replace(',', '.'); //HACK: find a way to understand numbers culture-invariantly
-			var fontSize = float.Parse(val, CultureInfo.InvariantCulture);
-			reader.ReadEndElement();
-			reader.ReadStartElement("style");
-			var fontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), reader.ReadString());
-			Font = new Font(fontName, fontSize, fontStyle, fontUnit);
-			reader.ReadEndElement();
-		}
-
-		protected void ReadSize(XmlReader reader)
-		{
-			reader.ReadToFollowing("width");
-			Width = reader.ReadElementContentAsInt();
-			Height = reader.ReadElementContentAsInt();
-		}
-
-		protected void ReadLocation(XmlReader reader)
-		{
-			reader.ReadToFollowing("x");
-			var x = reader.ReadElementContentAsInt();
-			var y = reader.ReadElementContentAsInt();
-			Location = new Point(x, y);
-		}
-
-		private static Color DeserializeColor(string color)
-		{
-			var pieces = color.Split(new[] { ':' });
-
-			var colorType = (ColorFormat)
-				Enum.Parse(typeof(ColorFormat), pieces[0], true);
-
-			switch (colorType)
-			{
-				case ColorFormat.NamedColor:
-					return Color.FromName(pieces[1]);
-
-				case ColorFormat.ArgbColor:
-					var a = byte.Parse(pieces[1], CultureInfo.InvariantCulture);
-					var r = byte.Parse(pieces[2], CultureInfo.InvariantCulture);
-					var g = byte.Parse(pieces[3], CultureInfo.InvariantCulture);
-					var b = byte.Parse(pieces[4], CultureInfo.InvariantCulture);
-
-					return Color.FromArgb(a, r, g, b);
-			}
-			return Color.Empty;
-		}
-
 		public ShapeContainer ShapeContainer
 		{
 			get;
@@ -618,21 +470,26 @@ namespace Nummite.Shapes
 		{
 			if (!(AutoResizeHeight || AutoResizeWidth) || ShapeContainer == null)
 				return;
+			Size newSize;
 			using (var g = ShapeContainer.CreateGraphics())
-			{
-				var textSize = g.MeasureString(Text, Font);
-				if (AutoResizeWidth)
-				{
-					var w = (int)textSize.Width + 10;
-					Width = Math.Max(w, Options.MinimumWidth);
-				}
-				if (AutoResizeHeight)
-				{
-					var h = (int)textSize.Height + 5;
-					Height = Math.Max(h, Options.MinimumHeight);
-				}
-				ShapeContainer.ForceRefresh();
-			}
+				newSize = GetSize(g, Text, Font);
+			if (AutoResizeWidth)
+				Width = newSize.Width;
+			if (AutoResizeHeight)
+				Height = newSize.Height;
+			Size = newSize;
+			ShapeContainer.ForceRefresh();
+		}
+
+		public static Size GetSize(Graphics g, string text, Font font)
+		{
+			Size newSize = Size.Empty;
+			var textSize = g.MeasureString(text, font);
+			var w = (int)textSize.Width + 10;
+			newSize.Width = Math.Max(w, Options.MinimumWidth);
+			var h = (int)textSize.Height + 5;
+			newSize.Height = Math.Max(h, Options.MinimumHeight);
+			return newSize;
 		}
 
 		public virtual void SvgSave(XmlWriter writer)

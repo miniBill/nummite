@@ -88,12 +88,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HelpResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SemanticVersion.cs" />
+    <Compile Include="Forms\TypeCollection.cs" />
+    <Compile Include="Forms\VersionComparer.cs" />
     <Compile Include="Gencode\GDecoder.cs" />
     <Compile Include="Gencode\GDictionary.cs" />
     <Compile Include="Gencode\GList.cs" />
     <Compile Include="Gencode\GObject.cs" />
     <Compile Include="Gencode\GObjectHelper.cs" />
-    <Compile Include="Shapes\LineHelperCollection.cs" />
+    <Compile Include="Shapes\IPersistableHelper.cs" />
+    <Compile Include="Shapes\Lines\LineHelperCollection.cs" />
     <Compile Include="Forms\OptionPanes\IOptionPane.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -167,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShapeContainer.resx">
+      <DependentUpon>ShapeContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SizeForm.resx">
       <DependentUpon>SizeForm.cs</DependentUpon>

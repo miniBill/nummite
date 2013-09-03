@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 using System.Xml;
 using Nummite.Gencode;
@@ -62,11 +61,14 @@ namespace Nummite.Forms
 			if (e.Button == MouseButtons.Left)
 			{
 				using (var current = ShapeType.Create())
-					container.AddCurrentShapeAtPoint(new Point(e.Location.X - current.Width / 2, e.Location.Y - current.Height / 2));
+				{
+					var location = new Point(e.Location.X - current.Width / 2, e.Location.Y - current.Height / 2);
+					container.AddCurrentShapeAtPoint(location);
+				}
 			}
-			if (e.Button == MouseButtons.Middle)
-				if (MiddleDoubleClick != null)
-					MiddleDoubleClick(sender, e);
+			if (e.Button != MouseButtons.Middle || MiddleDoubleClick == null)
+				return;
+			MiddleDoubleClick(sender, e);
 		}
 
 		public event EventHandler MiddleDoubleClick;
@@ -120,7 +122,7 @@ namespace Nummite.Forms
 		private void Open(StreamReader reader)
 		{
 			var decoder = new GDecoder(reader);
-			GDictionary file = decoder.ReadDictionary();
+			var file = decoder.ReadRoot() as GDictionary;
 			var attributes = file.GetObject<GDictionary>("attributes");
 			Width = attributes.GetValue<int>("width") ?? 1000;
 			Height = attributes.GetValue<int>("height") ?? 800;
@@ -132,11 +134,16 @@ namespace Nummite.Forms
 				var helper = ShapeDictionary.GetHelper(type) as IPersistableHelper;
 				if (helper == null)
 					throw new ArgumentException(String.Format("Found a non-persistable type {0} in file", type));
-				IShape s = helper.Load(decoder);
+				IShape s = helper.Load(shape);
 				toLoad.Add(s);
 			}
 			container.ClearShapes();
 			container.LoadShapes(toLoad);
+			foreach (var shape in toLoad)
+			{
+				if (shape.NeedInitialize)
+					shape.EndInitialize(toLoad);
+			}
 		}
 
 		public event EventHandler Opened;
@@ -148,29 +155,34 @@ namespace Nummite.Forms
 
 		public void Save(string filename)
 		{
-			using (var stream = File.OpenWrite(filename))
+			using (var stream = File.Open(filename, FileMode.Create))
 			using (var writer = new StreamWriter(stream))
 			{
 				var encoder = new GEncoder(writer);
 				encoder.BeginDictionary();
-				encoder.WriteString("attributes");
 				{
-					encoder.BeginDictionary();
-					encoder.WritePair("width", container.Width);
-					encoder.WritePair("height", container.Height);
-					encoder.EndDictionary();
-				}
+					encoder.WriteString("attributes");
+					{
+						encoder.BeginDictionary();
+						encoder.WritePair("width", container.Width);
+						encoder.WritePair("height", container.Height);
+						encoder.EndDictionary();
+					}
 
-				encoder.WriteString("shapes");
-				foreach (var s in container.ShapeList)
-				{
-					IShapeHelper helper = ShapeDictionary.GetHelper(s.GetType().Name);
-					var persistable = helper as IPersistableHelper;
-					if (persistable == null)
-						continue;
-					persistable.Save(s, encoder);
+					encoder.WriteString("shapes");
+					{
+						encoder.BeginList();
+						foreach (var s in container.ShapeList)
+						{
+							IShapeHelper helper = ShapeDictionary.GetHelper(s.GetType().Name);
+							var persistable = helper as IPersistableHelper;
+							if (persistable == null)
+								continue;
+							persistable.Save(s, encoder);
+						}
+						encoder.EndList();
+					}
 				}
-
 				encoder.EndDictionary();
 			}
 			Filename = filename;
@@ -256,7 +268,7 @@ namespace Nummite.Forms
 			}
 		}
 
-		public int Width { get { return Size.Width; } set { Size = new Size(value,Height); } }
+		public int Width { get { return Size.Width; } set { Size = new Size(value, Height); } }
 		public int Height { get { return Size.Height; } set { Size = new Size(Width, value); } }
 
 		public void Save()

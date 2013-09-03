@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Nummite.Export;
-using Nummite.Forms;
-using Nummite.Shapes.Lines;
+﻿using Nummite.Shapes.Lines;
 
 namespace Nummite.Shapes
 {

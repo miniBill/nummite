@@ -1,8 +1,8 @@
 using System;
 using System.Drawing;
 using System.Xml;
-using Nummite.Export;
 using Nummite.Gencode;
+using Nummite.Properties;
 
 namespace Nummite.Shapes
 {
@@ -14,52 +14,104 @@ namespace Nummite.Shapes
 
 		}
 
-		public override void Save(T value, GEncoder writer)
+		public override void Save(T value, GEncoder encoder)
 		{
-			writer.BeginDictionary();
-			SaveType(writer);
-			SaveName(value, writer);
-			SaveLocation(value.Location, writer);
-			SaveSize(value.Size, writer);
-			SaveFont(value.Font, writer);
-			SaveColors(value, writer);
-			SaveText(value, writer);
-			SaveAuto(value, writer);
-			writer.EndDictionary();
+			if (value == null)
+				throw new ArgumentNullException ("value");
+			if (encoder == null)
+				throw new ArgumentNullException ("encoder");
+			encoder.BeginDictionary();
+			SaveType(encoder);
+			SaveName(value, encoder);
+			SaveLocation(value.Location, encoder);
+			SaveSize(value.Size, encoder);
+			SaveFont(value.Font, encoder);
+			SaveColors(value, encoder);
+			SaveText(value, encoder);
+			SaveAuto(value, encoder);
+			encoder.EndDictionary();
 		}
-		private void SaveAuto(T value, GEncoder writer)
+		private static void SaveAuto(T value, GEncoder encoder)
 		{
-			writer.WritePair("autoresizewidth", value.AutoResizeWidth);
-			writer.WritePair("autoresizeheight", value.AutoResizeHeight);
+			encoder.WritePair("autoresizewidth", value.AutoResizeWidth);
+			encoder.WritePair("autoresizeheight", value.AutoResizeHeight);
 		}
-		protected void SaveColors(T value, GEncoder writer) 
+		protected static void SaveColors(T value, GEncoder encoder)
 		{
-			writer.WritePair("foregroundColor", SerializeColor(value.ForegroundColor));
-			writer.WritePair("backgroundColor", SerializeColor(value.BackgroundColor));
-			writer.WritePair("borderColor", SerializeColor(value.BorderColor));
-		}
-
-		public void SvgSave (T shape, XmlWriter writer)
-		{
-			throw new System.NotImplementedException ();
-		}
-
-		public IShape Load (GDecoder stream)
-		{
-			throw new System.NotImplementedException ();
+			encoder.WritePair("foregroundColor", SerializeColor(value.ForegroundColor));
+			encoder.WritePair("backgroundColor", SerializeColor(value.BackgroundColor));
+			encoder.WritePair("borderColor", SerializeColor(value.BorderColor));
 		}
 
-		public void SvgSave (IShape shape, XmlWriter writer)
+		public void SvgSave(T shape, XmlWriter writer)
 		{
-			throw new System.NotImplementedException ();
+			throw new NotImplementedException();
 		}
 
-		public void Save (IShape shape, GEncoder encoder)
+		public IShape Load(GDictionary shape)
 		{
-			T value = shape as T;
-			if(value==null)
-				throw new ArgumentException("Shape is of incorrect type","shape");
-			Save (value, encoder);
+			var toret = new T();
+			foreach (var pair in shape)
+			{
+				var key = pair.Key as string;
+				object value = pair.Value;
+				switch (key)
+				{
+					case "name":
+						toret.Name = value as string;
+						break;
+					case "x":
+						toret.X = (int)value;
+						break;
+					case "y":
+						toret.Y = (int)value;
+						break;
+					case "height":
+						toret.Height = (int)value;
+						break;
+					case "width":
+						toret.Width = (int)value;
+						break;
+					case "font":
+						toret.Font = ParseFont(value as GDictionary);
+						break;
+					case "foregroundColor":
+						toret.ForegroundColor = ParseColor(value as string) ?? Color.Magenta;
+						break;
+					case "backgroundColor":
+						toret.BackgroundColor = ParseColor(value as string) ?? Color.Magenta;
+						break;
+					case "borderColor":
+						toret.BorderColor = ParseColor(value as string) ?? Color.Magenta;
+						break;
+					case "text":
+						toret.Text = value as string;
+						break;
+					case "autoresizewidth":
+						toret.AutoResizeWidth = (bool)value;
+						break;
+					case "autoresizeheight":
+						toret.AutoResizeHeight = (bool)value;
+						break;
+				}
+			}
+			return toret;
+		}
+
+		public void SvgSave(IShape shape, XmlWriter writer)
+		{
+			var value = shape as T;
+			if (value == null)
+				throw new ArgumentException(Resources.IncorrectShapeType, "shape");
+			SvgSave(value, writer);
+		}
+
+		public void Save(IShape shape, GEncoder encoder)
+		{
+			var value = shape as T;
+			if (value == null)
+				throw new ArgumentException(Resources.IncorrectShapeType, "shape");
+			((ShapeHelper<T>)this).Save(value, encoder);
 		}
 	}
 }

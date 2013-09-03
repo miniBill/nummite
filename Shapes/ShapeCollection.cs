@@ -16,15 +16,17 @@
  * along with Nummite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Collections.ObjectModel;
-using Nummite.Shapes;
 
-namespace Nummite.Forms
+namespace Nummite.Shapes
 {
 	class ShapeCollection : KeyedCollection<string, IShape>
 	{
 		protected override string GetKeyForItem(IShape item)
 		{
+			if (item == null)
+				throw new ArgumentNullException ("item");
 			return item.Name;
 		}
 	}

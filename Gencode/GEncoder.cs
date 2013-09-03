@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.IO;
-using System.Text;
 
 namespace Nummite.Gencode
 {
@@ -40,10 +39,9 @@ namespace Nummite.Gencode
 
 		public void WriteString (string key)
 		{
-			byte[] value = Encoding.UTF8.GetBytes (key);
-			stream.Write (value.Length.ToString(CultureInfo.InvariantCulture));
+			stream.Write (key.Length.ToString(CultureInfo.InvariantCulture));
 			stream.Write (':');
-			stream.Write (value);
+			stream.Write (key);
 		}
 
 		public void WritePair (string key, int value)
@@ -57,6 +55,16 @@ namespace Nummite.Gencode
 			stream.Write ('i');
 			stream.Write (value.ToString (CultureInfo.InvariantCulture));
 			stream.Write ('e');
+		}
+
+		public void BeginList ()
+		{
+			stream.Write ('l');
+		}
+
+		public void EndList()
+		{
+			stream.Write('e');
 		}
 	}
 }

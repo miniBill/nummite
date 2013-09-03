@@ -113,7 +113,7 @@ namespace Nummite.Shapes.Lines {
 
 		public override void DrawTo (Graphics graphics)
 		{
-			CheckShapeContainer ();
+			SetShapeContainer ();
 			if (!ShouldDraw ())
 				return;
 			float dx = Origin.Center.X - Pointed.Center.X;
@@ -129,7 +129,7 @@ namespace Nummite.Shapes.Lines {
 		{
 			if (Origin == null || Pointed == null || ShapeContainer == null)
 				return;
-			CheckShapeContainer ();
+			SetShapeContainer ();
 			/*float dx = Origin.Center.X - Pointed.Center.X;
 			float dy = Origin.Center.Y - Pointed.Center.Y;*/
 			SubPoints [0].Move (reverse
@@ -144,7 +144,7 @@ namespace Nummite.Shapes.Lines {
 			}
 		}
 
-		void CheckShapeContainer ()
+		protected void SetShapeContainer ()
 		{
 			if (SubPoints [0].ShapeContainer == null) {
 				foreach (var l in SubLines)

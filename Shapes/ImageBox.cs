@@ -18,30 +18,32 @@
 
 using System;
 using System.Drawing;
-using System.Xml;
 using System.IO;
-using Nummite.Properties;
-using System.Windows.Forms;
 
-namespace Nummite.Shapes {
+namespace Nummite.Shapes
+{
 	class ImageBox : Box
 	{
 		string filename = String.Empty;
 
-		public string FileName {
+		public string FileName
+		{
 			get { return filename; }
-			set {
+			set
+			{
 				filename = value;
-				if (value.Length == 0) {
+				if (value.Length == 0)
+				{
 					if (image != null)
-						image.Dispose ();
-					image = new Bitmap (100, 50);
+						image.Dispose();
+					image = new Bitmap(100, 50);
 					Width = 100;
 					Height = 50;
-					using (var g = Graphics.FromImage(image)) {
-						g.DrawLine (Pens.Red, 0, 0, Width, Height);
-						g.DrawLine (Pens.Red, 0, Height, Width, 0);
-						g.DrawLines (Pens.Black, new[] {
+					using (var g = Graphics.FromImage(image))
+					{
+						g.DrawLine(Pens.Red, 0, 0, Width, Height);
+						g.DrawLine(Pens.Red, 0, Height, Width, 0);
+						g.DrawLines(Pens.Black, new[] {
 							new Point (0, 0),
 							new Point (Width - 1, 0),
 							new Point (Width - 1, Height - 1),
@@ -49,39 +51,47 @@ namespace Nummite.Shapes {
 							new Point (0, 0)
 						});
 					}
-				} else
-					try {
-						var temp = Image.FromFile (filename);
+				}
+				else
+					try
+					{
+						var temp = Image.FromFile(filename);
 						ShownImage = temp;
-					} catch (FileNotFoundException) {
+					}
+					catch (FileNotFoundException)
+					{
 						FileName = String.Empty;
 					}
 			}
 		}
 
-		Image image = new Bitmap (100, 50);
+		Image image = new Bitmap(100, 50);
 
-		public Image ShownImage {
-			get {
+		public Image ShownImage
+		{
+			get
+			{
 				return image;
 			}
-			set {
+			set
+			{
 				image = value;
 				//iw/ih=w/h
 				//h=ih*w/iw
 				Width = 100;
 				Height = value.Height * Width / value.Width;
 				if (ShapeContainer != null)
-					ShapeContainer.ForceRefresh ();
+					ShapeContainer.ForceRefresh();
 			}
 		}
 
-		public ImageBox ()
+		public ImageBox()
 		{
-			using (var g = Graphics.FromImage(image)) {
-				g.DrawLine (Pens.Red, 0, 0, Width, Height);
-				g.DrawLine (Pens.Red, 0, Height, Width, 0);
-				g.DrawLines (Pens.Black, new[] {
+			using (var g = Graphics.FromImage(image))
+			{
+				g.DrawLine(Pens.Red, 0, 0, Width, Height);
+				g.DrawLine(Pens.Red, 0, Height, Width, 0);
+				g.DrawLines(Pens.Black, new[] {
 					new Point (0, 0),
 					new Point (Width - 1, 0),
 					new Point (Width - 1, Height - 1),
@@ -89,51 +99,22 @@ namespace Nummite.Shapes {
 					new Point (0, 0)
 				});
 			}
-			ContextMenu.MenuItems.Add ("Proprietà", PropertiesClick);
+			ContextMenu.MenuItems.Add("Proprietà", PropertiesClick);
 		}
 
-		void PropertiesClick (object sender, EventArgs e)
+		void PropertiesClick(object sender, EventArgs e)
 		{
-			new ImagePropertiesForm (this).ShowDialog ();
-			ShapeContainer.ForceRefresh ();
+			new ImagePropertiesForm(this).ShowDialog();
+			ShapeContainer.ForceRefresh();
 		}
 
-		public override void DrawTo (Graphics graphics)
+		public override void DrawTo(Graphics graphics)
 		{
-			var bounds = new Rectangle (Location.X, Location.Y, Width, Height);
-			var src = new Rectangle (0, 0, image.Width, image.Height);
-			graphics.DrawImage (image, bounds, src, GraphicsUnit.Pixel);
+			var bounds = new Rectangle(Location.X, Location.Y, Width, Height);
+			var src = new Rectangle(0, 0, image.Width, image.Height);
+			graphics.DrawImage(image, bounds, src, GraphicsUnit.Pixel);
 		}
 
-		public readonly static new IShapeHelper Helper = new ImageBoxHelper ();
-
-		public override void Load (XmlReader reader)
-		{
-			while (!reader.EOF) {
-				switch (reader.Name) {
-					case "name":
-						ReadName (reader);
-						break;
-					case "location":
-						ReadLocation (reader);
-						break;
-					case "size":
-						ReadSize (reader);
-						break;
-					case "image":
-						ReadImage (reader);
-						break;
-				}
-				reader.ReadEndElement ();
-			}
-		}
-
-		void ReadImage (XmlReader reader)
-		{
-			if (reader.MoveToAttribute ("path"))
-				FileName = reader.ReadString ();
-			else
-				MessageBox.Show (Resources.ErrorLoadingImageBox);
-		}
+		public readonly static new IShapeHelper Helper = new ImageBoxHelper();
 	}
 }

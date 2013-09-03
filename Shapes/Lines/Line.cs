@@ -23,12 +23,13 @@ using System.Xml;
 using Nummite.Export;
 using Nummite.Properties;
 
-namespace Nummite.Shapes.Lines {
+namespace Nummite.Shapes.Lines
+{
 	class Line : Box
 	{
-		readonly TextLabel label = new TextLabel ();
+		readonly TextLabel label = new TextLabel();
 
-		public Line ()
+		public Line()
 		{
 			Location = Point.Empty;
 			Start = Point.Empty;
@@ -41,150 +42,166 @@ namespace Nummite.Shapes.Lines {
 			ForegroundColorChange += Line_ForegroundColorChange;
 		}
 
-		void Line_ForegroundColorChange (object sender, EventArgs e)
+		void Line_ForegroundColorChange(object sender, EventArgs e)
 		{
 			label.ForegroundColor = ForegroundColor;
 		}
 
-		void Line_BackgroundColorChange (object sender, EventArgs e)
+		void Line_BackgroundColorChange(object sender, EventArgs e)
 		{
 			label.BackgroundColor = BackgroundColor;
 		}
 
 		bool textchanged;
 
-		protected override void OnTextChange ()
+		protected override void OnTextChange()
 		{
 			label.Text = Text;
 			textchanged = true;
-			base.OnTextChange ();
+			base.OnTextChange();
 		}
 
 		IShape origin;
 
-		public IShape Origin {
-			get {
+		public IShape Origin
+		{
+			get
+			{
 				return origin;
 			}
-			set {
-				OnOriginChange (value);
+			set
+			{
+				OnOriginChange(value);
 			}
 		}
 
-		protected virtual void OnOriginChange (IShape value)
+		public string OriginName { get; set; }
+		public string PointedName { get; set; }
+		protected virtual void OnOriginChange(IShape value)
 		{
 			origin = value;
 			origin.Moving += OnMoving;
 			origin.DragStart += OnDragStart;
 			origin.DragEnd += OnDragEnd;
 			origin.Deleted += OnDeleted;
-			OnMoving (this, EventArgs.Empty);
+			OnMoving(this, EventArgs.Empty);
 		}
 
-		void OnDeleted (object sender, EventArgs e)
+		void OnDeleted(object sender, EventArgs e)
 		{
-			ShapeContainer.RemoveShape (this);
+			ShapeContainer.RemoveShape(this);
 		}
 
 		IShape pointed;
 
-		public IShape Pointed {
-			get {
+		public IShape Pointed
+		{
+			get
+			{
 				return pointed;
 			}
-			set {
-				OnPointedChange (value);
+			set
+			{
+				OnPointedChange(value);
 			}
 		}
 
-		protected virtual void OnPointedChange (IShape value)
+		protected virtual void OnPointedChange(IShape value)
 		{
 			pointed = value;
 			pointed.Moving += OnMoving;
 			pointed.DragStart += OnDragStart;
 			pointed.DragEnd += OnDragEnd;
 			pointed.Deleted += OnDeleted;
-			OnMoving (this, EventArgs.Empty);
+			OnMoving(this, EventArgs.Empty);
 		}
 
-		void OnDragEnd (object sender, EventArgs e)
+		void OnDragEnd(object sender, EventArgs e)
 		{
 			Depends = false;
 		}
 
-		void OnDragStart (object sender, EventArgs e)
+		void OnDragStart(object sender, EventArgs e)
 		{
 			Depends = true;
 		}
 
-		protected virtual void OnMoving (object sender, EventArgs e)
+		protected virtual void OnMoving(object sender, EventArgs e)
 		{
-			Moved ();
+			Moved();
 		}
 
-		void Moved ()
+		void Moved()
 		{
 			if (origin == null || pointed == null ||
-			    origin.Contains (pointed.Center) || pointed.Contains (origin.Center)) {
-				Start = End = new PointF (0, 0);
-			} else {
-				Start = origin.GetIntersection (pointed.Center);
-				End = pointed.GetIntersection (origin.Center);
-				label.SetLocation (new Point ((int)(Start.X + End.X - label.Width) / 2, (int)(Start.Y + End.Y - label.Height) / 2));
+				origin.Contains(pointed.Center) || pointed.Contains(origin.Center))
+			{
+				Start = End = new PointF(0, 0);
+			}
+			else
+			{
+				Start = origin.GetIntersection(pointed.Center);
+				End = pointed.GetIntersection(origin.Center);
+				label.SetLocation(new Point((int)(Start.X + End.X - label.Width) / 2, (int)(Start.Y + End.Y - label.Height) / 2));
 			}
 		}
 
-		protected PointF Start {
-			get;
-			private set;
-		}
-
-		protected PointF End {
-			get;
-			private set;
-		}
-
-		public override void DrawTo (Graphics graphics)
+		protected PointF Start
 		{
-			if (!ShouldDraw ())
+			get;
+			private set;
+		}
+
+		protected PointF End
+		{
+			get;
+			private set;
+		}
+
+		public override void DrawTo(Graphics graphics)
+		{
+			if (!ShouldDraw())
 				return;
-			graphics.DrawLine (BorderPen, Start, End);
-			if (textchanged) {
+			graphics.DrawLine(BorderPen, Start, End);
+			if (textchanged)
+			{
 				textchanged = false;
 				if (label.ShapeContainer == null)
 					label.ShapeContainer = ShapeContainer;
 				label.AutoResizeHeight = label.AutoResizeWidth = true;
-				label.SetLocation (
-					new Point (
+				label.SetLocation(
+					new Point(
 						(int)(Start.X + End.X - label.Width) / 2,
 						(int)(Start.Y + End.Y - label.Height) / 2
 					));
 			}
 			if (label.Text.Length > 0)
-				label.DrawTo (graphics);
+				label.DrawTo(graphics);
 		}
 
-		protected virtual bool ShouldDraw ()
+		protected virtual bool ShouldDraw()
 		{
 			return (Math.Abs(Start.X) > Options.TOLERANCE || Math.Abs(Start.Y) < Options.TOLERANCE)
 				&& (Math.Abs(End.X) > Options.TOLERANCE || Math.Abs(End.Y) > Options.TOLERANCE)
 				&& !Pointed.Contains(Start) && !Origin.Contains(End);
 		}
 
-		protected override void OnSizeChange ()
+		protected override void OnSizeChange()
 		{
 			label.Width = Width;
 			label.Height = Height;
-			base.OnSizeChange ();
+			base.OnSizeChange();
 		}
 
-		protected override Point VCenter {
-			get {
-				return new Point ((int)((Start.X + End.X) / 2F), (int)((Start.Y + End.Y) / 2F));
+		protected override Point VCenter
+		{
+			get
+			{
+				return new Point((int)((Start.X + End.X) / 2F), (int)((Start.Y + End.Y) / 2F));
 			}
 		}
 
-		public override bool Contains (PointF point)
+		public override bool Contains(PointF point)
 		{
 			return (Math.Abs(Start.X) > Options.TOLERANCE || Math.Abs(Start.Y) > Options.TOLERANCE)
 				&& (Math.Abs(End.X) > Options.TOLERANCE || Math.Abs(End.Y) > Options.TOLERANCE)
@@ -221,99 +238,49 @@ namespace Nummite.Shapes.Lines {
 			 * */
 		}
 
-		public override PointF GetIntersection (PointF other)
+		public override PointF GetIntersection(PointF other)
 		{
-			throw new NotImplementedException ();
+			throw new NotImplementedException();
 		}
 
-		public override void Load (XmlReader reader)
+
+		public override void EndInitialize(KeyedCollection<string, IShape> list)
 		{
-			while (!reader.EOF) {
-				reader.Read ();
-				switch (reader.Name) {
-					case "origin":
-						ReadEndpoints (reader);
-						break;
-					case "pointed":
-						ReadEndpoints (reader);
-						break;
-					case "name":
-						ReadName (reader);
-						break;
-					case "font":
-						ReadFont (reader);
-						break;
-					case "foregroundColor":
-						ReadColors (reader);
-						break;
-					case "backgroundColor":
-						ReadColors (reader);
-						break;
-					case "borderColor":
-						ReadBorderColor (reader);
-						break;
-					case "text":
-						ReadText (reader);
-						break;
-				}
-			}
-			//backwards compatiblity
-			if (BackgroundColor == ForegroundColor)
-				BackgroundColor = Color.FromArgb (255 - ForegroundColor.R, 255 - ForegroundColor.G, 255 - ForegroundColor.B);
+			Origin = list[OriginName];
+			Pointed = list[PointedName];
 		}
 
-		void ReadEndpoints (XmlReader reader)
+		public override bool NeedInitialize
 		{
-			if (reader.Name == "origin") {
-				ReadEndpointCheck (reader);
-				originName = reader.Value;
-			} else {
-				ReadEndpointCheck (reader);
-				pointedName = reader.Value;
-			}
-		}
-
-		static void ReadEndpointCheck (XmlReader reader)
-		{
-			reader.MoveToAttribute ("name");
-			if (!reader.ReadAttributeValue ())
-				throw new ArgumentException ("Cannot read endpoint");
-		}
-
-		string originName;
-		string pointedName;
-
-		public override void EndInitialize (KeyedCollection<string, IShape> list)
-		{
-			Origin = list [originName];
-			Pointed = list [pointedName];
-		}
-
-		public override bool NeedInitialize {
-			get {
+			get
+			{
 				return true;
 			}
 		}
 
-		public override bool Linkable {
-			get {
+		public override bool Linkable
+		{
+			get
+			{
 				return false;
 			}
 		}
 
-		public readonly static new ILineHelper Helper = new LineHelper<Line> (Description, Resources.NoArrow);
+		public readonly static new ILineHelper Helper = new LineHelper<Line>(Description, Resources.NoArrow);
 
-		public static new string Description {
-			get {
+		public static new string Description
+		{
+			get
+			{
 				return "Linea semplice";
-			} 
+			}
 		}
 
-		public override void SvgSave (XmlWriter writer)
+		public override void SvgSave(XmlWriter writer)
 		{
-			Svg.WriteLine (writer, Start, End, BorderPen);
-			Svg.WriteRectangle (writer, label.Location, label.Size, BackgroundColor, BackPen);
-			Svg.WriteText (writer, label.Center, ForegroundColor, Font, label.Text);
+			Svg.WriteLine(writer, Start, End, BorderPen);
+			Svg.WriteRectangle(writer, label.Location, label.Size, BackgroundColor, BackPen);
+			Svg.WriteText(writer, label.Center, ForegroundColor, Font, label.Text);
 		}
 	}
 }

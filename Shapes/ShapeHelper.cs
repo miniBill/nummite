@@ -16,6 +16,7 @@
  * along with Nummite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Drawing;
 using System.Globalization;
 using Nummite.Gencode;
@@ -55,15 +56,15 @@ namespace Nummite.Shapes
 			private set;
 		}
 
-		public virtual void Save(T value, GEncoder writer)
+		public virtual void Save(T value, GEncoder encoder)
 		{
-			writer.BeginDictionary();
-			SaveType(writer);
-			SaveName(value, writer);
-			SaveLocation(value.Location, writer);
-			SaveSize(value.Size, writer);
-			SaveText(value, writer);
-			writer.EndDictionary();
+			encoder.BeginDictionary();
+			SaveType(encoder);
+			SaveName(value, encoder);
+			SaveLocation(value.Location, encoder);
+			SaveSize(value.Size, encoder);
+			SaveText(value, encoder);
+			encoder.EndDictionary();
 		}
 
 		protected void SaveType(GEncoder writer)
@@ -73,7 +74,7 @@ namespace Nummite.Shapes
 
 
 
-		protected void SaveText(T value, GEncoder writer)
+		protected static void SaveText(T value, GEncoder writer)
 		{
 			writer.WritePair("text", value.Text);
 		}
@@ -81,24 +82,24 @@ namespace Nummite.Shapes
 
 
 
-		protected void SaveName(T value, GEncoder writer)
+		protected static void SaveName(T value, GEncoder writer)
 		{
 			writer.WritePair("name", value.Name);
 		}
 
-		protected void SaveSize(Size size, GEncoder writer)
+		protected static void SaveSize(Size size, GEncoder writer)
 		{
 			writer.WritePair("width", size.Width);
 			writer.WritePair("height", size.Height);
 		}
 
-		protected void SaveLocation(Point location, GEncoder writer)
+		protected static void SaveLocation(Point location, GEncoder writer)
 		{
 			writer.WritePair("x", location.X);
 			writer.WritePair("y", location.Y);
 		}
 
-		protected void SaveFont(Font font, GEncoder writer)
+		protected static void SaveFont(Font font, GEncoder writer)
 		{
 			writer.WriteString("font");
 			writer.BeginDictionary();
@@ -117,6 +118,43 @@ namespace Nummite.Shapes
 			return string.Format(CultureInfo.InvariantCulture, "{0}:{1}:{2}:{3}:{4}",
 				ColorFormat.ArgbColor,
 				color.A, color.R, color.G, color.B);
+		}
+
+		protected static Color? ParseColor(string color)
+		{
+			if (color == null)
+				return null;
+			var pieces = color.Split(new[] { ':' });
+
+			var colorType = (ColorFormat)
+				Enum.Parse(typeof(ColorFormat), pieces[0], true);
+
+			switch (colorType)
+			{
+				case ColorFormat.NamedColor:
+					return Color.FromName(pieces[1]);
+
+				case ColorFormat.ArgbColor:
+					var a = Byte.Parse(pieces[1], CultureInfo.InvariantCulture);
+					var r = Byte.Parse(pieces[2], CultureInfo.InvariantCulture);
+					var g = Byte.Parse(pieces[3], CultureInfo.InvariantCulture);
+					var b = Byte.Parse(pieces[4], CultureInfo.InvariantCulture);
+
+					return Color.FromArgb(a, r, g, b);
+			}
+			return null;
+		}
+
+		protected static Font ParseFont(GDictionary font)
+		{
+			var fontName = font.GetObject<string>("name");
+			var unit_s = font.GetObject<string>("unit");
+			var fontUnit = (GraphicsUnit)Enum.Parse(typeof(GraphicsUnit), unit_s);
+			var size_s = font.GetObject<string>("size");
+			var fontSize = Single.Parse(size_s, CultureInfo.InvariantCulture);
+			var style_s = font.GetObject<string>("style");
+			var fontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), style_s);
+			return new Font(fontName, fontSize, fontStyle, fontUnit);
 		}
 	}
 	public enum ColorFormat

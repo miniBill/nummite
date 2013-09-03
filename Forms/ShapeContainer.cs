@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -26,10 +27,12 @@ using Nummite.Shapes;
 using System.ComponentModel;
 using Nummite.Shapes.Lines;
 
-namespace Nummite.Forms {
+namespace Nummite.Forms
+{
 	partial class ShapeContainer : UserControl, ISizeable
 	{
-		public ShapeCollection ShapeList {
+		public ShapeCollection ShapeList
+		{
 			get;
 			private set;
 		}
@@ -38,39 +41,42 @@ namespace Nummite.Forms {
 		Bitmap current;
 		bool linkMode;
 
-		[DefaultValue (false)]
-		public bool LinkMode {
-			get {
+		[DefaultValue(false)]
+		public bool LinkMode
+		{
+			get
+			{
 				return linkMode;
 			}
-			set {
+			set
+			{
 				linkMode = value;
 				linking &= linkMode;
 			}
 		}
 
-		public ShapeContainer ()
+		public ShapeContainer()
 		{
 			ShapeType = RoundedBox.Helper;
 			LineType = Line.Helper;
-			ShapeList = new ShapeCollection ();
-			back = new Bitmap (Width, Height);
-			current = new Bitmap (Width, Height);
-			InitializeComponent ();
+			ShapeList = new ShapeCollection();
+			back = new Bitmap(Width, Height);
+			current = new Bitmap(Width, Height);
+			InitializeComponent();
 		}
 
-		protected override void OnResize (EventArgs e)
+		protected override void OnResize(EventArgs e)
 		{
-			base.OnResize (e);
+			base.OnResize(e);
 			if (Width * Height < 1)
 				return;
-			ClearAndDrawShapesToBack ();
-			RegenImage ();
+			ClearAndDrawShapesToBack();
+			RegenImage();
 		}
 
-		protected override void OnPaint (PaintEventArgs e)
+		protected override void OnPaint(PaintEventArgs e)
 		{
-			RegenImage ();
+			RegenImage();
 		}
 
 		/// <summary>
@@ -78,34 +84,35 @@ namespace Nummite.Forms {
 		/// Draw moving shapes on front
 		/// Draw front
 		/// </summary>
-		void RegenImage ()
+		void RegenImage()
 		{
-			current.Dispose ();
-			current = (Bitmap)back.Clone ();
-			DrawMovingShapes ();
+			current.Dispose();
+			current = (Bitmap)back.Clone();
+			DrawMovingShapes();
 			using (var g = CreateGraphics())
-				g.DrawImageUnscaled (current, Point.Empty);
+				g.DrawImageUnscaled(current, Point.Empty);
 		}
 
-		void DrawMovingShapes ()
+		void DrawMovingShapes()
 		{
 			using (var f = Graphics.FromImage(current))
 				foreach (IShape s in ShapeList.Where(s => s.Dragged || s.Depends))
-					s.DrawTo (f);
+					s.DrawTo(f);
 		}
 
-		public ILineHelper LineType {
+		public ILineHelper LineType
+		{
 			get;
 			set;
 		}
 
-		void ShapeContainer_MouseDown (object sender, MouseEventArgs e)
+		void ShapeContainer_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
-			if (!LinkMode)
-				OnLeftNonLinkClick (e.Location);
-			else
-				OnLeftLinkClick (e.Location);
+				if (!LinkMode)
+					OnLeftNonLinkClick(e.Location);
+				else
+					OnLeftLinkClick(e.Location);
 		}
 
 		bool linking;
@@ -118,94 +125,99 @@ namespace Nummite.Forms {
 		/// </summary>
 		Line linkingPointer;
 
-		void OnLeftLinkClick (Point p)
+		void OnLeftLinkClick(Point p)
 		{
-			var s = GetSelectedShape (p, true);
+			var s = GetSelectedShape(p, true);
 			if (s == null)
 				return;
 			linking = true;
-			ClearAndDrawShapesToBack ();
-			AddLinkingShapes (p, s);
-			RegenImage ();
+			ClearAndDrawShapesToBack();
+			AddLinkingShapes(p, s);
+			RegenImage();
 		}
 
-		void ClearAndDrawShapesToBack ()
+		void ClearAndDrawShapesToBack()
 		{
-			using (var b = Graphics.FromImage(back)) {
-				b.Clear (BackColor);
+			using (var b = Graphics.FromImage(back))
+			{
+				b.Clear(BackColor);
 				foreach (var nD in ShapeList)
-					nD.DrawTo (b);
+					nD.DrawTo(b);
 			}
 		}
 
-		void AddLinkingShapes (Point p, IShape s)
+		void AddLinkingShapes(Point p, IShape s)
 		{
 			//Point
-			var point = new InvisiblePoint ();
-			point.SetLocation (p);
+			var point = new InvisiblePoint();
+			point.SetLocation(p);
 			point.Dragged = true;
 			point.Offset = Point.Empty;
 			linkingPoint = point;
-			AddShape (point);
+			AddShape(point);
 			//Pointer
-			var pointer = LineType.Create ();
+			var pointer = LineType.Create();
 			pointer.Origin = s;
 			pointer.Pointed = point;
 			pointer.Depends = true;
 			linkingPointer = pointer;
-			AddShape (pointer);
-			point.Move (p);
+			AddShape(pointer);
+			point.Move(p);
 		}
 
-		public IShape GetSelectedShape (Point point, bool needsLinkable)
+		public IShape GetSelectedShape(Point point, bool needsLinkable)
 		{
-			var selected = new List<IShape> ();
-			foreach (var s in ShapeList) {
-				if (s.Contains (point) && (!needsLinkable || s.Linkable))
-					selected.Add (s);
+			var selected = new List<IShape>();
+			foreach (var s in ShapeList)
+			{
+				if (s.Contains(point) && (!needsLinkable || s.Linkable))
+					selected.Add(s);
 				s.Dragged = false;
 			}
-			var i = selected.Select (ShapeList.IndexOf).Concat (new[] { -1 }).Max ();
-			return i < 0 ? null : ShapeList [i];
+			var i = selected.Select(ShapeList.IndexOf).Concat(new[] { -1 }).Max();
+			return i < 0 ? null : ShapeList[i];
 		}
 
-		void OnRightNonLinkClick (Point p)
+		void OnRightNonLinkClick(Point p)
 		{
-			var s = GetSelectedShape (p, false);
+			var s = GetSelectedShape(p, false);
 			if (s != null)
-				s.OpenMenu (p);
+				s.OpenMenu(p);
 		}
 
-		void OnLeftNonLinkClick (Point p)
+		void OnLeftNonLinkClick(Point p)
 		{
-			using (var b = Graphics.FromImage(back)) {
-				b.Clear (BackColor);
+			using (var b = Graphics.FromImage(back))
+			{
+				b.Clear(BackColor);
 
-				var selectedShape = GetSelectedShape (p, true);
-				if (selectedShape != null) {
+				var selectedShape = GetSelectedShape(p, true);
+				if (selectedShape != null)
+				{
 					selectedShape.Dragged = true;
-					selectedShape.Offset = new Point (
+					selectedShape.Offset = new Point(
 						p.X - selectedShape.Location.X,
 						p.Y - selectedShape.Location.Y
 					);
-					selectedShape.Move (p);
+					selectedShape.Move(p);
 				}
 
 				foreach (IShape nD in ShapeList.Where(nD => !nD.Dragged && !nD.Depends))
-					nD.DrawTo (b);
+					nD.DrawTo(b);
 
 			}
-			RegenImage ();
+			RegenImage();
 		}
 
-		void ShapeContainer_MouseMove (object sender, MouseEventArgs e)
+		void ShapeContainer_MouseMove(object sender, MouseEventArgs e)
 		{
 			var drag = false;
 			var parent = Parent as ScrollableControl;
 			foreach (var s in ShapeList)
-				if (s.Dragged) {
+				if (s.Dragged)
+				{
 					drag = true;
-					s.Move (e.Location);
+					s.Move(e.Location);
 					if (parent == null)
 						continue;
 					var x = -parent.AutoScrollPosition.X;
@@ -218,242 +230,311 @@ namespace Nummite.Forms {
 						y = s.Location.Y - 5;
 					if (s.Location.Y + s.Height > y + parent.Height)
 						y = s.Location.Y + 5 + s.Height - parent.Height;
-					parent.AutoScrollPosition = new Point (x, y);
+					parent.AutoScrollPosition = new Point(x, y);
 				}
 			if (drag)
-				RegenImage ();
+				RegenImage();
 		}
 
 		public new event EventHandler<ShapeEventArgs> Click;
 
-		void ShapeContainer_MouseUp (object sender, MouseEventArgs e)
+		void ShapeContainer_MouseUp(object sender, MouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Right && !LinkMode) {
-				OnRightNonLinkClick (e.Location);
+			if (e.Button == MouseButtons.Right && !LinkMode)
+			{
+				OnRightNonLinkClick(e.Location);
 				return;
 			}
 			if (linking)
-				TryLink (e.Location);
-			using (var g = Graphics.FromImage(back)) {
-				g.Clear (BackColor);
-				foreach (var s in ShapeList) {
+				TryLink(e.Location);
+			using (var g = Graphics.FromImage(back))
+			{
+				g.Clear(BackColor);
+				foreach (var s in ShapeList)
+				{
 					if (s.Dragged)
 						s.Dragged = false;
-					s.DrawTo (g);
+					s.DrawTo(g);
 				}
 			}
-			RegenImage ();
-			var selected = GetSelectedShape (e.Location, false);
+			RegenImage();
+			var selected = GetSelectedShape(e.Location, false);
 			if ((Click != null) && (selected != null))
-				Click.Invoke (this, new ShapeEventArgs (selected));
+				Click.Invoke(this, new ShapeEventArgs(selected));
 		}
 
-		void TryLink (Point location)
+		void TryLink(Point location)
 		{
 			linking = false;
 			linkingPoint.Dragged = false;
 			linkingPointer.Depends = false;
-			RemoveShape (linkingPoint);
-			var selectedShape = GetSelectedShape (location, true);
-			if (selectedShape == null || selectedShape == linkingPointer.Origin) {
-				if (Options.AutoCreateOnLink) {
-					using (var shapeSize = ShapeType.Create ())
-						selectedShape = AddCurrentShapeAtPoint (new Point (location.X - shapeSize.Width / 2, location.Y - shapeSize.Height / 2));
-				} else {
-					RemoveShape (linkingPointer);
+			RemoveShape(linkingPoint);
+			var selectedShape = GetSelectedShape(location, true);
+			if (selectedShape == null || selectedShape == linkingPointer.Origin)
+			{
+				if (Options.AutoCreateOnLink)
+				{
+					using (var shapeSize = ShapeType.Create())
+						selectedShape = AddCurrentShapeAtPoint(new Point(location.X - shapeSize.Width / 2, location.Y - shapeSize.Height / 2));
+				}
+				else
+				{
+					RemoveShape(linkingPointer);
 					return;
 				}
 			}
 			linkingPointer.Pointed = selectedShape;
 			selectedShape.Offset = Point.Empty;
-			selectedShape.Move (selectedShape.Location);
+			selectedShape.Move(selectedShape.Location);
 			LinkMode = false;
 			if (Link != null)
-				Link (this, EventArgs.Empty);
+				Link(this, EventArgs.Empty);
 
 		}
 
-		public IShapeHelper ShapeType {
+		public IShapeHelper ShapeType
+		{
 			get;
 			set;
 		}
 
-		public IShape AddCurrentShapeAtPoint (Point location)
+		public IShape AddCurrentShapeAtPoint(Point location)
 		{
-			var toret = ShapeType.Create ();
-			AddShapeAtPoint (toret, location);
-			return toret;
+			IShape shape = ShapeType.Create();
+			AddShapeAtPoint(shape, location);
+			return shape;
 		}
 
 		public event EventHandler Link;
 
-		public void RemoveShape (IShape shape)
+		public void RemoveShape(IShape shape)
 		{
-			ShapeList.Remove (shape);
-			shape.Deleted += delegate {
-				shape.Dispose ();
+			ShapeList.Remove(shape);
+			shape.Deleted += delegate
+			{
+				shape.Dispose();
 			};
-			ForceRefresh ();
+			ForceRefresh();
 		}
 
-		void AddShapeAtPoint (IShape shape, Point point)
+		void AddShapeAtPoint(IShape shape, Point point)
 		{
-			shape.Name = GetNextName (0);
-			if (shape.Text.Length == 0 && !(shape is Line))
-				shape.Text = "...";
-			shape.SetLocation (Grid ? CutToGrid (point) : point);
-			DoAddShape (shape);
+			shape.Name = GetNextName(0);
+			shape.SetLocation(Grid ? CutToGrid(point) : point);
+			DoAddShape(shape);
 		}
 
 		bool suspended;
 
-		void DoAddShape (IShape shape)
+		void DoAddShape(IShape shape)
 		{
-			ShapeList.Add (shape);
+			ShapeList.Add(shape);
 			shape.ShapeContainer = this;
 			if (suspended)
 				return;
+			AskInput(shape, shape.Center);
 			using (var b = Graphics.FromImage(back))
-				shape.DrawTo (b);
-			RegenImage ();
+				shape.DrawTo(b);
+			RegenImage();
 		}
 
-		void AddShape (IShape shape)
+		void AddShape(IShape shape)
 		{
 			var parent = Parent as ScrollableControl;
 			if (parent == null)
 				return;
-			var p = new Point (-parent.AutoScrollPosition.X, -parent.AutoScrollPosition.Y);
-			AddShapeAtPoint (shape, p);
+			var p = new Point(-parent.AutoScrollPosition.X, -parent.AutoScrollPosition.Y);
+			AddShapeAtPoint(shape, p);
 		}
 
-		string GetNextName (int p)
+		string GetNextName(int p)
 		{
-			while (true) {
-				if (ShapeList.Contains ("Shape" + p.ToString (CultureInfo.CurrentCulture)))
+			while (true)
+			{
+				if (ShapeList.Contains("Shape" + p.ToString(CultureInfo.CurrentCulture)))
 					p++;
 				else
-					return "Shape" + p.ToString (CultureInfo.CurrentCulture);
+					return "Shape" + p.ToString(CultureInfo.CurrentCulture);
 			}
 		}
 
-		public void LoadShapes (IEnumerable<IShape> shapes)
+		public void LoadShapes(IEnumerable<IShape> shapes)
 		{
-			Suspend ();
-			var enumerable = shapes as IList<IShape> ?? shapes.ToList ();
-			var initialized = enumerable.Where (b => b.NeedInitialize).ToList ();
+			Suspend();
+			var enumerable = shapes as IList<IShape> ?? shapes.ToList();
+			var initialized = enumerable.Where(b => b.NeedInitialize).ToList();
 			foreach (var b in initialized)
-				b.BeginInitialize ();
+				b.BeginInitialize();
 			foreach (var s in enumerable)
-				DoAddShape (s);
+				DoAddShape(s);
 			foreach (var e in initialized)
-				e.EndInitialize (ShapeList);
-			ForceRefresh ();
+				e.EndInitialize(ShapeList);
+			ForceRefresh();
 		}
 
-		void ShapeContainer_MouseDoubleClick (object sender, MouseEventArgs e)
+		void ShapeContainer_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			var selectedShape = GetSelectedShape (e.Location, false);
+			var selectedShape = GetSelectedShape(e.Location, false);
 			if (selectedShape == null || selectedShape is ImageBox)
 				return;
-			if (StringInput.Show ("Inserisci il testo", "Nummite", selectedShape.Text.Replace (Environment.NewLine, @"\n")) != DialogResult.OK)
+			if (StringInput.Show("Inserisci il testo", "Nummite", selectedShape.Text.Replace(Environment.NewLine, @"\n")) != DialogResult.OK)
 				return;
-			selectedShape.Text = StringInput.LastResult.Replace (@"\n", Environment.NewLine);
-			Refresh ();
+			selectedShape.Text = StringInput.LastResult.Replace(@"\n", Environment.NewLine);
+			Refresh();
 		}
 
-		public void DrawTo (Graphics graphics, bool hidePoints)
+		public void DrawTo(Graphics graphics, bool hidePoints)
 		{
 			foreach (var s in ShapeList)
 				if (!hidePoints || !(s is VisiblePoint))
-					s.DrawTo (graphics);
+					s.DrawTo(graphics);
 		}
 
-		public void PrintTo (Graphics graphics, Rectangle rectangle)
+		public void PrintTo(Graphics graphics, Rectangle rectangle)
 		{
 			using (Image i = new Bitmap(Width, Height))
-			using (var g = Graphics.FromImage(i)) {
-				DrawTo (g, true);
-				graphics.DrawImage (i, rectangle);
+			using (var g = Graphics.FromImage(i))
+			{
+				DrawTo(g, true);
+				graphics.DrawImage(i, rectangle);
 			}
 		}
 
-		public void ClearShapes ()
+		public void ClearShapes()
 		{
-			ShapeList.Clear ();
+			ShapeList.Clear();
 			using (var g = Graphics.FromImage(back))
-				g.Clear (BackColor);
-			RegenImage ();
-			Refresh ();
+				g.Clear(BackColor);
+			RegenImage();
+			Refresh();
 		}
 
-		void Suspend ()
+		void Suspend()
 		{
 			suspended = true;
 		}
 
-		public void ForceRefresh ()
+		public void ForceRefresh()
 		{
 			suspended = false;
-			back.Dispose ();
-			back = new Bitmap (Width, Height);
-			using (var g = Graphics.FromImage(back)) {
-				g.Clear (BackColor);
+			back.Dispose();
+			back = new Bitmap(Width, Height);
+			using (var g = Graphics.FromImage(back))
+			{
+				g.Clear(BackColor);
 				foreach (var s in ShapeList)
-					s.DrawTo (g);
+					s.DrawTo(g);
 			}
-			current.Dispose ();
-			current = (Bitmap)back.Clone ();
+			current.Dispose();
+			current = (Bitmap)back.Clone();
 			using (var g = CreateGraphics())
-				g.DrawImageUnscaled (current, Point.Empty);
+				g.DrawImageUnscaled(current, Point.Empty);
 		}
 
-		public void ShowPoints ()
+		public void ShowPoints()
 		{
-			TogglePoints (true);
+			TogglePoints(true);
 		}
 
-		void TogglePoints (bool show)
+		void TogglePoints(bool show)
 		{
-			foreach (var s in ShapeList) {
+			foreach (var s in ShapeList)
+			{
 				var p = s as VisiblePoint;
 				if (p != null)
 					p.Open = show;
 			}
 		}
 
-		public void HidePoints ()
+		public void HidePoints()
 		{
-			TogglePoints (false);
+			TogglePoints(false);
 		}
 
 		const int GRID_SIZE = 10;
 
-		public void AlignToGrid ()
+		public void AlignToGrid()
 		{
-			foreach (var s in ShapeList) {
+			foreach (var s in ShapeList)
+			{
 				s.Offset = Point.Empty;
-				s.Move (CutToGrid (s.Location));
+				s.Move(CutToGrid(s.Location));
 			}
-			ForceRefresh ();
+			ForceRefresh();
 		}
 
-		public static Point CutToGrid (Point point)
+		public static Point CutToGrid(Point point)
 		{
-			return new Point (point.X - (point.X % GRID_SIZE), point.Y - (point.Y % GRID_SIZE));
+			return new Point(point.X - (point.X % GRID_SIZE), point.Y - (point.Y % GRID_SIZE));
 		}
 
-		[DefaultValue (false)]
-		public bool Grid {
+		[DefaultValue(false)]
+		public bool Grid
+		{
 			get;
 			set;
 		}
 
-		public void BringForeground (IShape shape)
+		public void BringForeground(IShape shape)
 		{
-			ShapeList.Remove (shape);
-			ShapeList.Add (shape);
-			ForceRefresh ();
+			ShapeList.Remove(shape);
+			ShapeList.Add(shape);
+			ForceRefresh();
+		}
+
+		private Box inputShape;
+
+		public void AskInput(IShape shape, Point location)
+		{
+			var box = shape as Box;
+			if (box == null || (inputShape as Line) != null || suspended)
+				return;
+			Debug.WriteLine(box.GetType().Name);
+			inputShape = box;
+			inputShape.AutoResizeWidth = true;
+			inputBox.Visible = true;
+			inputBox.Text = "...";
+			inputBox.SelectionStart = 0;
+			inputBox.SelectionLength = 3;
+			inputBox.ForeColor = inputShape.ForegroundColor;
+			inputShape.ForegroundColor = inputShape.BackgroundColor;
+			inputBox.BackColor = inputShape.BackgroundColor;
+			inputBox.Font = inputShape.Font;
+			inputBox.Focus();
+		}
+
+		private void inputBox_TextChanged(object sender, EventArgs e)
+		{
+			var text = inputBox.Text;
+			Size size;
+			using (var g = CreateGraphics())
+				size = Box.GetSize(g, text, Font);
+			inputBox.Width = size.Width + 10;
+			inputShape.Text = string.Format(".    {0}    .", inputBox.Text);
+			inputBox.Top = inputShape.Center.Y - inputBox.Height / 2;
+			inputBox.Left = inputShape.Center.X - inputBox.Width / 2;
+		}
+
+		private void inputBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode != Keys.Enter)
+				return;
+			e.SuppressKeyPress = true;
+			EndInput();
+		}
+
+		private void EndInput()
+		{
+			inputShape.Text = inputBox.Text;
+			inputShape.ForegroundColor = inputBox.ForeColor;
+			inputBox.Visible = false;
+			inputShape = null;
+			ForceRefresh();
+		}
+
+		private void inputBox_Leave(object sender, EventArgs e)
+		{
+			EndInput();
 		}
 	}
 }
