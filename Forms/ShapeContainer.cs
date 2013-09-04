@@ -57,8 +57,6 @@ namespace Nummite.Forms
 
 		public ShapeContainer()
 		{
-			ShapeType = RoundedBox.Helper;
-			LineType = Line.Helper;
 			ShapeList = new ShapeCollection();
 			back = new Bitmap(Width, Height);
 			current = new Bitmap(Width, Height);
@@ -187,6 +185,7 @@ namespace Nummite.Forms
 
 		void OnLeftNonLinkClick(Point p)
 		{
+			EndInput ();
 			using (var b = Graphics.FromImage(back))
 			{
 				b.Clear(BackColor);
@@ -332,7 +331,8 @@ namespace Nummite.Forms
 			shape.ShapeContainer = this;
 			if (suspended)
 				return;
-			AskInput(shape, shape.Center);
+			if (!(shape is Line))
+				AskInput (shape);
 			using (var b = Graphics.FromImage(back))
 				shape.DrawTo(b);
 			RegenImage();
@@ -377,9 +377,7 @@ namespace Nummite.Forms
 			var selectedShape = GetSelectedShape(e.Location, false);
 			if (selectedShape == null || selectedShape is ImageBox)
 				return;
-			if (StringInput.Show("Inserisci il testo", "Nummite", selectedShape.Text.Replace(Environment.NewLine, @"\n")) != DialogResult.OK)
-				return;
-			selectedShape.Text = StringInput.LastResult.Replace(@"\n", Environment.NewLine);
+			AskInput (selectedShape);
 			Refresh();
 		}
 
@@ -484,18 +482,22 @@ namespace Nummite.Forms
 
 		private Box inputShape;
 
-		public void AskInput(IShape shape, Point location)
+		public void AskInput(IShape shape)
 		{
+			if (inputShape != null)
+				EndInput();
 			var box = shape as Box;
-			if (box == null || (inputShape as Line) != null || suspended)
+			if (box == null || suspended)
 				return;
 			Debug.WriteLine(box.GetType().Name);
 			inputShape = box;
 			inputShape.AutoResizeWidth = true;
 			inputBox.Visible = true;
-			inputBox.Text = "...";
+			if (shape.Text.Length == 0)
+				inputShape.Text = "...";
+			inputBox.Text = inputShape.Text;
 			inputBox.SelectionStart = 0;
-			inputBox.SelectionLength = 3;
+			inputBox.SelectionLength = inputBox.TextLength;
 			inputBox.ForeColor = inputShape.ForegroundColor;
 			inputShape.ForegroundColor = inputShape.BackgroundColor;
 			inputBox.BackColor = inputShape.BackgroundColor;
@@ -505,12 +507,14 @@ namespace Nummite.Forms
 
 		private void inputBox_TextChanged(object sender, EventArgs e)
 		{
+			if (inputShape == null)
+				return;
 			var text = inputBox.Text;
 			Size size;
 			using (var g = CreateGraphics())
 				size = Box.GetSize(g, text, Font);
 			inputBox.Width = size.Width + 10;
-			inputShape.Text = string.Format(".    {0}    .", inputBox.Text);
+			inputShape.Text = string.Format (".    {0}    .", inputBox.Text);
 			inputBox.Top = inputShape.Center.Y - inputBox.Height / 2;
 			inputBox.Left = inputShape.Center.X - inputBox.Width / 2;
 		}
@@ -525,6 +529,8 @@ namespace Nummite.Forms
 
 		private void EndInput()
 		{
+			if (inputShape == null)
+				return;
 			inputShape.Text = inputBox.Text;
 			inputShape.ForegroundColor = inputBox.ForeColor;
 			inputBox.Visible = false;

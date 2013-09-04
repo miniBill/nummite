@@ -67,7 +67,7 @@ namespace Nummite.Forms
 				AddShapeType(t, linkModeTS, lTypeHandler);
 				AddShapeType(t, lineKindTSMI, lTypeHandler);
 			}
-			SetDefaultObject(RoundedBox.Helper);
+			SetDefaultObjects (ShapeDictionary.DefaultShape, ShapeDictionary.DefaultLine);
 			new Thread(CheckForUpdates).Start();
 
 			shapeContainer1.ForceRefresh ();
@@ -117,11 +117,14 @@ namespace Nummite.Forms
 			linkModeTS.Owner.Refresh();
 		}
 
-		void SetDefaultObject(IShapeHelper e)
+		private void SetDefaultObjects (IShapeHelper s, ILineHelper l)
 		{
-			libraryTS.Image = e.Image;
-			libraryTS.Tag = e.GetType();
-			libraryTS.Text = e.ToString();
+			libraryTS.Image = s.Image;
+			libraryTS.Tag = s.GetType ();
+			shapeContainer1.ShapeType = s;
+			linkModeTS.Image = l.Image;
+			linkModeTS.Tag = l.GetType ();
+			shapeContainer1.LineType = l;
 		}
 
 		static void AddShapeType(IShapeHelper helper, ToolStripDropDownItem dropDownItem,

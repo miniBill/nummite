@@ -11,7 +11,7 @@ namespace Nummite.Shapes
 
 			//Shapes
 			ShapeTypes.AddRange(
-				RoundedBox.Helper,
+				RoundedBox.Helper/*,
 				Ellipse.Helper,
 				Box.Helper,
 				LabelShape.Helper,
@@ -19,25 +19,31 @@ namespace Nummite.Shapes
 				Parallelogram.Helper,
 				VisiblePoint.Helper,
 				ImageBox.Helper,
-				Link.Helper
+				Link.Helper*/
 			);
+
+			DefaultShape = RoundedBox.Helper;
 
 			//Arrow Kinds
 			ArrowTypes.AddRange(
-				Line.Helper,
-				OneArrow.Helper,
+				/*Line.Helper,*/
+				OneArrow.Helper/*,
 				TwoArrows.Helper,
 				OneArrowAngle.Helper,
 				TwoArrowsAngle.Helper,
 				NoArrowFragmented.Helper,
 				OneArrowFragmented.Helper,
-				TwoArrowsFragmented.Helper
+				TwoArrowsFragmented.Helper*/
 			);
+
+			DefaultLine = OneArrow.Helper;
 		}
 
 		public static ShapeHelperCollection ShapeTypes { get; set; }
 
 		public static LineHelperCollection ArrowTypes { get; set; }
+		public static IShapeHelper DefaultShape { get; private set; }
+		public static ILineHelper DefaultLine { get; private set; }
 
 		public static IShapeHelper GetHelper(string name)
 		{

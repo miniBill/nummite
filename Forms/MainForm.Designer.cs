@@ -598,7 +598,7 @@ namespace Nummite.Forms {
 			// 
 			this.linkModeTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.linkModeTS.DoubleClickEnabled = true;
-			this.linkModeTS.Image = global::Nummite.Properties.Resources.NoArrow;
+			this.linkModeTS.Image = global::Nummite.Properties.Resources.Book;
 			this.linkModeTS.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.linkModeTS.Name = "linkModeTS";
 			this.linkModeTS.Size = new System.Drawing.Size(32, 22);

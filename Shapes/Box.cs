@@ -188,6 +188,8 @@ namespace Nummite.Shapes
 			BorderColor = Color.Black;
 			text = String.Empty;
 			Font = SystemFonts.DefaultFont;
+			transformations = new MenuItem("Transformazioni");
+			ContextMenu.MenuItems.Add(transformations);
 			ContextMenu.MenuItems.Add("Elimina", DelClick);
 			ContextMenu.MenuItems.Add("Dimensione", SizeClick);
 			ContextMenu.MenuItems.Add("Porta in primo piano", ForeBring);
@@ -516,6 +518,7 @@ namespace Nummite.Shapes
 
 		private bool autoresizeheight;
 		private Size size;
+		private readonly MenuItem transformations;
 
 		public bool AutoResizeHeight
 		{
