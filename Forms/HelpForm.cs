@@ -7,6 +7,7 @@ namespace Nummite.Forms {
 			InitializeComponent();
 			LoadPageIndex();
 		}
+
 		void LoadPageIndex() {
 			throw new NotImplementedException();
 		}

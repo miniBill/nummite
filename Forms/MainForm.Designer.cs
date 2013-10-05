@@ -1,6 +1,5 @@
 
 using System.Windows.Forms;
-using Nummite.Forms;
 
 namespace Nummite.Forms {
 	partial class MainForm {
@@ -68,6 +67,7 @@ namespace Nummite.Forms {
 			this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.gEncodeTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
@@ -94,6 +94,7 @@ namespace Nummite.Forms {
 			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
 			this.resizeTS = new System.Windows.Forms.ToolStripButton();
 			this.gridTS = new System.Windows.Forms.ToolStripButton();
+			this.layoutRadialTSB = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.fColorDialog = new System.Windows.Forms.ColorDialog();
@@ -107,6 +108,7 @@ namespace Nummite.Forms {
 			this.saveFileDialogRaster = new System.Windows.Forms.SaveFileDialog();
 			this.borderColorDialog = new System.Windows.Forms.ColorDialog();
 			this.saveFileDialogSvg = new System.Windows.Forms.SaveFileDialog();
+			this.layoutSpringsTSB = new System.Windows.Forms.ToolStripButton();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
@@ -249,13 +251,6 @@ namespace Nummite.Forms {
 			this.exportImageToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
 			this.exportImageToolStripMenuItem.Text = "Come immagine...";
 			this.exportImageToolStripMenuItem.Click += new System.EventHandler(this.ExportImageToolStripMenuItemClick);
-			// 
-			// comeImmagineVettorialeToolStripMenuItem
-			// 
-			this.comeImmagineVettorialeToolStripMenuItem.Name = "comeImmagineVettorialeToolStripMenuItem";
-			this.comeImmagineVettorialeToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-			this.comeImmagineVettorialeToolStripMenuItem.Text = "Come immagine vettoriale...";
-			this.comeImmagineVettorialeToolStripMenuItem.Click += new System.EventHandler(this.ComeImmagineVettorialeToolStripMenuItemClick);
 			// 
 			// toolStripSeparator1
 			// 
@@ -416,14 +411,12 @@ namespace Nummite.Forms {
 			this.showTSMI.Name = "showTSMI";
 			this.showTSMI.Size = new System.Drawing.Size(186, 22);
 			this.showTSMI.Text = "Mostra tutti i punti";
-			this.showTSMI.Click += new System.EventHandler(this.ShowTsmiClick);
 			// 
 			// hideTSMI
 			// 
 			this.hideTSMI.Name = "hideTSMI";
 			this.hideTSMI.Size = new System.Drawing.Size(186, 22);
 			this.hideTSMI.Text = "Nascondi tutti i punti";
-			this.hideTSMI.Click += new System.EventHandler(this.HideTsmiClick);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -431,6 +424,7 @@ namespace Nummite.Forms {
             this.contentsToolStripMenuItem,
             this.indexToolStripMenuItem,
             this.searchToolStripMenuItem,
+            this.gEncodeTreeToolStripMenuItem,
             this.toolStripSeparator5,
             this.aboutToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -493,11 +487,13 @@ namespace Nummite.Forms {
             this.toolStripSeparator9,
             this.resizeTS,
             this.gridTS,
+            this.layoutRadialTSB,
+            this.layoutSpringsTSB,
             this.toolStripSeparator10,
             this.helpToolStripButton});
 			this.toolStrip.Location = new System.Drawing.Point(3, 24);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(360, 25);
+			this.toolStrip.Size = new System.Drawing.Size(541, 25);
 			this.toolStrip.TabIndex = 1;
 			// 
 			// newToolStripButton
@@ -722,6 +718,16 @@ namespace Nummite.Forms {
 			this.gridTS.Click += new System.EventHandler(this.GridTsClick);
 			this.gridTS.DoubleClick += new System.EventHandler(this.GridTsDoubleClick);
 			// 
+			// layoutRadialTSB
+			// 
+			this.layoutRadialTSB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.layoutRadialTSB.Image = ((System.Drawing.Image)(resources.GetObject("layoutRadialTSB.Image")));
+			this.layoutRadialTSB.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.layoutRadialTSB.Name = "layoutRadialTSB";
+			this.layoutRadialTSB.Size = new System.Drawing.Size(23, 22);
+			this.layoutRadialTSB.Text = "Layout (radial)";
+			this.layoutRadialTSB.Click += new System.EventHandler(this.LayoutRadialTSB_Click);
+			// 
 			// toolStripSeparator10
 			// 
 			this.toolStripSeparator10.Name = "toolStripSeparator10";
@@ -903,6 +909,9 @@ namespace Nummite.Forms {
 		ToolStripMenuItem altriToolStripMenuItem3;
 		ToolStripMenuItem comeImmagineVettorialeToolStripMenuItem;
 		SaveFileDialog saveFileDialogSvg;
+		private ToolStripMenuItem gEncodeTreeToolStripMenuItem;
+		private ToolStripButton layoutRadialTSB;
+		private ToolStripButton layoutSpringsTSB;
 	}
 }
 

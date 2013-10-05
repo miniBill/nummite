@@ -21,7 +21,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using Nummite.Shapes;
+using Nummite.Shapes.Interfaces;
 
 namespace Nummite.Forms {
 	partial class SizeForm : Form

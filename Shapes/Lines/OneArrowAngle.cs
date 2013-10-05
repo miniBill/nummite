@@ -22,22 +22,20 @@ using System.Drawing;
 using System.Linq;
 using System.Xml;
 using Nummite.Properties;
+using Nummite.Shapes.Basic;
+using Nummite.Shapes.Interfaces;
+using Nummite.Shapes.Support;
 
 namespace Nummite.Shapes.Lines {
-	class OneArrowAngle : OneArrow
-	{
-		public readonly static new ILineHelper Helper = new LineHelper<OneArrowAngle> (Description, Resources.OneArrowAngle);
-
-		protected override void OnOriginChange (IShape value)
-		{
-			SubLines [0].Origin = value;
-			base.OnOriginChange (value);
+	class OneArrowAngle : OneArrow {
+		protected override void OnOriginChange(IShape value) {
+			SubLines[0].Origin = value;
+			base.OnOriginChange(value);
 		}
 
-		protected override void OnPointedChange (IShape value)
-		{
-			SubLines [1].Pointed = value;
-			base.OnPointedChange (value);
+		protected override void OnPointedChange(IShape value) {
+			SubLines[1].Pointed = value;
+			base.OnPointedChange(value);
 		}
 
 		List<InvisiblePoint> SubPoints {
@@ -52,13 +50,12 @@ namespace Nummite.Shapes.Lines {
 
 		bool reverse;
 
-		public OneArrowAngle ()
-		{
-			SubLines = new List<Line> ();
-			SubPoints = new List<InvisiblePoint> ();
-			SubLines.Add (new Line ());
-			SubLines.Add (new OneArrow ());
-			SubPoints.Add (new InvisiblePoint ());
+		public OneArrowAngle() {
+			SubLines = new List<Line>();
+			SubPoints = new List<InvisiblePoint>();
+			SubLines.Add(new Line());
+			SubLines.Add(new OneArrow());
+			SubPoints.Add(new InvisiblePoint());
 			//"normal"
 			//origin
 			//|
@@ -73,80 +70,74 @@ namespace Nummite.Shapes.Lines {
 			//            |
 			//            pointed
 			if (Origin != null)
-				SubLines [0].Origin = Origin;
-			SubLines [0].Pointed = SubPoints [0];
-			SubLines [1].Origin = SubPoints [0];
+				SubLines[0].Origin = Origin;
+			SubLines[0].Pointed = SubPoints[0];
+			SubLines[1].Origin = SubPoints[0];
 			if (Pointed != null)
-				SubLines [1].Pointed = Pointed;
+				SubLines[1].Pointed = Pointed;
 			ForegroundColorChange += Fragmented_ForegroundColorChange;
 			BackgroundColorChange += Fragmented_BackgroundColorChange;
 			BorderColorChange += Fragmented_BorderColorChange;
-			ContextMenu.MenuItems.Add ("Inverti", delegate {
+			ContextMenu.MenuItems.Add("Inverti", delegate {
 				reverse = !reverse;
-				ShapeContainer.ForceRefresh ();
+				ShapeContainer.ForceRefresh();
 			});
 		}
 
-		void Fragmented_BorderColorChange (object sender, EventArgs e)
-		{
+		void Fragmented_BorderColorChange(object sender, EventArgs e) {
 			foreach (var l in SubLines)
 				l.BorderColor = BorderColor;
 		}
 
-		void Fragmented_BackgroundColorChange (object sender, EventArgs e)
-		{
+		void Fragmented_BackgroundColorChange(object sender, EventArgs e) {
 			foreach (var l in SubLines)
 				l.BackgroundColor = BackgroundColor;
 		}
 
-		void Fragmented_ForegroundColorChange (object sender, EventArgs e)
-		{
+		void Fragmented_ForegroundColorChange(object sender, EventArgs e) {
 			foreach (var l in SubLines)
 				l.ForegroundColor = ForegroundColor;
 		}
 
-		protected override void OnMoving (object sender, EventArgs e)
-		{
-			base.OnMoving (sender, e);
-			Moved ();
+		protected override void OnMoving(object sender, EventArgs e) {
+			base.OnMoving(sender, e);
+			Moved();
 		}
 
-		public override void DrawTo (Graphics graphics)
-		{
-			SetShapeContainer ();
-			if (!ShouldDraw ())
+		public override void DrawTo(Graphics graphics) {
+			SetShapeContainer();
+			if (!ShouldDraw())
 				return;
 			float dx = Origin.Center.X - Pointed.Center.X;
 			float dy = Origin.Center.Y - Pointed.Center.Y;
 			if (Math.Abs(dx) < Options.TOLERANCE || Math.Abs(dy) < Options.TOLERANCE)
-				base.DrawTo (graphics);
+				base.DrawTo(graphics);
 			else
 				foreach (var l in SubLines)
-					l.DrawTo (graphics);
+					l.DrawTo(graphics);
 		}
 
-		void Moved ()
-		{
+		void Moved() {
 			if (Origin == null || Pointed == null || ShapeContainer == null)
 				return;
-			SetShapeContainer ();
+			SetShapeContainer();
 			/*float dx = Origin.Center.X - Pointed.Center.X;
 			float dy = Origin.Center.Y - Pointed.Center.Y;*/
-			SubPoints [0].Move (reverse
-								? new Point (Pointed.Center.X, Origin.Center.Y)
-								: new Point (Origin.Center.X, Pointed.Center.Y));
-			if (Origin.Contains (SubPoints [0].Location)) {
-				var m1Int = Origin.GetIntersection (Pointed.Center);
-				SubPoints [0].Move (new Point ((int)m1Int.X, Pointed.Center.Y));
-			} else if (Pointed.Contains (SubPoints [0].Location)) {
-				var m1Int = Origin.GetIntersection (Pointed.Center);
-				SubPoints [0].Move (new Point (Pointed.Center.X, (int)m1Int.Y));
+			SubPoints[0].Move(reverse
+								? new Point(Pointed.Center.X, Origin.Center.Y)
+								: new Point(Origin.Center.X, Pointed.Center.Y));
+			if (Origin.Contains(SubPoints[0].Location)) {
+				var m1Int = Origin.GetIntersection(Pointed.Center);
+				SubPoints[0].Move(new Point((int)m1Int.X, Pointed.Center.Y));
+			}
+			else if (Pointed.Contains(SubPoints[0].Location)) {
+				var m1Int = Origin.GetIntersection(Pointed.Center);
+				SubPoints[0].Move(new Point(Pointed.Center.X, (int)m1Int.Y));
 			}
 		}
 
-		protected void SetShapeContainer ()
-		{
-			if (SubPoints [0].ShapeContainer == null) {
+		protected void SetShapeContainer() {
+			if (SubPoints[0].ShapeContainer == null) {
 				foreach (var l in SubLines)
 					l.ShapeContainer = ShapeContainer;
 				foreach (var m in SubPoints)
@@ -154,32 +145,19 @@ namespace Nummite.Shapes.Lines {
 			}
 		}
 
-		protected override void OnTextChange ()
-		{
+		protected override void OnTextChange() {
 			if (SubLines.Count > 1)
-				SubLines [reverse ? 0 : 1].Text = Text;
+				SubLines[reverse ? 0 : 1].Text = Text;
 		}
 
-		public override bool Contains (PointF point)
-		{
-			return SubLines.Any (l => l.Contains (point));
+		public override bool Contains(PointF point) {
+			return SubLines.Any(l => l.Contains(point));
 		}
 
 		public static new string Description { 
 			get {
 				return "Ad angolo";
 			}
-		}
-
-		public override void SvgSave (XmlWriter writer)
-		{
-			float dx = Origin.Center.X - Pointed.Center.X;
-			float dy = Origin.Center.Y - Pointed.Center.Y;
-			if (Math.Abs(dx) < Options.TOLERANCE || Math.Abs(dy) < Options.TOLERANCE)
-				base.SvgSave (writer);
-			else
-				foreach (var l in SubLines)
-					l.SvgSave (writer);
 		}
 	}
 }

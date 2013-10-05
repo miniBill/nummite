@@ -20,8 +20,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Xml;
-using Nummite.Export;
-using Nummite.Properties;
+using Nummite.Shapes.Basic;
+using Nummite.Shapes.Interfaces;
+using Nummite.Shapes.Support;
 
 namespace Nummite.Shapes.Lines
 {
@@ -246,8 +247,10 @@ namespace Nummite.Shapes.Lines
 
 		public override void EndInitialize(KeyedCollection<string, IShape> list)
 		{
-			Origin = list[OriginName];
-			Pointed = list[PointedName];
+			if (list.Contains (OriginName))
+				Origin = list [OriginName];
+			if (list.Contains (PointedName))
+				Pointed = list [PointedName];
 		}
 
 		public override bool NeedInitialize
@@ -266,21 +269,12 @@ namespace Nummite.Shapes.Lines
 			}
 		}
 
-		public readonly static new ILineHelper Helper = new LineHelper<Line>(Description, Resources.NoArrow);
-
 		public static new string Description
 		{
 			get
 			{
 				return "Linea semplice";
 			}
-		}
-
-		public override void SvgSave(XmlWriter writer)
-		{
-			Svg.WriteLine(writer, Start, End, BorderPen);
-			Svg.WriteRectangle(writer, label.Location, label.Size, BackgroundColor, BackPen);
-			Svg.WriteText(writer, label.Center, ForegroundColor, Font, label.Text);
 		}
 	}
 }

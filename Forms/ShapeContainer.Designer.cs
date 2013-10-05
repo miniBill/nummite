@@ -41,9 +41,9 @@ namespace Nummite.Forms {
 			this.inputBox.TabIndex = 0;
 			this.inputBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.inputBox.Visible = false;
-			this.inputBox.TextChanged += new System.EventHandler(this.inputBox_TextChanged);
-			this.inputBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputBox_KeyDown);
-			this.inputBox.Leave += new System.EventHandler(this.inputBox_Leave);
+			this.inputBox.TextChanged += new System.EventHandler(this.InputBox_TextChanged);
+			this.inputBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputBox_KeyDown);
+			this.inputBox.Leave += new System.EventHandler(this.InputBox_Leave);
 			// 
 			// ShapeContainer
 			// 

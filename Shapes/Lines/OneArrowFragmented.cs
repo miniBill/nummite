@@ -18,24 +18,25 @@
 
 using System.Drawing;
 using Nummite.Properties;
+using Nummite.Shapes.Interfaces;
+using Nummite.Shapes.Support;
 
 namespace Nummite.Shapes.Lines {
-	class OneArrowFragmented : NoArrowFragmented
-	{
-		public override void DrawTo (Graphics graphics)
-		{
-			SetShapeContainer ();
-			if (!ShouldDraw ())
+	class OneArrowFragmented : NoArrowFragmented {
+		public override void DrawTo(Graphics graphics) {
+			SetShapeContainer();
+			if (!ShouldDraw())
 				return;
 			var c = SubLines.Count - 1;
-			if (!(SubLines [c] is OneArrow)) {
-				SubLines [c] = new OneArrow {
-					Origin = SubPoints [1]
+			if (!(SubLines[c] is OneArrow)) {
+				SubLines[c] = new OneArrow
+				{
+					Origin = SubPoints[1]
 				};
 				if (Pointed != null)
-					SubLines [c].Pointed = Pointed;
+					SubLines[c].Pointed = Pointed;
 			}
-			base.DrawTo (graphics);
+			base.DrawTo(graphics);
 		}
 
 		public static new string Description { 
@@ -43,7 +44,5 @@ namespace Nummite.Shapes.Lines {
 				return "Spezzata con freccia";
 			}
 		}
-
-		public readonly static new ILineHelper Helper = new LineHelper<OneArrowFragmented>(Description, Resources.OneArrowFragmented);
 	}
 }

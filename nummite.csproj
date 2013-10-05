@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nummite</RootNamespace>
     <AssemblyName>Nummite</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
@@ -46,6 +46,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,6 +56,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,9 +64,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="protobuf-net">
+      <HintPath>protobuf-net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Export\Svg.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,15 +93,22 @@
       <DependentUpon>HelpResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Forms\SemanticVersion.cs" />
+    <Compile Include="Forms\Spring.cs" />
     <Compile Include="Forms\TypeCollection.cs" />
     <Compile Include="Forms\VersionComparer.cs" />
-    <Compile Include="Gencode\GDecoder.cs" />
-    <Compile Include="Gencode\GDictionary.cs" />
-    <Compile Include="Gencode\GList.cs" />
-    <Compile Include="Gencode\GObject.cs" />
-    <Compile Include="Gencode\GObjectHelper.cs" />
-    <Compile Include="Shapes\IPersistableHelper.cs" />
-    <Compile Include="Shapes\Lines\LineHelperCollection.cs" />
+    <Compile Include="Graphs\Graph.cs" />
+    <Compile Include="Graphs\Node.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Shapes\Net\Address.cs" />
+    <Compile Include="Shapes\Net\Addressv6.cs" />
+    <Compile Include="Shapes\Net\Domain.cs" />
+    <Compile Include="Shapes\Net\Hostname.cs" />
+    <Compile Include="Shapes\Net\Addressv4.cs" />
+    <Compile Include="Shapes\Net\TaggedImage.cs" />
     <Compile Include="Forms\OptionPanes\IOptionPane.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -129,7 +140,6 @@
     <Compile Include="Forms\ShapeContainer.Designer.cs">
       <DependentUpon>ShapeContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ShapeController.cs" />
     <Compile Include="Forms\SizeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,7 +152,6 @@
     <Compile Include="Forms\StringInput.Designer.cs">
       <DependentUpon>StringInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gencode\GEncoder.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -183,91 +192,75 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shapes\ImagePropertiesForm.resx">
+    <EmbeddedResource Include="Shapes\Support\ImagePropertiesForm.resx">
       <DependentUpon>ImagePropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Shapes\BoxHelper.cs" />
-    <Compile Include="Shapes\DistanceHelper.cs" />
-    <Compile Include="Shapes\Ellipse.cs" />
-    <Compile Include="Shapes\ImageBox.cs" />
-    <Compile Include="Shapes\ImageBoxHelper.cs" />
-    <Compile Include="Shapes\ImagePropertiesForm.cs">
+    <Compile Include="Shapes\Support\DistanceHelper.cs" />
+    <Compile Include="Shapes\Basic\ImageBox.cs" />
+    <Compile Include="Shapes\Support\ImagePropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Shapes\ImagePropertiesForm.Designer.cs">
+    <Compile Include="Shapes\Support\ImagePropertiesForm.Designer.cs">
       <DependentUpon>ImagePropertiesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Shapes\InvisiblePoint.cs" />
-    <Compile Include="Shapes\IShape.cs" />
-    <Compile Include="Shapes\Link.cs" />
-    <Compile Include="Shapes\Parallelogram.cs" />
-    <Compile Include="Shapes\Box.cs" />
-    <Compile Include="Shapes\Rhombus.cs" />
-    <Compile Include="Shapes\RoundedBox.cs" />
-    <Compile Include="Shapes\ShapeDictionary.cs" />
-    <Compile Include="Shapes\Text.cs" />
-    <Compile Include="Shapes\VisiblePoint.cs" />
-    <Compile Include="Shapes\IDimension.cs" />
-    <Compile Include="Shapes\IStyleable.cs" />
-    <Compile Include="Shapes\IShapeHelper.cs" />
+    <Compile Include="Shapes\Basic\InvisiblePoint.cs" />
+    <Compile Include="Shapes\Interfaces\IShape.cs" />
+    <Compile Include="Shapes\Basic\Box.cs" />
+    <Compile Include="Shapes\Support\ShapeDictionary.cs" />
+    <Compile Include="Shapes\Basic\Text.cs" />
+    <Compile Include="Shapes\Interfaces\IDimension.cs" />
+    <Compile Include="Shapes\Interfaces\IStyleable.cs" />
     <Compile Include="Forms\ShapeEventArgs.cs" />
-    <Compile Include="Shapes\ShapeCollection.cs" />
-    <Compile Include="Shapes\TextLabel.cs" />
-    <Compile Include="Shapes\IAutoSizeable.cs" />
-    <Compile Include="Shapes\ISizeable.cs" />
+    <Compile Include="Shapes\Support\ShapeCollection.cs" />
+    <Compile Include="Shapes\Basic\TextLabel.cs" />
+    <Compile Include="Shapes\Interfaces\IAutoSizeable.cs" />
+    <Compile Include="Shapes\Interfaces\ISizeable.cs" />
     <Compile Include="Shapes\Lines\Line.cs" />
     <Compile Include="Shapes\Lines\NoArrowFragmented.cs" />
     <Compile Include="Shapes\Lines\OneArrow.cs" />
     <Compile Include="Shapes\Lines\OneArrowAngle.cs" />
     <Compile Include="Shapes\Lines\OneArrowFragmented.cs" />
-    <Compile Include="Shapes\Lines\TwoArrows.cs" />
-    <Compile Include="Shapes\Lines\TwoArrowsAngle.cs" />
-    <Compile Include="Shapes\Lines\TwoArrowsFragmented.cs" />
-    <Compile Include="Shapes\ShapeHelper.cs" />
-    <Compile Include="Shapes\ShapeHelperCollection.cs" />
-    <Compile Include="Shapes\Lines\ILineHelper.cs" />
-    <Compile Include="Shapes\Lines\LineHelper.cs" />
+    <Compile Include="Model\Document.cs" />
+    <Compile Include="Shapes\Support\ShapeType.cs" />
+    <Compile Include="Shapes\Support\ShapeTypeCollection.cs" />
+    <Compile Include="Shapes\Support\IShapeType.cs" />
+    <Compile Include="Controller\ShapeController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Book.png" />
     <Content Include="Resources\Book_openHS.png" />
-    <Content Include="Resources\Ellipse.bmp" />
-    <None Include="Resources\ellipse1.bmp" />
-    <Content Include="Resources\Fill.bmp" />
-    <Content Include="Resources\FontColor.bmp" />
+    <Content Include="Resources\IPv4.png" />
+    <Content Include="Resources\IPv4Icon.png" />
+    <Content Include="Resources\IPv6.png" />
+    <Content Include="Resources\IPv6Icon.png" />
+    <Content Include="Resources\Void.png" />
+    <None Include="app.config" />
+    <None Include="Resources\Domain.png" />
+    <None Include="Resources\DomainIcon.png" />
+    <Content Include="Resources\Border.png" />
+    <Content Include="Resources\Fill.png" />
+    <Content Include="Resources\FontColor.png" />
     <Content Include="Resources\FontDialogHS.png" />
-    <None Include="Resources\Fragmented.bmp" />
-    <None Include="Resources\Grid.bmp" />
-    <None Include="Resources\Fragmented1.bmp" />
-    <None Include="Resources\Fragmented11.bmp" />
-    <None Include="Resources\Fragmented12.bmp" />
-    <None Include="Resources\Fragmented111.bmp" />
-    <Content Include="Resources\Link.bmp" />
-    <Content Include="Resources\Parallelogram.bmp" />
+    <Content Include="Resources\Fragmented.png" />
+    <Content Include="Resources\Grid.png" />
+    <Content Include="Resources\Hostname.png" />
+    <Content Include="Resources\HostnameIcon.png" />
+    <Content Include="Resources\Line.png" />
+    <Content Include="Resources\Link.png" />
+    <Content Include="Resources\Link2.png" />
+    <Content Include="Resources\OneArrow.png" />
+    <Content Include="Resources\OneArrowAngle.png" />
+    <Content Include="Resources\OneArrowFragmented.png" />
     <Content Include="Resources\PictureBox.png" />
-    <Content Include="Resources\Point.bmp" />
-    <Content Include="Resources\Point1.bmp" />
-    <Content Include="Resources\Point2.bmp" />
     <None Include="Resources\Program.ico" />
-    <Content Include="Resources\Rectangle.bmp" />
-    <None Include="Resources\rectangle1.bmp" />
-    <Content Include="Resources\Rhombus.bmp" />
-    <Content Include="Resources\RoundedBox.bmp" />
-    <Content Include="Resources\Simple.bmp" />
     <Content Include="Resources\Text.png" />
-    <Content Include="Resources\Void.bmp" />
+    <None Include="protobuf-net.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="COPYING" />
-    <None Include="version" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -306,4 +299,18 @@
   </Target>
   -->
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Controller\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy TabsToSpaces="False" NoTabsAfterNonTabs="True" EolMarker="Unix" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" NamespaceBraceStyle="EndOfLine" ClassBraceStyle="EndOfLine" InterfaceBraceStyle="EndOfLine" StructBraceStyle="EndOfLine" EnumBraceStyle="EndOfLine" MethodBraceStyle="EndOfLine" ConstructorBraceStyle="EndOfLine" DestructorBraceStyle="EndOfLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" ArrayInitializerWrapping="DoNotChange" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" BeforeIndexerDeclarationBracket="False" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" NewLineAferMethodCallOpenParentheses="SameLine" MethodCallClosingParenthesesOnNewLine="SameLine" NewLineAferMethodDeclarationOpenParentheses="SameLine" MethodDeclarationClosingParenthesesOnNewLine="SameLine" AlignToFirstMethodDeclarationParameter="False" NewLineAferIndexerDeclarationOpenBracket="SameLine" IndexerDeclarationClosingBracketOnNewLine="SameLine" AlignToFirstIndexerDeclarationParameter="False" NewLineAferIndexerOpenBracket="SameLine" IndexerClosingBracketOnNewLine="SameLine" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

@@ -19,26 +19,21 @@
 using System;
 using System.Drawing;
 using System.Xml;
-using Nummite.Export;
-using Nummite.Properties;
 
 namespace Nummite.Shapes.Lines {
-	class OneArrow : Line
-	{
+	class OneArrow : Line {
 		const float DISTANZA = 10F;
 		const float APERTURA = 5F;
 		PointF l, r;
 
-		public override void DrawTo (Graphics graphics)
-		{
-			if (!ShouldDraw ())
+		public override void DrawTo(Graphics graphics) {
+			if (!ShouldDraw())
 				return;
-			base.DrawTo (graphics);
-			graphics.FillPolygon (BorderBrush, new[] { l, End, r, l });
+			base.DrawTo(graphics);
+			graphics.FillPolygon(BorderBrush, new[] { l, End, r, l });
 		}
 
-		void Recalculate ()
-		{
+		void Recalculate() {
 			var otherPointX = Start.X - End.X;
 			var otherPointY = Start.Y - End.Y;
 			var m = otherPointY / otherPointX;
@@ -48,19 +43,18 @@ namespace Nummite.Shapes.Lines {
 				l.X = End.X - APERTURA;
 				r.X = End.X + APERTURA;
 			}
-			else if (Math.Abs(otherPointY) < Options.TOLERANCE)
-			{
+			else if (Math.Abs(otherPointY) < Options.TOLERANCE) {
 				var x = (End.X > Start.X) ? (End.X - DISTANZA) : (End.X + DISTANZA);
 				l.X = r.X = x;
 				l.Y = End.Y - APERTURA;
 				r.Y = End.Y + APERTURA;
-			} else {
-				RecalculateMath (otherPointX, m, out l, out r, End);
+			}
+			else {
+				RecalculateMath(otherPointX, m, out l, out r, End);
 			}
 		}
 
-		static void RecalculateMath (float otherPointX, float m, out PointF l, out PointF r, PointF end)
-		{
+		static void RecalculateMath(float otherPointX, float m, out PointF l, out PointF r, PointF end) {
 			//       c
 			//      /|\
 			//     / | \
@@ -81,9 +75,10 @@ namespace Nummite.Shapes.Lines {
 			//o^2=mx^2+m^2mx^2
 			//o^2=(1+m^2)mx^2
 			//mx=o/sqrt(1+m^2)
-			l = r = new PointF ();
-			var cross = new PointF {
-				X = DISTANZA / (float)Math.Sqrt (1F + m * m)
+			l = r = new PointF();
+			var cross = new PointF
+			{
+				X = DISTANZA / (float)Math.Sqrt(1F + m * m)
 			};
 			if (otherPointX < 0)
 				cross.X = -cross.X;
@@ -102,7 +97,7 @@ namespace Nummite.Shapes.Lines {
 			var b = 2 * (inverseM * inverseQ - cross.X - cross.Y * inverseM);
 			var discriminant = inverseQ * inverseQ - APERTURA * APERTURA + cross.X * cross.X +
 			                   2 * cross.Y * cross.Y - 2 * cross.Y * inverseQ;
-			var discriminantRoot = (float)Math.Sqrt (discriminant);
+			var discriminantRoot = (float)Math.Sqrt(discriminant);
 			l.X = (-b + discriminantRoot) / (2F * a);
 			l.Y = l.X * inverseM + inverseQ;
 			l.X += end.X;
@@ -113,24 +108,15 @@ namespace Nummite.Shapes.Lines {
 			r.Y += end.Y;
 		}
 
-		public readonly static new ILineHelper Helper = new LineHelper<OneArrow> (Description, Resources.OneArrow);
-
 		public static new string Description { 
 			get {
 				return "Punta singola";
 			}
 		}
 
-		protected override void OnMoving (object sender, EventArgs e)
-		{
-			base.OnMoving (sender, e);
-			Recalculate ();
-		}
-
-		public override void SvgSave (XmlWriter writer)
-		{
-			base.SvgSave (writer);
-			Svg.WritePolygon (writer, new[] { l, End, r, l }, BorderColor);
+		protected override void OnMoving(object sender, EventArgs e) {
+			base.OnMoving(sender, e);
+			Recalculate();
 		}
 	}
 }

@@ -17,7 +17,7 @@
  */
 
 using System;
-using Nummite.Shapes;
+using Nummite.Shapes.Interfaces;
 
 namespace Nummite.Forms
 {

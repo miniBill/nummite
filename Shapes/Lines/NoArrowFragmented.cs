@@ -22,12 +22,13 @@ using System.Drawing;
 using System.Linq;
 using System.Xml;
 using Nummite.Properties;
+using Nummite.Shapes.Basic;
+using Nummite.Shapes.Interfaces;
+using Nummite.Shapes.Support;
 
 namespace Nummite.Shapes.Lines {
 	class NoArrowFragmented : Line
 	{
-		public readonly static new ILineHelper Helper = new LineHelper<NoArrowFragmented>(Description, Resources.NoArrowFragmented);
-
 		protected override void OnOriginChange (IShape value)
 		{
 			SubLines [0].Origin = value;
@@ -165,17 +166,6 @@ namespace Nummite.Shapes.Lines {
 			get {
 				return "Spezzata";
 			}
-		}
-
-		public override void SvgSave (XmlWriter writer)
-		{
-			float dx = Origin.Center.X - Pointed.Center.X;
-			float dy = Origin.Center.Y - Pointed.Center.Y;
-			if (Math.Abs(dx) < Options.TOLERANCE || Math.Abs(dy) < Options.TOLERANCE)
-				base.SvgSave (writer);
-			else
-				foreach (var l in SubLines)
-					l.SvgSave (writer);
 		}
 	}
 }
